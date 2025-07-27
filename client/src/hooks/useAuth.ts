@@ -10,9 +10,6 @@ export function useAuth() {
     refetchOnWindowFocus: false,
     staleTime: Infinity, // Don't refetch automatically
     enabled: !hasAuthError, // Disable query if we know auth failed
-    onError: () => {
-      setHasAuthError(true); // Stop further requests on 401
-    }
   });
 
   // Set auth error on 401 responses to prevent continuous requests

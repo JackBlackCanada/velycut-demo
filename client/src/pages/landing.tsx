@@ -24,8 +24,14 @@ export default function Landing() {
   }
 
   const handleUserTypeSelection = (userType: string) => {
+    // Store user type in localStorage for later use
     localStorage.setItem('selectedUserType', userType);
-    window.location.href = '/api/login';
+    setShowUserTypeModal(false);
+    
+    // Redirect to authentication with a small delay to ensure modal closes
+    setTimeout(() => {
+      window.location.href = '/api/login';
+    }, 100);
   };
 
   return (
