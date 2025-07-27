@@ -13,6 +13,8 @@ import StylistDashboard from "@/pages/stylist-dashboard";
 import SearchStylists from "@/pages/search-stylists";
 import Checkout from "@/pages/checkout";
 import ReferEarn from "@/pages/refer-earn";
+import StylistOnboarding from "@/pages/stylist-onboarding";
+import Earnings from "@/pages/earnings";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -28,6 +30,8 @@ function Router() {
       <Route path="/search-stylists" component={SearchStylists} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/refer-earn" component={ReferEarn} />
+      <Route path="/stylist-onboarding" component={StylistOnboarding} />
+      <Route path="/earnings" component={Earnings} />
       <Route component={NotFound} />
     </Switch>
   );

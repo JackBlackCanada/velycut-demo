@@ -8,12 +8,14 @@ import { Calendar, MapPin, Star, Clock, DollarSign, Settings, TrendingUp } from 
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useLocation } from "wouter";
 // Using simple text logo for now
 
 export default function StylistDashboard() {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, navigate] = useLocation();
 
   const { data: bookings, isLoading } = useQuery({
     queryKey: ["/api/stylist/bookings"],
@@ -83,7 +85,10 @@ export default function StylistDashboard() {
       <div className="app-content">
         {/* Stats Cards - Matches Dashboard Mockup */}
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="metric-card">
+          <div 
+            className="metric-card cursor-pointer active:scale-95 transition-transform"
+            onClick={() => navigate('/earnings')}
+          >
             <div className="metric-value">${stats?.totalEarnings || 0}</div>
             <div className="metric-label">Earnings</div>
           </div>
@@ -91,6 +96,30 @@ export default function StylistDashboard() {
             <div className="metric-value">{stats?.weeklyBookings || 0}</div>
             <div className="metric-label">This Week</div>
             <div className="text-xs text-gray-500 mt-1">appointments</div>
+          </div>
+        </div>
+
+        {/* Payout Setup Alert */}
+        <div className="ios-card mb-6 border-yellow-200 bg-yellow-50">
+          <div className="ios-card-content">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <DollarSign className="w-5 h-5 text-yellow-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-yellow-800">Set up payouts</h3>
+                  <p className="text-sm text-yellow-700">Complete your account to receive earnings directly</p>
+                </div>
+              </div>
+              <Button 
+                onClick={() => navigate('/stylist-onboarding')}
+                size="sm"
+                className="bg-yellow-600 hover:bg-yellow-700"
+              >
+                Setup
+              </Button>
+            </div>
           </div>
         </div>
 

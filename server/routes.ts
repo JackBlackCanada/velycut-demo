@@ -286,6 +286,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Stripe Connect routes for stylist payouts
+  app.post('/api/stylist/create-stripe-account', async (req, res) => {
+    try {
+      // For demo purposes, simulate account creation
+      // In production, this would create a real Stripe Connect account
+      const mockAccount = {
+        id: 'acct_demo_' + Math.random().toString(36).substr(2, 9),
+        status: 'pending'
+      };
+
+      const accountLinkUrl = `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=demo&state=demo&scope=read_write`;
+
+      res.json({
+        accountId: mockAccount.id,
+        accountLinkUrl: accountLinkUrl,
+        status: 'pending'
+      });
+    } catch (error: any) {
+      res.status(500).json({ message: 'Failed to create Stripe account: ' + error.message });
+    }
+  });
+
+  app.get('/api/stylist/stripe-status', async (req, res) => {
+    try {
+      // For demo purposes, return mock status
+      // In production, this would check actual Stripe account status
+      const mockStatus = {
+        status: 'pending',
+        onboardingCompleted: false,
+        accountLinkUrl: 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=demo&state=demo&scope=read_write'
+      };
+
+      res.json(mockStatus);
+    } catch (error: any) {
+      res.status(500).json({ message: 'Failed to get Stripe status: ' + error.message });
+    }
+  });
+
+  app.post('/api/stylist/refresh-stripe-status', async (req, res) => {
+    try {
+      // For demo purposes, simulate status refresh
+      // In production, this would refresh actual Stripe account status
+      res.json({ message: 'Status refreshed successfully' });
+    } catch (error: any) {
+      res.status(500).json({ message: 'Failed to refresh status: ' + error.message });
+    }
+  });
+
+  app.get('/api/stylist/earnings', async (req, res) => {
+    try {
+      // For demo purposes, return mock earnings data
+      const mockEarnings = {
+        totalEarnings: 1250.75,
+        thisMonth: 485.50,
+        pendingPayouts: 125.00,
+        completedBookings: 23,
+        recentPayouts: [
+          {
+            id: '1',
+            amount: 85.00,
+            date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'completed',
+            bookingId: 'booking_1'
+          },
+          {
+            id: '2', 
+            amount: 125.50,
+            date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'completed',
+            bookingId: 'booking_2'
+          },
+          {
+            id: '3',
+            amount: 67.25,
+            date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+            status: 'pending',
+            bookingId: 'booking_3'
+          }
+        ]
+      };
+
+      res.json(mockEarnings);
+    } catch (error: any) {
+      res.status(500).json({ message: 'Failed to get earnings: ' + error.message });
+    }
+  });
+
   // Stripe payment routes
   if (stripe) {
     app.post("/api/create-payment-intent", isAuthenticated, async (req, res) => {

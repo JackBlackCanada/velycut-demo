@@ -32,6 +32,8 @@ export const users = pgTable("users", {
   totalEarnings: decimal("total_earnings", { precision: 10, scale: 2 }).default("0.00"),
   stripeCustomerId: varchar("stripe_customer_id"),
   stripeAccountId: varchar("stripe_account_id"),
+  stripeAccountStatus: varchar("stripe_account_status").default("pending"), // pending, active, restricted, inactive
+  stripeOnboardingCompleted: boolean("stripe_onboarding_completed").default(false),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -62,6 +64,9 @@ export const bookings = pgTable("bookings", {
   clientPhone: varchar("client_phone"),
   specialRequests: text("special_requests"),
   paymentIntentId: varchar("payment_intent_id"),
+  stripeTransferStatus: varchar("stripe_transfer_status").default("pending"), // pending, completed, failed
+  stylistPayout: decimal("stylist_payout", { precision: 8, scale: 2 }),
+  platformFee: decimal("platform_fee", { precision: 8, scale: 2 }),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
