@@ -375,21 +375,47 @@ export default function BookService() {
 
           {/* Map View Toggle */}
           <div className="flex space-x-2 mb-4">
-            <Button variant="default" size="sm" className="flex-1">
+            <Button 
+              variant={viewMode === 'list' ? 'default' : 'outline'} 
+              size="sm" 
+              className="flex-1"
+              onClick={() => setViewMode('list')}
+            >
               List View
             </Button>
-            <Button variant="outline" size="sm" className="flex-1">
+            <Button 
+              variant={viewMode === 'map' ? 'default' : 'outline'} 
+              size="sm" 
+              className="flex-1"
+              onClick={() => setViewMode('map')}
+            >
               Map View
             </Button>
           </div>
 
-          {/* Stylists List */}
-          <div className="space-y-4">
-            {availableStylists?.sort((a, b) => {
-              if (sortBy === 'price') return a.price - b.price;
-              if (sortBy === 'rating') return b.rating - a.rating;
-              return parseFloat(a.distance) - parseFloat(b.distance);
-            })?.map((stylist) => (
+          {/* Map View */}
+          {viewMode === 'map' && availableStylists && (
+            <MapView 
+              stylists={availableStylists.sort((a, b) => {
+                if (sortBy === 'price') return a.price - b.price;
+                if (sortBy === 'rating') return b.rating - a.rating;
+                return parseFloat(a.distance) - parseFloat(b.distance);
+              })} 
+              onStylistSelect={(stylist) => {
+                setSelectedStylist(stylist);
+                setStep('confirm');
+              }} 
+            />
+          )}
+
+          {/* List View */}
+          {viewMode === 'list' && (
+            <div className="space-y-4">
+              {availableStylists?.sort((a, b) => {
+                if (sortBy === 'price') return a.price - b.price;
+                if (sortBy === 'rating') return b.rating - a.rating;
+                return parseFloat(a.distance) - parseFloat(b.distance);
+              })?.map((stylist) => (
               <Card 
                 key={stylist.id}
                 className="cursor-pointer active:scale-95 transition-transform"
@@ -448,7 +474,8 @@ export default function BookService() {
                 </CardContent>
               </Card>
             ))}
-          </div>
+            </div>
+          )}
 
           {!availableStylists?.length && (
             <div className="text-center py-8">
