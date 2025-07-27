@@ -2,108 +2,269 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(20, 14.3%, 4.1%);
-  --muted: hsl(60, 4.8%, 95.9%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(20, 14.3%, 4.1%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(20, 14.3%, 4.1%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(324, 84%, 60%);
-  --secondary-foreground: hsl(60, 9.1%, 97.8%);
-  --accent: hsl(146, 84%, 52%);
-  --accent-foreground: hsl(24, 9.8%, 10%);
-  --destructive: hsl(0, 84.2%, 60.2%);
-  --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
-  --radius: 0.5rem;
-}
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262 100% 55%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262 100% 55%;
+    --radius: 0.75rem;
+  }
 
-.dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(324, 84%, 60%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(146, 84%, 52%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
-  --radius: 0.5rem;
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 40% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 262 100% 55%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 262 100% 55%;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
-  /* Mobile-first responsive improvements */
-  .mobile-container {
-    @apply px-4 sm:px-6 lg:px-8;
-  }
-  
-  .mobile-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6;
-  }
-  
-  /* Smooth animations */
-  .smooth-transition {
-    @apply transition-all duration-300 ease-in-out;
-  }
-  
-  /* Glass morphism effects */
-  .glass-card {
-    @apply backdrop-blur-sm bg-white/90 border border-white/20 shadow-lg dark:bg-gray-900/90 dark:border-gray-700/20;
-  }
-  
-  /* Enhanced button styles */
-  .btn-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 smooth-transition;
-  }
-  
-  /* Loading skeleton animations */
-  @keyframes skeleton-loading {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
-  }
-  
-  .skeleton {
-    @apply bg-gray-200 dark:bg-gray-700 rounded animate-pulse;
-    animation: skeleton-loading 2s ease-in-out infinite;
-  }
-  
-  /* Custom scrollbar */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-gray-800 rounded-full;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-primary/60 rounded-full hover:bg-primary/80;
-  }
+}
+
+/* Apple-Style Mobile App Design */
+.app-container {
+  @apply max-w-sm mx-auto bg-white dark:bg-gray-900 min-h-screen;
+}
+
+.app-header {
+  @apply bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3 sticky top-0 z-50;
+}
+
+.app-content {
+  @apply px-4 py-6 space-y-6;
+}
+
+/* iOS-Style Cards */
+.ios-card {
+  @apply bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden;
+}
+
+.ios-card-content {
+  @apply p-4;
+}
+
+.ios-list-item {
+  @apply flex items-center p-4 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 last:border-b-0;
+}
+
+/* Apple-Style Buttons */
+.btn-primary {
+  @apply bg-purple-600 hover:bg-purple-700 text-white font-semibold py-4 px-6 rounded-2xl shadow-sm active:scale-95 transition-all duration-150;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 font-semibold py-3 px-5 rounded-xl transition-all duration-150 active:scale-95;
+}
+
+.btn-ghost {
+  @apply text-purple-600 dark:text-purple-400 font-medium py-2 px-3 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all duration-150;
+}
+
+/* Typography - Apple Style */
+.text-title-large {
+  @apply text-3xl font-bold text-gray-900 dark:text-white tracking-tight;
+}
+
+.text-title {
+  @apply text-2xl font-bold text-gray-900 dark:text-white;
+}
+
+.text-headline {
+  @apply text-xl font-semibold text-gray-900 dark:text-white;
+}
+
+.text-body {
+  @apply text-base text-gray-700 dark:text-gray-300 leading-relaxed;
+}
+
+.text-caption {
+  @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+/* Status Indicators */
+.status-online {
+  @apply w-3 h-3 bg-green-500 rounded-full;
+}
+
+.status-offline {
+  @apply w-3 h-3 bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+/* Rating Stars */
+.rating-star {
+  @apply w-4 h-4 text-yellow-400 fill-current;
+}
+
+.rating-star-empty {
+  @apply w-4 h-4 text-gray-300 dark:text-gray-600 fill-current;
+}
+
+/* Service Selection */
+.service-option {
+  @apply ios-card p-4 mb-3 cursor-pointer transition-all duration-150 hover:shadow-md active:scale-95;
+}
+
+.service-option.selected {
+  @apply ring-2 ring-purple-600 shadow-lg;
+}
+
+/* Profile Images */
+.profile-avatar {
+  @apply w-12 h-12 rounded-full object-cover;
+}
+
+.profile-avatar-large {
+  @apply w-20 h-20 rounded-full object-cover;
+}
+
+/* Input Fields - iOS Style */
+.ios-input {
+  @apply w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-150;
+}
+
+/* Navigation */
+.tab-bar {
+  @apply fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-gray-200/50 dark:border-gray-800/50 px-4 py-2;
+}
+
+.tab-item {
+  @apply flex flex-col items-center justify-center p-2 rounded-lg min-w-0 flex-1;
+}
+
+.tab-item.active {
+  @apply text-purple-600 dark:text-purple-400;
+}
+
+.tab-item.inactive {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+/* Loading States */
+.skeleton {
+  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded-xl;
+}
+
+.skeleton-text {
+  @apply skeleton h-4 mb-2;
+}
+
+.skeleton-title {
+  @apply skeleton h-6 mb-3;
+}
+
+.skeleton-avatar {
+  @apply skeleton w-12 h-12 rounded-full;
+}
+
+/* Booking Status */
+.status-pending {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400;
+}
+
+.status-confirmed {
+  @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400;
+}
+
+.status-completed {
+  @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400;
+}
+
+.status-cancelled {
+  @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400;
+}
+
+/* Search */
+.search-container {
+  @apply relative mb-6;
+}
+
+.search-input {
+  @apply ios-input pl-10;
+}
+
+.search-icon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400;
+}
+
+/* Metrics Cards */
+.metric-card {
+  @apply ios-card p-4 text-center;
+}
+
+.metric-value {
+  @apply text-2xl font-bold text-gray-900 dark:text-white;
+}
+
+.metric-label {
+  @apply text-sm text-gray-500 dark:text-gray-400 mt-1;
+}
+
+/* Safe Areas for Mobile */
+.safe-top {
+  @apply pt-4;
+}
+
+.safe-bottom {
+  @apply pb-4;
+}
+
+/* Smooth Transitions */
+.smooth-transition {
+  @apply transition-all duration-200 ease-out;
+}
+
+/* Custom Shadows - Subtle iOS Style */
+.card-shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.elevated-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo Styles */
+.logo {
+  @apply h-8 w-auto;
+}
+
+.logo-large {
+  @apply h-16 w-auto;
 }

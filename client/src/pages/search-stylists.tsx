@@ -2,25 +2,19 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, MapPin, Star, Clock, DollarSign, Filter, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Star, MapPin } from "lucide-react";
 import BookingModal from "@/components/booking-modal";
-import { StylistCardSkeleton } from "@/components/loading-skeleton";
+import logoPath from "@assets/logo_1753651837767.png";
 
 export default function SearchStylists() {
   const [, navigate] = useLocation();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [selectedSpecialization, setSelectedSpecialization] = useState("");
-  const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedStylist, setSelectedStylist] = useState<any>(null);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   const { data: stylists, isLoading } = useQuery({
-    queryKey: ["/api/stylists", selectedLocation, selectedSpecialization],
+    queryKey: ["/api/stylists"],
   });
 
   const handleBookStylist = (stylist: any) => {
@@ -28,189 +22,125 @@ export default function SearchStylists() {
     setShowBookingModal(true);
   };
 
-  const filteredStylists = stylists?.filter((stylist: any) => {
-    if (!searchQuery) return true;
-    const query = searchQuery.toLowerCase();
+  if (isLoading) {
     return (
-      stylist.firstName?.toLowerCase().includes(query) ||
-      stylist.lastName?.toLowerCase().includes(query) ||
-      stylist.specializations?.some((spec: string) => spec.toLowerCase().includes(query)) ||
-      stylist.bio?.toLowerCase().includes(query)
+      <div className="app-container">
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+        </div>
+      </div>
     );
-  }) || [];
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Search Header */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center space-x-4">
+    <div className="app-container">
+      {/* Header - Matches "Book a Haircut" Mockup */}
+      <div className="app-header">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
             <Button 
               variant="ghost" 
-              size="sm"
-              onClick={() => navigate(-1)}
+              size="icon"
+              onClick={() => navigate('/')}
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-5 h-5" />
             </Button>
-            <div className="flex-1">
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Search stylists, services, or locations"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-                <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <h1 className="text-title">Book a Haircut</h1>
+          </div>
+          <Button variant="ghost" className="text-blue-500 font-medium">
+            Back
+          </Button>
+        </div>
+      </div>
+
+      <div className="app-content">
+        {/* Time Selection - Matches Mockup */}
+        <div className="ios-card mb-6">
+          <div className="ios-card-content">
+            <div className="flex items-center space-x-4">
+              <Avatar className="w-12 h-12">
+                <AvatarImage src="https://images.unsplash.com/photo-1594736797933-d0d4519d8e0a?w=100&h=100&fit=crop&crop=face" />
+                <AvatarFallback>YU</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="text-headline mb-1">Today</h3>
+                <p className="text-2xl font-bold text-gray-900">2:00 PM</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Filters */}
-      <div className="bg-gray-50 border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-wrap gap-3">
-            <Button 
-              variant={!selectedSpecialization ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedSpecialization("")}
-            >
-              All Services
-            </Button>
-            <Button 
-              variant={selectedLocation ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedLocation(selectedLocation ? "" : "nearby")}
-            >
-              Nearby
-            </Button>
-            <Button 
-              variant={selectedSpecialization === "available" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedSpecialization(selectedSpecialization === "available" ? "" : "available")}
-            >
-              Available Today
-            </Button>
-            <Button 
-              variant={selectedSpecialization === "top-rated" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedSpecialization(selectedSpecialization === "top-rated" ? "" : "top-rated")}
-            >
-              Top Rated
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Stylist Results */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <p className="text-gray-600">
-            Showing <span className="font-semibold">{filteredStylists.length}</span> stylists
-            {selectedLocation && " near you"}
-          </p>
-        </div>
-        
-        {isLoading ? (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {filteredStylists.map((stylist: any) => (
-              <Card key={stylist.id} className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex flex-col md:flex-row gap-6">
-                    <div className="flex-shrink-0">
-                      <Avatar className="w-32 h-32">
-                        <AvatarImage src={stylist.profileImageUrl || ''} />
-                        <AvatarFallback className="text-2xl">
-                          {stylist.firstName?.[0]}{stylist.lastName?.[0]}
-                        </AvatarFallback>
-                      </Avatar>
-                    </div>
-                    
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-xl font-semibold text-gray-900">
-                            {stylist.firstName} {stylist.lastName}
-                          </h3>
-                          <div className="flex items-center mt-1">
-                            <div className="flex text-yellow-400">
-                              {[1,2,3,4,5].map(star => (
-                                <i key={star} className={`fas fa-star ${parseFloat(stylist.rating) >= star ? '' : 'text-gray-300'}`}></i>
-                              ))}
-                            </div>
-                            <span className="text-gray-600 ml-1">
-                              {stylist.rating} ({stylist.totalReviews} reviews)
-                            </span>
-                          </div>
-                          <p className="text-gray-600 mt-1">{stylist.serviceArea}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-lg font-semibold text-gray-900">From $45</p>
-                          {stylist.isAvailable && (
-                            <Badge className="bg-accent text-white">
-                              Available Today
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                      
-                      <p className="text-gray-600 mb-4">
-                        {stylist.bio || "Professional stylist with years of experience."}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {stylist.specializations?.map((spec: string) => (
-                          <Badge key={spec} variant="secondary">
-                            {spec}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      <div className="flex gap-3">
-                        <Button 
-                          variant="outline"
-                          className="flex-1"
-                          onClick={() => {/* TODO: Navigate to profile */}}
-                        >
-                          View Profile
-                        </Button>
-                        <Button 
-                          className="flex-1"
-                          onClick={() => handleBookStylist(stylist)}
-                        >
-                          Book Now
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-            
-            {filteredStylists.length === 0 && !isLoading && (
-              <div className="text-center py-12">
-                <i className="fas fa-search text-4xl text-gray-300 mb-4"></i>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">No stylists found</h4>
-                <p className="text-gray-600">Try adjusting your search criteria or location</p>
+        {/* Available Stylists List - Matches "Book a Haircut" Mockup */}
+        <div className="space-y-4">
+          {/* Sample Stylists matching mockup */}
+          {[
+            { name: "Sarah", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=100&h=100&fit=crop&crop=face" },
+            { name: "James", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" },
+            { name: "Emily", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face" },
+            { name: "Daniel", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" }
+          ].map((stylist, index) => (
+            <div key={index} className="ios-list-item">
+              <Avatar className="w-12 h-12 mr-4">
+                <AvatarImage src={stylist.avatar} />
+                <AvatarFallback>{stylist.name[0]}</AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <h3 className="text-headline">{stylist.name}</h3>
+                <p className="text-body">{stylist.title}</p>
               </div>
-            )}
+            </div>
+          ))}
+        </div>
+
+        {/* Dynamic Stylists from API */}
+        {stylists?.map((stylist: any) => (
+          <div key={stylist.id} className="ios-list-item cursor-pointer" onClick={() => handleBookStylist(stylist)}>
+            <Avatar className="w-12 h-12 mr-4">
+              <AvatarImage src={stylist.profileImageUrl} />
+              <AvatarFallback>
+                {stylist.firstName?.[0]}{stylist.lastName?.[0]}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="text-headline">
+                  {stylist.firstName} {stylist.lastName}
+                </h3>
+                <div className="flex items-center">
+                  <Star className="w-4 h-4 text-yellow-400 mr-1" />
+                  <span className="text-sm font-semibold">{stylist.averageRating || '4.9'}</span>
+                  <span className="text-caption ml-1">({stylist.reviewCount || '4.9'})</span>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <p className="text-body">{stylist.bio || 'Experienced stylist'}</p>
+                <div className="flex items-center text-caption">
+                  <MapPin className="w-3 h-3 mr-1" />
+                  <span>{stylist.location || 'Nearby'}</span>
+                </div>
+              </div>
+            </div>
           </div>
-        )}
+        ))}
+      </div>
+
+      {/* Bottom Button - Matches Mockup */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
+        <div className="app-container max-w-sm mx-auto">
+          <Button 
+            onClick={() => setShowBookingModal(true)}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 rounded-2xl font-semibold text-lg"
+          >
+            Book Now
+          </Button>
+        </div>
       </div>
 
       {/* Booking Modal */}
       <BookingModal 
         open={showBookingModal}
-        onClose={() => {
-          setShowBookingModal(false);
-          setSelectedStylist(null);
-        }}
+        onClose={() => setShowBookingModal(false)}
         stylist={selectedStylist}
       />
     </div>

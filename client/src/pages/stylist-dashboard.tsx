@@ -1,372 +1,236 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useLocation } from "wouter";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
+import { Calendar, MapPin, Star, Clock, DollarSign, Settings, TrendingUp } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
+import logoPath from "@assets/logo_1753651837767.png";
 
 export default function StylistDashboard() {
-  const { user, isLoading, isAuthenticated } = useAuth();
-  const [, navigate] = useLocation();
+  const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: bookings, isLoading: bookingsLoading } = useQuery({
-    queryKey: ["/api/bookings/user"],
-    enabled: isAuthenticated && user?.userType === 'stylist',
+  const { data: bookings, isLoading } = useQuery({
+    queryKey: ["/api/stylist/bookings"],
   });
 
-  const availabilityMutation = useMutation({
-    mutationFn: async (isAvailable: boolean) => {
-      return await apiRequest("PATCH", "/api/stylists/availability", { isAvailable });
+  const { data: stats } = useQuery({
+    queryKey: ["/api/stylist/stats"],
+  });
+
+  const toggleAvailabilityMutation = useMutation({
+    mutationFn: async (available: boolean) => {
+      await apiRequest("PATCH", "/api/stylist/availability", { available });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
-      toast({
-        title: "Availability Updated",
-        description: "Your availability has been updated successfully.",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: "Failed to update availability. Please try again.",
-        variant: "destructive",
-      });
+      queryClient.invalidateQueries({ queryKey: ["/api/stylist/stats"] });
+      toast({ title: "Availability updated" });
     },
   });
 
-  const bookingStatusMutation = useMutation({
-    mutationFn: async ({ bookingId, status }: { bookingId: string; status: string }) => {
-      return await apiRequest("PATCH", `/api/bookings/${bookingId}/status`, { status });
+  const handleBookingAction = useMutation({
+    mutationFn: async ({ bookingId, action }: { bookingId: string; action: 'accept' | 'reject' }) => {
+      await apiRequest("PATCH", `/api/bookings/${bookingId}`, { 
+        status: action === 'accept' ? 'confirmed' : 'cancelled' 
+      });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/bookings/user"] });
-      toast({
-        title: "Booking Updated",
-        description: "Booking status has been updated successfully.",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: "Failed to update booking status. Please try again.",
-        variant: "destructive",
-      });
+      queryClient.invalidateQueries({ queryKey: ["/api/stylist/bookings"] });
+      toast({ title: "Booking updated" });
     },
   });
 
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      toast({
-        title: "Unauthorized",
-        description: "You are logged out. Logging in again...",
-        variant: "destructive",
-      });
-      setTimeout(() => {
-        window.location.href = "/api/login";
-      }, 500);
-      return;
-    }
+  const pendingBookings = bookings?.filter((b: any) => b.status === 'pending') || [];
+  const upcomingBookings = bookings?.filter((b: any) => b.status === 'confirmed') || [];
 
-    if (user && user.userType !== 'stylist') {
-      navigate('/client-dashboard');
-    }
-  }, [user, isLoading, isAuthenticated, navigate, toast]);
-
-  const handleAvailabilityToggle = (isAvailable: boolean) => {
-    availabilityMutation.mutate(isAvailable);
-  };
-
-  const handleBookingAction = (bookingId: string, status: string) => {
-    bookingStatusMutation.mutate({ bookingId, status });
-  };
-
-  const getStatusBadge = (status: string) => {
-    const statusConfig = {
-      pending: { variant: "secondary", label: "Pending" },
-      confirmed: { variant: "default", label: "Confirmed" },
-      in_progress: { variant: "default", label: "In Progress" },
-      completed: { variant: "outline", label: "Completed" },
-      cancelled: { variant: "destructive", label: "Cancelled" },
-    };
-    
-    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
-    return <Badge variant={config.variant as any}>{config.label}</Badge>;
-  };
-
-  const todayBookings = bookings?.filter((booking: any) => {
-    const today = new Date();
-    const bookingDate = new Date(booking.scheduledAt);
-    return bookingDate.toDateString() === today.toDateString();
-  }) || [];
-
-  const completedBookings = bookings?.filter((booking: any) => booking.status === 'completed') || [];
-  const totalEarnings = completedBookings.reduce((sum: number, booking: any) => sum + parseFloat(booking.totalAmount), 0);
-
-  if (isLoading || bookingsLoading) {
+  if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="app-container">
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Dashboard Header */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900">
-                {user?.firstName}'s Dashboard
-              </h2>
-              <p className="text-sm text-gray-600">Professional Stylist</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm font-medium text-gray-900">
-                  ${totalEarnings.toFixed(2)} total
-                </p>
-                <p className="text-xs text-gray-600">
-                  {completedBookings.length} completed
-                </p>
-              </div>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => window.location.href = '/api/logout'}
-              >
-                Sign Out
-              </Button>
-              <Avatar>
-                <AvatarImage src={user?.profileImageUrl || ''} />
-                <AvatarFallback>{user?.firstName?.[0] || 'U'}</AvatarFallback>
-              </Avatar>
+    <div className="app-container">
+      {/* Header - Matches Dashboard Mockup */}
+      <div className="app-header">
+        <div className="flex items-center justify-between">
+          <h1 className="text-title">Dashboard</h1>
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
+              <span className="text-caption">Availability</span>
+              <Switch
+                checked={stats?.isAvailable || false}
+                onCheckedChange={(checked) => toggleAvailabilityMutation.mutate(checked)}
+                className="data-[state=checked]:bg-purple-600"
+              />
+              <span className="text-caption">
+                {stats?.isAvailable ? 'On' : 'Off'}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Quick Stats */}
-      <div className="bg-gradient-to-r from-secondary to-pink-500 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white bg-opacity-20 rounded-xl p-4 text-center">
-              <p className="text-2xl font-bold text-white">${totalEarnings.toFixed(0)}</p>
-              <p className="text-pink-100 text-sm">Total Earned</p>
-            </div>
-            <div className="bg-white bg-opacity-20 rounded-xl p-4 text-center">
-              <p className="text-2xl font-bold text-white">{user?.rating || "0.0"}</p>
-              <p className="text-pink-100 text-sm">Rating</p>
-            </div>
-            <div className="bg-white bg-opacity-20 rounded-xl p-4 text-center">
-              <p className="text-2xl font-bold text-white">{completedBookings.length}</p>
-              <p className="text-pink-100 text-sm">Completed</p>
-            </div>
-            <div className="bg-white bg-opacity-20 rounded-xl p-4 text-center">
-              <p className="text-2xl font-bold text-white">{user?.totalReviews || 0}</p>
-              <p className="text-pink-100 text-sm">Reviews</p>
-            </div>
+      <div className="app-content">
+        {/* Stats Cards - Matches Dashboard Mockup */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="metric-card">
+            <div className="metric-value">${stats?.totalEarnings || 0}</div>
+            <div className="metric-label">Earnings</div>
+          </div>
+          <div className="metric-card">
+            <div className="metric-value">{stats?.weeklyBookings || 0}</div>
+            <div className="metric-label">This Week</div>
+            <div className="text-xs text-gray-500 mt-1">appointments</div>
           </div>
         </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Today's Schedule */}
-          <div className="lg:col-span-2">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xl font-semibold text-gray-900">Today's Schedule</h3>
-                  <span className="text-sm text-gray-600">
-                    {new Date().toLocaleDateString()}
-                  </span>
-                </div>
-                
-                <div className="space-y-4">
-                  {todayBookings.length > 0 ? (
-                    todayBookings.map((booking: any) => (
-                      <div key={booking.id} className={`flex items-center p-4 rounded-xl border-l-4 ${
-                        booking.status === 'in_progress' ? 'border-accent bg-green-50' :
-                        booking.status === 'confirmed' ? 'border-primary bg-blue-50' :
-                        'border-gray-300 bg-gray-50'
-                      }`}>
-                        <Avatar className="w-16 h-16 mr-4">
-                          <AvatarImage src={booking.client?.profileImageUrl || ''} />
-                          <AvatarFallback>
-                            {booking.client?.firstName?.[0]}{booking.client?.lastName?.[0]}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <h4 className="font-semibold text-gray-900">
-                              {booking.client?.firstName} {booking.client?.lastName}
-                            </h4>
-                            {getStatusBadge(booking.status)}
-                          </div>
-                          <p className="text-gray-600 text-sm">{booking.service?.name}</p>
-                          <p className="text-gray-500 text-sm">
-                            {new Date(booking.scheduledAt).toLocaleTimeString()} • {booking.duration}min
-                          </p>
-                          <p className="text-gray-500 text-sm">{booking.clientAddress}</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-primary">${booking.totalAmount}</p>
-                          {booking.status === 'pending' && (
-                            <div className="flex gap-2 mt-1">
-                              <Button 
-                                size="sm" 
-                                variant="outline"
-                                onClick={() => handleBookingAction(booking.id, 'confirmed')}
-                              >
-                                Accept
-                              </Button>
-                              <Button 
-                                size="sm" 
-                                variant="destructive"
-                                onClick={() => handleBookingAction(booking.id, 'cancelled')}
-                              >
-                                Decline
-                              </Button>
-                            </div>
-                          )}
-                          {booking.status === 'confirmed' && (
-                            <Button 
-                              size="sm"
-                              onClick={() => handleBookingAction(booking.id, 'in_progress')}
-                            >
-                              Start
-                            </Button>
-                          )}
-                          {booking.status === 'in_progress' && (
-                            <Button 
-                              size="sm"
-                              onClick={() => handleBookingAction(booking.id, 'completed')}
-                            >
-                              Complete
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-12">
-                      <i className="fas fa-calendar-day text-4xl text-gray-300 mb-4"></i>
-                      <h4 className="text-lg font-semibold text-gray-900 mb-2">No appointments today</h4>
-                      <p className="text-gray-600">Your schedule is clear for today</p>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Availability Toggle */}
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Availability</h3>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-700">Available for bookings</span>
-                  <Switch 
-                    checked={user?.isAvailable ?? true}
-                    onCheckedChange={handleAvailabilityToggle}
-                    disabled={availabilityMutation.isPending}
-                  />
-                </div>
-                <p className="text-sm text-gray-600 mt-2">
-                  {user?.isAvailable 
-                    ? "Currently accepting new bookings" 
-                    : "Not accepting new bookings"
-                  }
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Booking Requests */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Pending Requests</h3>
-                  <Badge variant="secondary">
-                    {bookings?.filter((b: any) => b.status === 'pending').length || 0}
-                  </Badge>
-                </div>
-                
-                {bookings?.filter((b: any) => b.status === 'pending').length > 0 ? (
-                  <div className="space-y-3">
-                    {bookings.filter((b: any) => b.status === 'pending').slice(0, 3).map((booking: any) => (
-                      <div key={booking.id} className="p-3 border border-gray-200 rounded-xl">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-sm">
-                            {booking.client?.firstName} {booking.client?.lastName}
-                          </span>
-                          <span className="text-xs text-gray-500">
-                            {new Date(booking.createdAt).toLocaleDateString()}
-                          </span>
-                        </div>
-                        <p className="text-sm text-gray-600">{booking.service?.name}</p>
-                        <p className="text-sm font-semibold text-secondary">${booking.totalAmount}</p>
-                        <div className="flex gap-2 mt-2">
-                          <Button 
-                            size="sm" 
-                            className="flex-1 bg-accent text-white text-xs"
-                            onClick={() => handleBookingAction(booking.id, 'confirmed')}
+        {/* Pending Bookings */}
+        {pendingBookings.length > 0 && (
+          <div className="mb-6">
+            <h2 className="text-headline mb-4">Upcoming Appointments</h2>
+            <div className="space-y-3">
+              {pendingBookings.map((booking: any) => (
+                <div key={booking.id} className="ios-card">
+                  <div className="ios-card-content">
+                    <div className="flex items-center space-x-4">
+                      <Avatar className="w-12 h-12">
+                        <AvatarImage src={booking.client?.profileImageUrl} />
+                        <AvatarFallback>
+                          {booking.client?.firstName?.[0]}{booking.client?.lastName?.[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                      
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-1">
+                          <h3 className="text-headline">
+                            {booking.client?.firstName || 'Mia'}
+                          </h3>
+                          <Button
+                            size="sm"
+                            onClick={() => handleBookingAction.mutate({ 
+                              bookingId: booking.id, 
+                              action: 'accept' 
+                            })}
+                            className="btn-secondary text-xs px-3 py-1"
                           >
                             Accept
                           </Button>
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="flex-1 text-xs"
-                            onClick={() => handleBookingAction(booking.id, 'cancelled')}
-                          >
-                            Decline
-                          </Button>
+                        </div>
+                        
+                        <div className="flex items-center text-caption">
+                          <Clock className="w-3 h-3 mr-1" />
+                          {new Date(booking.scheduledAt).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })} AM
                         </div>
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-sm text-gray-600">No pending requests</p>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Recent Reviews */}
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Reviews</h3>
-                <div className="space-y-4">
-                  <div className="border-b border-gray-100 pb-3">
-                    <div className="flex items-center mb-2">
-                      <div className="flex text-yellow-400 text-sm">
-                        {[1,2,3,4,5].map(star => (
-                          <i key={star} className="fas fa-star"></i>
-                        ))}
-                      </div>
-                      <span className="text-gray-600 text-sm ml-2">Recent Client</span>
                     </div>
-                    <p className="text-sm text-gray-700">
-                      "Professional service and great results. Highly recommended!"
-                    </p>
                   </div>
-                  <Button variant="ghost" size="sm" className="w-full">
-                    View all reviews
-                  </Button>
                 </div>
-              </CardContent>
-            </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Today's Schedule */}
+        {upcomingBookings.length > 0 && (
+          <div className="mb-6">
+            <h2 className="text-headline mb-4">Today's Schedule</h2>
+            <div className="space-y-3">
+              {upcomingBookings.map((booking: any) => (
+                <div key={booking.id} className="ios-card">
+                  <div className="ios-card-content">
+                    <div className="flex items-center space-x-4">
+                      <Avatar className="w-12 h-12">
+                        <AvatarImage src={booking.client?.profileImageUrl} />
+                        <AvatarFallback>
+                          {booking.client?.firstName?.[0]}{booking.client?.lastName?.[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                      
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-1">
+                          <h3 className="text-headline">
+                            {booking.client?.firstName} {booking.client?.lastName}
+                          </h3>
+                          <Badge className="status-confirmed text-xs px-2 py-1 rounded-full">
+                            Confirmed
+                          </Badge>
+                        </div>
+                        
+                        <div className="flex items-center justify-between text-caption">
+                          <div className="flex items-center space-x-4">
+                            <div className="flex items-center">
+                              <Clock className="w-3 h-3 mr-1" />
+                              {new Date(booking.scheduledAt).toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </div>
+                            <div className="flex items-center">
+                              <MapPin className="w-3 h-3 mr-1" />
+                              {booking.clientAddress}
+                            </div>
+                          </div>
+                          <span className="font-semibold text-gray-900">
+                            ${booking.totalAmount}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {pendingBookings.length === 0 && upcomingBookings.length === 0 && (
+          <div className="text-center py-12">
+            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Calendar className="w-8 h-8 text-gray-400" />
+            </div>
+            <h3 className="text-headline mb-2">No appointments today</h3>
+            <p className="text-body mb-6">
+              Turn on availability to start receiving bookings
+            </p>
+            <Button 
+              onClick={() => toggleAvailabilityMutation.mutate(true)}
+              className="btn-primary"
+              disabled={stats?.isAvailable}
+            >
+              {stats?.isAvailable ? 'Already Available' : 'Go Online'}
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="tab-bar">
+        <div className="flex justify-around">
+          <div className="tab-item active">
+            <Calendar className="w-5 h-5 mb-1" />
+            <span className="text-xs">Appointments</span>
+          </div>
+          <div className="tab-item inactive">
+            <Clock className="w-5 h-5 mb-1" />
+            <span className="text-xs">Schedule</span>
+          </div>
+          <div className="tab-item inactive">
+            <DollarSign className="w-5 h-5 mb-1" />
+            <span className="text-xs">Earnings</span>
           </div>
         </div>
       </div>
