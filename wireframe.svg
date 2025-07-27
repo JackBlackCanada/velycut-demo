@@ -1,0 +1,224 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #333; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 12px; fill: #666; }
+      .text { font-family: Arial, sans-serif; font-size: 10px; fill: #333; }
+      .small-text { font-family: Arial, sans-serif; font-size: 9px; fill: #666; }
+      .screen { fill: #fff; stroke: #ddd; stroke-width: 2; rx: 8; }
+      .button { fill: #6366f1; stroke: none; rx: 6; }
+      .button-text { font-family: Arial, sans-serif; font-size: 10px; fill: white; text-anchor: middle; }
+      .card { fill: #f9fafb; stroke: #e5e7eb; stroke-width: 1; rx: 6; }
+      .flow-arrow { stroke: #6366f1; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .process-box { fill: #f0f4ff; stroke: #6366f1; stroke-width: 2; rx: 6; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="600" y="25" class="title" text-anchor="middle">VELY - Stripe Connect Payout System Wireframe</text>
+  
+  <!-- Stylist Dashboard Screen -->
+  <rect x="50" y="50" width="200" height="300" class="screen"/>
+  <text x="150" y="75" class="title" text-anchor="middle">Stylist Dashboard</text>
+  
+  <!-- Earnings Card -->
+  <rect x="70" y="90" width="80" height="60" class="card"/>
+  <text x="110" y="110" class="subtitle" text-anchor="middle">$1,247</text>
+  <text x="110" y="125" class="small-text" text-anchor="middle">Total Earnings</text>
+  <text x="110" y="140" class="small-text" text-anchor="middle">👆 Click to view</text>
+  
+  <!-- This Month Card -->
+  <rect x="160" y="90" width="80" height="60" class="card"/>
+  <text x="200" y="110" class="subtitle" text-anchor="middle">$485</text>
+  <text x="200" y="125" class="small-text" text-anchor="middle">This Month</text>
+  
+  <!-- Payout Setup Alert -->
+  <rect x="70" y="160" width="160" height="50" class="card" fill="#fef3c7"/>
+  <text x="150" y="175" class="text" text-anchor="middle">⚠️ Set up payouts</text>
+  <text x="150" y="190" class="small-text" text-anchor="middle">Complete account to receive earnings</text>
+  <rect x="180" y="195" width="50" height="20" class="button"/>
+  <text x="205" y="207" class="button-text">Setup</text>
+  
+  <!-- Upcoming Appointments -->
+  <text x="70" y="235" class="subtitle">Upcoming Appointments</text>
+  <rect x="70" y="245" width="160" height="40" class="card"/>
+  <circle cx="85" cy="265" r="12" fill="#e5e7eb"/>
+  <text x="110" y="260" class="text">Mia Johnson</text>
+  <text x="110" y="275" class="small-text">2:30 PM - Haircut & Style</text>
+  <rect x="190" y="255" width="35" height="20" class="button"/>
+  <text x="207" y="267" class="button-text">Accept</text>
+  
+  <!-- Flow Arrow 1 -->
+  <path d="M 250 200 L 300 200" class="flow-arrow"/>
+  
+  <!-- Payout Setup Screen -->
+  <rect x="320" y="50" width="200" height="300" class="screen"/>
+  <text x="420" y="75" class="title" text-anchor="middle">Payout Setup</text>
+  
+  <!-- Status Icon -->
+  <circle cx="420" cy="110" r="25" fill="#fbbf24"/>
+  <text x="420" y="115" class="title" text-anchor="middle">⏱️</text>
+  
+  <text x="420" y="150" class="subtitle" text-anchor="middle">Setup In Progress</text>
+  <text x="420" y="165" class="small-text" text-anchor="middle">Complete your account setup to</text>
+  <text x="420" y="175" class="small-text" text-anchor="middle">start receiving payments</text>
+  
+  <!-- Continue Setup Button -->
+  <rect x="370" y="190" width="100" height="25" class="button"/>
+  <text x="420" y="205" class="button-text">Continue Setup</text>
+  
+  <!-- How It Works -->
+  <text x="340" y="235" class="subtitle">How It Works</text>
+  <rect x="340" y="245" width="160" height="80" class="card"/>
+  <text x="350" y="260" class="small-text">1. Complete Service</text>
+  <text x="350" y="275" class="small-text">2. Platform Fee Deducted (15%)</text>
+  <text x="350" y="290" class="small-text">3. Direct Deposit (2 days)</text>
+  <text x="350" y="310" class="small-text">Requirements: ID, SSN, Bank Info</text>
+  
+  <!-- Flow Arrow 2 -->
+  <path d="M 520 200 L 570 200" class="flow-arrow"/>
+  
+  <!-- Earnings Dashboard -->
+  <rect x="590" y="50" width="200" height="300" class="screen"/>
+  <text x="690" y="75" class="title" text-anchor="middle">Earnings Dashboard</text>
+  
+  <!-- Time Filters -->
+  <rect x="610" y="85" width="40" height="20" class="button" fill="#e5e7eb"/>
+  <text x="630" y="97" class="small-text" text-anchor="middle">Week</text>
+  <rect x="655" y="85" width="40" height="20" class="button"/>
+  <text x="675" y="97" class="button-text">Month</text>
+  <rect x="700" y="85" width="40" height="20" class="button" fill="#e5e7eb"/>
+  <text x="720" y="97" class="small-text" text-anchor="middle">All</text>
+  
+  <!-- Earnings Cards -->
+  <rect x="610" y="115" width="70" height="50" class="card"/>
+  <text x="645" y="130" class="subtitle" text-anchor="middle">$1,250.75</text>
+  <text x="645" y="145" class="small-text" text-anchor="middle">Total Earnings</text>
+  <text x="645" y="155" class="small-text" text-anchor="middle">💚</text>
+  
+  <rect x="690" y="115" width="70" height="50" class="card"/>
+  <text x="725" y="130" class="subtitle" text-anchor="middle">$485.50</text>
+  <text x="725" y="145" class="small-text" text-anchor="middle">This Month</text>
+  <text x="725" y="155" class="small-text" text-anchor="middle">📈</text>
+  
+  <!-- Pending & Completed -->
+  <rect x="610" y="175" width="70" height="40" class="card"/>
+  <text x="645" y="190" class="text" text-anchor="middle">$125.00</text>
+  <text x="645" y="205" class="small-text" text-anchor="middle">Pending</text>
+  
+  <rect x="690" y="175" width="70" height="40" class="card"/>
+  <text x="725" y="190" class="text" text-anchor="middle">23</text>
+  <text x="725" y="205" class="small-text" text-anchor="middle">Completed</text>
+  
+  <!-- Recent Payouts -->
+  <text x="610" y="235" class="subtitle">Recent Payouts</text>
+  <rect x="610" y="245" width="150" height="60" class="card"/>
+  <text x="620" y="260" class="small-text">✅ $85.00 - Jan 25 (Paid)</text>
+  <text x="620" y="275" class="small-text">✅ $125.50 - Jan 22 (Paid)</text>
+  <text x="620" y="290" class="small-text">⏱️ $67.25 - Jan 20 (Pending)</text>
+  
+  <!-- Earnings Breakdown -->
+  <text x="610" y="320" class="subtitle">Breakdown</text>
+  <rect x="610" y="325" width="150" height="20" class="card"/>
+  <text x="620" y="338" class="small-text">Service: $100 - Fee: $15 = You: $85</text>
+  
+  <!-- System Architecture Section -->
+  <text x="600" y="390" class="title" text-anchor="middle">System Architecture</text>
+  
+  <!-- Database -->
+  <rect x="100" y="420" width="120" height="60" class="process-box"/>
+  <text x="160" y="440" class="subtitle" text-anchor="middle">PostgreSQL DB</text>
+  <text x="160" y="455" class="small-text" text-anchor="middle">• User profiles</text>
+  <text x="160" y="465" class="small-text" text-anchor="middle">• Stripe account IDs</text>
+  <text x="160" y="475" class="small-text" text-anchor="middle">• Payout history</text>
+  
+  <!-- Backend API -->
+  <rect x="300" y="420" width="120" height="60" class="process-box"/>
+  <text x="360" y="440" class="subtitle" text-anchor="middle">Express.js API</text>
+  <text x="360" y="455" class="small-text" text-anchor="middle">• /api/stylist/create-stripe-account</text>
+  <text x="360" y="465" class="small-text" text-anchor="middle">• /api/stylist/stripe-status</text>
+  <text x="360" y="475" class="small-text" text-anchor="middle">• /api/stylist/earnings</text>
+  
+  <!-- Stripe Connect -->
+  <rect x="500" y="420" width="120" height="60" class="process-box"/>
+  <text x="560" y="440" class="subtitle" text-anchor="middle">Stripe Connect</text>
+  <text x="560" y="455" class="small-text" text-anchor="middle">• Account creation</text>
+  <text x="560" y="465" class="small-text" text-anchor="middle">• KYC verification</text>
+  <text x="560" y="475" class="small-text" text-anchor="middle">• Automatic transfers</text>
+  
+  <!-- React Frontend -->
+  <rect x="700" y="420" width="120" height="60" class="process-box"/>
+  <text x="760" y="440" class="subtitle" text-anchor="middle">React Frontend</text>
+  <text x="760" y="455" class="small-text" text-anchor="middle">• Stylist onboarding</text>
+  <text x="760" y="465" class="small-text" text-anchor="middle">• Earnings dashboard</text>
+  <text x="760" y="475" class="small-text" text-anchor="middle">• Payout history</text>
+  
+  <!-- Flow Arrows for Architecture -->
+  <path d="M 220 450 L 300 450" class="flow-arrow"/>
+  <path d="M 420 450 L 500 450" class="flow-arrow"/>
+  <path d="M 620 450 L 700 450" class="flow-arrow"/>
+  
+  <!-- Payment Flow -->
+  <text x="600" y="520" class="title" text-anchor="middle">Payment Flow</text>
+  
+  <!-- Client Payment -->
+  <rect x="50" y="540" width="100" height="40" class="card" fill="#dcfce7"/>
+  <text x="100" y="555" class="text" text-anchor="middle">Client Pays</text>
+  <text x="100" y="570" class="small-text" text-anchor="middle">$100.00</text>
+  
+  <!-- Platform Fee -->
+  <rect x="200" y="540" width="100" height="40" class="card" fill="#fef3c7"/>
+  <text x="250" y="555" class="text" text-anchor="middle">Platform Fee</text>
+  <text x="250" y="570" class="small-text" text-anchor="middle">$15.00 (15%)</text>
+  
+  <!-- Stylist Payout -->
+  <rect x="350" y="540" width="100" height="40" class="card" fill="#dbeafe"/>
+  <text x="400" y="555" class="text" text-anchor="middle">Stylist Gets</text>
+  <text x="400" y="570" class="small-text" text-anchor="middle">$85.00 (85%)</text>
+  
+  <!-- Bank Transfer -->
+  <rect x="500" y="540" width="100" height="40" class="card" fill="#f3e8ff"/>
+  <text x="550" y="555" class="text" text-anchor="middle">Bank Transfer</text>
+  <text x="550" y="570" class="small-text" text-anchor="middle">2 business days</text>
+  
+  <!-- Payment Flow Arrows -->
+  <path d="M 150 560 L 200 560" class="flow-arrow"/>
+  <path d="M 300 560 L 350 560" class="flow-arrow"/>
+  <path d="M 450 560 L 500 560" class="flow-arrow"/>
+  
+  <!-- Key Features -->
+  <text x="600" y="620" class="title" text-anchor="middle">Key Features</text>
+  
+  <!-- Feature 1 -->
+  <rect x="100" y="640" width="180" height="30" class="card"/>
+  <text x="190" y="660" class="text" text-anchor="middle">✅ Automatic Stripe Connect onboarding</text>
+  
+  <!-- Feature 2 -->
+  <rect x="300" y="640" width="180" height="30" class="card"/>
+  <text x="390" y="660" class="text" text-anchor="middle">💳 Real-time payout status tracking</text>
+  
+  <!-- Feature 3 -->
+  <rect x="500" y="640" width="180" height="30" class="card"/>
+  <text x="590" y="660" class="text" text-anchor="middle">📊 Comprehensive earnings analytics</text>
+  
+  <!-- Feature 4 -->
+  <rect x="100" y="680" width="180" height="30" class="card"/>
+  <text x="190" y="700" class="text" text-anchor="middle">🏦 Direct bank account transfers</text>
+  
+  <!-- Feature 5 -->
+  <rect x="300" y="680" width="180" height="30" class="card"/>
+  <text x="390" y="700" class="text" text-anchor="middle">🔐 Secure KYC verification process</text>
+  
+  <!-- Feature 6 -->
+  <rect x="500" y="680" width="180" height="30" class="card"/>
+  <text x="590" y="700" class="text" text-anchor="middle">📱 Mobile-first responsive design</text>
+  
+  <!-- Technical Notes -->
+  <rect x="50" y="730" width="1100" height="50" class="card" fill="#f8fafc"/>
+  <text x="70" y="745" class="small-text">Technical Implementation:</text>
+  <text x="70" y="760" class="small-text">• Database schema updated with stripeAccountId, stripeAccountStatus, stripeOnboardingCompleted fields</text>
+  <text x="70" y="770" class="small-text">• Demo endpoints simulate Stripe Connect flow for development and testing purposes</text>
+</svg>
