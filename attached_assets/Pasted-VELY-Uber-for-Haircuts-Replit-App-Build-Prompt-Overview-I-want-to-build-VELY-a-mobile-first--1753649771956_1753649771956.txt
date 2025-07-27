@@ -1,0 +1,54 @@
+VELY — Uber for Haircuts (Replit App Build Prompt)
+
+Overview:
+I want to build VELY — a mobile-first, dual-sided web app (and future native app) where customers can book on-demand or scheduled haircuts at home, and stylists/barbers can accept bookings, manage schedules, and get paid. Think Uber but for hair services.
+
+Core Functionality
+
+For Clients:
+- User registration and login (email or phone-based)
+- Search for local stylists based on service, location, reviews, and hair type specialization
+- View detailed stylist profiles (bio, pricing, services, portfolio images)
+- Book a stylist (immediately or in the future)
+- Pay securely in-app (Stripe integration)
+- See booking history and rebook favorite stylists
+- Rate and review stylists after each service (1 to 5 stars + optional comments)
+
+For Stylists/Barbers:
+- Create a public profile with bio, certifications, service list, pricing, and availability
+- Set travel radius and working hours
+- Accept/reject appointments
+- Real-time notifications for job opportunities
+- Dashboard with upcoming appointments and completed jobs
+- View reviews and average rating
+- Receive payouts via Stripe Connect
+
+Tech Stack Preferences:
+- Frontend: HTML/CSS and JavaScript (React preferred)
+- Backend: Node.js with Express
+- Database: Firebase or MongoDB
+- Authentication: Firebase Auth or similar
+- Payments: Stripe (test keys acceptable for MVP)
+- Geolocation: Google Maps API (for displaying stylist proximity)
+
+Inclusion & Accessibility:
+- Interface must be accessible (WCAG-compliant, large tap targets, legible text)
+- Include diverse imagery and language representing all hair types, genders, races, and cultures
+- App must work well on mobile (responsive design)
+
+Launch Details:
+This MVP is intended for real-world testing in Toronto and Los Angeles.
+
+MVP Features for Delivery:
+1. Landing Page
+2. User Registration (Client & Stylist)
+3. Profile Creation and Viewing
+4. Search and Filter System
+5. Booking System with Time Picker
+6. Payment Flow (mock/test mode)
+7. Dashboard View for Both Roles
+8. Rating and Review System
+
+Future features can include: calendar sync, loyalty rewards, notifications, referral tracking, and emergency safety tools.
+
+Please structure the app for future scalability to native mobile using React Native or similar frameworks.
