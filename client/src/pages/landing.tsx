@@ -96,7 +96,7 @@ export default function Landing() {
           
           <div className="space-y-4">
             <div 
-              onClick={() => handleUserTypeSelection('client')}
+              onClick={() => navigate('/book-service')}
               className="ios-card cursor-pointer active:scale-95 transition-all duration-150"
             >
               <div className="ios-card-content text-center py-8">
@@ -105,7 +105,7 @@ export default function Landing() {
                 </div>
                 <h3 className="text-headline mb-2">Book a Haircut</h3>
                 <p className="text-body">
-                  Get professional haircuts at home
+                  Starting at $28 • On-demand service
                 </p>
               </div>
             </div>

@@ -6,6 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ArrowLeft, Calendar, MapPin, Star, Clock, User, Phone } from "lucide-react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
+import MapView from "@/components/MapView";
 
 interface Stylist {
   id: string;
@@ -32,6 +33,8 @@ export default function BookService() {
   const [step, setStep] = useState<'date' | 'stylists' | 'confirm'>('date');
   const [selectedStylist, setSelectedStylist] = useState<Stylist | null>(null);
   const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
+  const [sortBy, setSortBy] = useState<'distance' | 'price' | 'rating'>('distance');
 
   // Get user's location
   useEffect(() => {
@@ -71,8 +74,8 @@ export default function BookService() {
           distance: "0.8 mi",
           estimatedTime: "12 mins",
           profileImage: "",
-          specialties: ["Haircuts", "Color", "Styling"],
-          price: 85,
+          specialties: ["Basic Cut", "Wash & Style"],
+          price: 28,
           isAvailable: true,
           location: {
             lat: userLocation ? userLocation.lat + 0.01 : 37.7849,
@@ -89,7 +92,7 @@ export default function BookService() {
           estimatedTime: "18 mins",
           profileImage: "",
           specialties: ["Men's Cuts", "Beard Trim"],
-          price: 75,
+          price: 32,
           isAvailable: true,
           location: {
             lat: userLocation ? userLocation.lat - 0.008 : 37.7669,
@@ -105,13 +108,64 @@ export default function BookService() {
           distance: "2.1 mi",
           estimatedTime: "25 mins",
           profileImage: "",
-          specialties: ["Braids", "Natural Hair", "Extensions"],
-          price: 95,
+          specialties: ["Layered Cut", "Styling"],
+          price: 35,
           isAvailable: true,
           location: {
             lat: userLocation ? userLocation.lat + 0.015 : 37.7899,
             lng: userLocation ? userLocation.lng + 0.018 : -122.4014,
             address: "Castro Street"
+          }
+        },
+        {
+          id: "4",
+          name: "David Park",
+          rating: 4.6,
+          reviewCount: 94,
+          distance: "1.8 mi",
+          estimatedTime: "22 mins",
+          profileImage: "",
+          specialties: ["Precision Cut", "Fade"],
+          price: 38,
+          isAvailable: true,
+          location: {
+            lat: userLocation ? userLocation.lat - 0.012 : 37.7629,
+            lng: userLocation ? userLocation.lng + 0.008 : -122.4114,
+            address: "SOMA District"
+          }
+        },
+        {
+          id: "5",
+          name: "Jessica Kim",
+          rating: 4.9,
+          reviewCount: 203,
+          distance: "0.6 mi",
+          estimatedTime: "10 mins",
+          profileImage: "",
+          specialties: ["Premium Cut", "Blowout"],
+          price: 42,
+          isAvailable: true,
+          location: {
+            lat: userLocation ? userLocation.lat + 0.005 : 37.7799,
+            lng: userLocation ? userLocation.lng - 0.003 : -122.4224,
+            address: "Union Square"
+          }
+        },
+        {
+          id: "6",
+          name: "Alex Thompson",
+          rating: 4.8,
+          reviewCount: 167,
+          distance: "2.4 mi", 
+          estimatedTime: "28 mins",
+          profileImage: "",
+          specialties: ["Luxury Cut", "Deep Conditioning"],
+          price: 45,
+          isAvailable: true,
+          location: {
+            lat: userLocation ? userLocation.lat + 0.018 : 37.7929,
+            lng: userLocation ? userLocation.lng + 0.015 : -122.4044,
+            address: "Nob Hill"
           }
         }
       ];
@@ -171,7 +225,7 @@ export default function BookService() {
         date: selectedDate,
         time: selectedTime,
         service: "Haircut & Style",
-        price: selectedStylist?.price || 85
+        price: selectedStylist?.price || 28
       }
     });
   };
@@ -205,7 +259,7 @@ export default function BookService() {
                 <div>
                   <h3 className="font-semibold">Haircut & Style</h3>
                   <p className="text-sm text-gray-600">Professional cut and styling</p>
-                  <p className="text-sm font-semibold text-purple-600">Starting at $75</p>
+                  <p className="text-sm font-semibold text-purple-600">Starting at $28</p>
                 </div>
               </div>
             </CardContent>
@@ -296,21 +350,46 @@ export default function BookService() {
         </div>
 
         <div className="app-content">
-          {/* Location Info */}
+          {/* Location Info & Sort Options */}
           <Card className="mb-4 bg-blue-50 border-blue-200">
             <CardContent className="p-4">
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-blue-600" />
-                <span className="text-sm text-blue-700">
-                  Showing stylists near your location
-                </span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <MapPin className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm text-blue-700">
+                    Near your location
+                  </span>
+                </div>
+                <select 
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as 'distance' | 'price' | 'rating')}
+                  className="text-xs bg-white border border-blue-200 rounded px-2 py-1"
+                >
+                  <option value="distance">Sort by Distance</option>
+                  <option value="price">Sort by Price</option>
+                  <option value="rating">Sort by Rating</option>
+                </select>
               </div>
             </CardContent>
           </Card>
 
+          {/* Map View Toggle */}
+          <div className="flex space-x-2 mb-4">
+            <Button variant="default" size="sm" className="flex-1">
+              List View
+            </Button>
+            <Button variant="outline" size="sm" className="flex-1">
+              Map View
+            </Button>
+          </div>
+
           {/* Stylists List */}
           <div className="space-y-4">
-            {availableStylists?.map((stylist) => (
+            {availableStylists?.sort((a, b) => {
+              if (sortBy === 'price') return a.price - b.price;
+              if (sortBy === 'rating') return b.rating - a.rating;
+              return parseFloat(a.distance) - parseFloat(b.distance);
+            })?.map((stylist) => (
               <Card 
                 key={stylist.id}
                 className="cursor-pointer active:scale-95 transition-transform"
