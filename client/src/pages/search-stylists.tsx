@@ -3,10 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, MapPin, Star, Clock, DollarSign, Filter, ArrowLeft } from "lucide-react";
 import BookingModal from "@/components/booking-modal";
+import { StylistCardSkeleton } from "@/components/loading-skeleton";
 
 export default function SearchStylists() {
   const [, navigate] = useLocation();
@@ -47,7 +50,7 @@ export default function SearchStylists() {
               size="sm"
               onClick={() => navigate(-1)}
             >
-              <i className="fas fa-arrow-left"></i>
+              <ArrowLeft className="w-4 h-4" />
             </Button>
             <div className="flex-1">
               <div className="relative">

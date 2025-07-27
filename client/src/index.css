@@ -55,5 +55,55 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Mobile-first responsive improvements */
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  .mobile-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6;
+  }
+  
+  /* Smooth animations */
+  .smooth-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  /* Glass morphism effects */
+  .glass-card {
+    @apply backdrop-blur-sm bg-white/90 border border-white/20 shadow-lg dark:bg-gray-900/90 dark:border-gray-700/20;
+  }
+  
+  /* Enhanced button styles */
+  .btn-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 smooth-transition;
+  }
+  
+  /* Loading skeleton animations */
+  @keyframes skeleton-loading {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+  }
+  
+  .skeleton {
+    @apply bg-gray-200 dark:bg-gray-700 rounded animate-pulse;
+    animation: skeleton-loading 2s ease-in-out infinite;
+  }
+  
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary/60 rounded-full hover:bg-primary/80;
   }
 }

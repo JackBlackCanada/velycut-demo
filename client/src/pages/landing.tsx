@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Star, Clock, Shield, Smartphone, Scissors, MapPin, Menu, X } from "lucide-react";
 import UserTypeModal from "@/components/user-type-modal";
 import ClientSignupForm from "@/components/client-signup-form";
 import StylistSignupForm from "@/components/stylist-signup-form";
@@ -8,6 +9,7 @@ export default function Landing() {
   const [showUserTypeModal, setShowUserTypeModal] = useState(false);
   const [showClientSignup, setShowClientSignup] = useState(false);
   const [showStylistSignup, setShowStylistSignup] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -38,11 +40,43 @@ export default function Landing() {
                 Get Started
               </Button>
             </div>
-            <Button variant="ghost" size="sm" className="md:hidden">
-              <i className="fas fa-bars"></i>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-200 py-4">
+            <div className="px-4 space-y-4">
+              <a href="#how-it-works" className="block text-gray-600 hover:text-primary transition-colors">
+                How it Works
+              </a>
+              <a href="#for-stylists" className="block text-gray-600 hover:text-primary transition-colors">
+                For Stylists
+              </a>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start"
+                onClick={() => window.location.href = '/api/login'}
+              >
+                Sign In
+              </Button>
+              <Button 
+                className="w-full" 
+                onClick={() => setShowUserTypeModal(true)}
+              >
+                Get Started
+              </Button>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}

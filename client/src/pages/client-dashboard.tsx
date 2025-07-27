@@ -4,11 +4,13 @@ import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Plus, Calendar, DollarSign, MapPin, Clock, Star } from "lucide-react";
 import BookingModal from "@/components/booking-modal";
 import ReviewModal from "@/components/review-modal";
+import { DashboardSkeleton, BookingCardSkeleton } from "@/components/loading-skeleton";
 
 export default function ClientDashboard() {
   const { user, isLoading, isAuthenticated } = useAuth();
@@ -20,7 +22,7 @@ export default function ClientDashboard() {
 
   const { data: bookings, isLoading: bookingsLoading } = useQuery({
     queryKey: ["/api/bookings/user"],
-    enabled: isAuthenticated && user?.userType === 'client',
+    enabled: isAuthenticated && (user as any)?.userType === 'client',
   });
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function ClientDashboard() {
       return;
     }
 
-    if (user && user.userType !== 'client') {
+    if (user && (user as any).userType !== 'client') {
       navigate('/stylist-dashboard');
     }
   }, [user, isLoading, isAuthenticated, navigate, toast]);
@@ -60,11 +62,7 @@ export default function ClientDashboard() {
   };
 
   if (isLoading || bookingsLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   return (
@@ -75,7 +73,7 @@ export default function ClientDashboard() {
           <div className="flex justify-between items-center h-16">
             <div>
               <h2 className="text-xl font-semibold text-gray-900">
-                Welcome back, {user?.firstName}!
+                Welcome back, {(user as any)?.firstName || 'there'}!
               </h2>
             </div>
             <div className="flex items-center space-x-4">
@@ -87,8 +85,8 @@ export default function ClientDashboard() {
                 Sign Out
               </Button>
               <Avatar>
-                <AvatarImage src={user?.profileImageUrl || ''} />
-                <AvatarFallback>{user?.firstName?.[0] || 'U'}</AvatarFallback>
+                <AvatarImage src={(user as any)?.profileImageUrl || ''} />
+                <AvatarFallback>{(user as any)?.firstName?.[0] || 'U'}</AvatarFallback>
               </Avatar>
             </div>
           </div>
@@ -104,7 +102,7 @@ export default function ClientDashboard() {
               className="flex-1 bg-white text-primary hover:bg-gray-50"
               onClick={() => setShowBookingModal(true)}
             >
-              <i className="fas fa-calendar-plus mr-2"></i>
+              <Plus className="w-5 h-5 mr-2" />
               Book Now
             </Button>
             <Button 
@@ -113,7 +111,7 @@ export default function ClientDashboard() {
               className="flex-1 bg-white bg-opacity-20 text-white hover:bg-opacity-30"
               onClick={() => navigate('/search')}
             >
-              <i className="fas fa-search mr-2"></i>
+              <MapPin className="w-5 h-5 mr-2" />
               Find Stylists
             </Button>
           </div>
@@ -133,7 +131,7 @@ export default function ClientDashboard() {
                 </div>
                 
                 <div className="space-y-4">
-                  {bookings && bookings.length > 0 ? (
+                  {Array.isArray(bookings) && bookings.length > 0 ? (
                     bookings.map((booking: any) => (
                       <div key={booking.id} className="flex items-center p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
                         <Avatar className="w-16 h-16 mr-4">
@@ -192,20 +190,21 @@ export default function ClientDashboard() {
                 <div className="space-y-4">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Total Bookings</span>
-                    <span className="font-semibold">{bookings?.length || 0}</span>
+                    <span className="font-semibold">{Array.isArray(bookings) ? bookings.length : 0}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">This Month</span>
                     <span className="font-semibold">
-                      {bookings?.filter((b: any) => 
-                        new Date(b.scheduledAt).getMonth() === new Date().getMonth()
-                      ).length || 0}
+                      {Array.isArray(bookings) ? 
+                        bookings.filter((b: any) => 
+                          new Date(b.scheduledAt).getMonth() === new Date().getMonth()
+                        ).length : 0}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Completed</span>
                     <span className="font-semibold text-accent">
-                      {bookings?.filter((b: any) => b.status === 'completed').length || 0}
+                      {Array.isArray(bookings) ? bookings.filter((b: any) => b.status === 'completed').length : 0}
                     </span>
                   </div>
                 </div>
