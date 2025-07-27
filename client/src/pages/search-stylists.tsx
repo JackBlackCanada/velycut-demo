@@ -4,7 +4,7 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Star, MapPin } from "lucide-react";
+import { ArrowLeft, Star, MapPin, Home } from "lucide-react";
 import BookingModal from "@/components/booking-modal";
 import logoPath from "@assets/logo_1753651837767.png";
 
@@ -37,18 +37,23 @@ export default function SearchStylists() {
       {/* Header - Matches "Book a Haircut" Mockup */}
       <div className="app-header">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center">
             <Button 
               variant="ghost" 
               size="icon"
-              onClick={() => navigate('/')}
+              onClick={() => navigate(-1)}
+              className="mr-3"
             >
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <h1 className="text-title">Book a Haircut</h1>
           </div>
-          <Button variant="ghost" className="text-blue-500 font-medium">
-            Back
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={() => navigate('/')}
+          >
+            <Home className="w-5 h-5" />
           </Button>
         </div>
       </div>

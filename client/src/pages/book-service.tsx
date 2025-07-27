@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ArrowLeft, Calendar, MapPin, Star, Clock, User, Phone } from "lucide-react";
+import { ArrowLeft, Calendar, MapPin, Star, Clock, User, Phone, Home } from "lucide-react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import MapView from "@/components/MapView";
@@ -235,16 +235,25 @@ export default function BookService() {
       <div className="app-container">
         {/* Header */}
         <div className="app-header">
-          <div className="flex items-center">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => navigate('/')}
+                className="mr-3"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <h1 className="text-headline">Book a Haircut</h1>
+            </div>
             <Button 
               variant="ghost" 
               size="icon"
               onClick={() => navigate('/')}
-              className="mr-3"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <Home className="w-5 h-5" />
             </Button>
-            <h1 className="text-headline">Book a Haircut</h1>
           </div>
         </div>
 
@@ -331,21 +340,30 @@ export default function BookService() {
       <div className="app-container">
         {/* Header */}
         <div className="app-header">
-          <div className="flex items-center">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => setStep('date')}
+                className="mr-3"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <div>
+                <h1 className="text-headline">Available Stylists</h1>
+                <p className="text-sm text-gray-600">
+                  {formatDate(selectedDate)} at {selectedTime}
+                </p>
+              </div>
+            </div>
             <Button 
               variant="ghost" 
               size="icon"
-              onClick={() => setStep('date')}
-              className="mr-3"
+              onClick={() => navigate('/')}
             >
-              <ArrowLeft className="w-5 h-5" />
+              <Home className="w-5 h-5" />
             </Button>
-            <div>
-              <h1 className="text-headline">Available Stylists</h1>
-              <p className="text-sm text-gray-600">
-                {formatDate(selectedDate)} at {selectedTime}
-              </p>
-            </div>
           </div>
         </div>
 
@@ -493,16 +511,25 @@ export default function BookService() {
       <div className="app-container">
         {/* Header */}
         <div className="app-header">
-          <div className="flex items-center">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => setStep('stylists')}
+                className="mr-3"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <h1 className="text-headline">Confirm Booking</h1>
+            </div>
             <Button 
               variant="ghost" 
               size="icon"
-              onClick={() => setStep('stylists')}
-              className="mr-3"
+              onClick={() => navigate('/')}
             >
-              <ArrowLeft className="w-5 h-5" />
+              <Home className="w-5 h-5" />
             </Button>
-            <h1 className="text-headline">Confirm Booking</h1>
           </div>
         </div>
 

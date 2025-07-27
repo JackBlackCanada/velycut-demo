@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Calendar, MapPin, Star, Clock, DollarSign, Settings, TrendingUp } from "lucide-react";
+import { Calendar, MapPin, Star, Clock, DollarSign, Settings, TrendingUp, Home, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
@@ -65,7 +65,17 @@ export default function StylistDashboard() {
       {/* Header - Matches Dashboard Mockup */}
       <div className="app-header">
         <div className="flex items-center justify-between">
-          <h1 className="text-title">Dashboard</h1>
+          <div className="flex items-center">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => navigate('/')}
+              className="mr-3"
+            >
+              <Home className="w-5 h-5" />
+            </Button>
+            <h1 className="text-title">Dashboard</h1>
+          </div>
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2">
               <span className="text-caption">Availability</span>

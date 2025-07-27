@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Star, Clock, Plus, Settings, Gift, Home, Search, User } from "lucide-react";
+import { Calendar, MapPin, Star, Clock, Plus, Settings, Gift, Home, Search, User, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
 // Using simple text logo for now
@@ -40,7 +40,17 @@ export default function ClientDashboard() {
       {/* Header */}
       <div className="app-header">
         <div className="flex items-center justify-between">
-          <div className="text-xl font-bold text-purple-600">VELY</div>
+          <div className="flex items-center">
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => navigate('/')}
+              className="mr-3"
+            >
+              <Home className="w-5 h-5" />
+            </Button>
+            <div className="text-xl font-bold text-purple-600">VELY</div>
+          </div>
           <div className="flex items-center space-x-3">
             <Button variant="ghost" size="icon">
               <Settings className="w-5 h-5" />
