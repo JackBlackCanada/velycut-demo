@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
+import { useLocation } from "wouter";
 import logoPath from "@assets/logo_1753651837767.png";
 
 export default function Landing() {
   const { isAuthenticated, isLoading } = useAuth();
+  const [, navigate] = useLocation();
   const [showUserTypeModal, setShowUserTypeModal] = useState(false);
 
   if (isLoading) {
