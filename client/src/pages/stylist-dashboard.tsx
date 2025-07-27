@@ -8,7 +8,7 @@ import { Calendar, MapPin, Star, Clock, DollarSign, Settings, TrendingUp } from 
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import logoPath from "@assets/logo_1753651837767.png";
+// Using simple text logo for now
 
 export default function StylistDashboard() {
   const { user } = useAuth();

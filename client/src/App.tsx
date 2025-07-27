@@ -6,11 +6,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/landing";
+import Login from "@/pages/login";
 import Home from "@/pages/home";
 import ClientDashboard from "@/pages/client-dashboard";
 import StylistDashboard from "@/pages/stylist-dashboard";
 import SearchStylists from "@/pages/search-stylists";
 import Checkout from "@/pages/checkout";
+import ReferEarn from "@/pages/refer-earn";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -19,11 +21,13 @@ function Router() {
     <Switch>
       {/* Always allow access to all pages for demo purposes */}
       <Route path="/" component={Landing} />
+      <Route path="/login" component={Login} />
       <Route path="/home" component={Home} />
       <Route path="/client-dashboard" component={ClientDashboard} />
       <Route path="/stylist-dashboard" component={StylistDashboard} />
       <Route path="/search-stylists" component={SearchStylists} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/refer-earn" component={ReferEarn} />
       <Route component={NotFound} />
     </Switch>
   );

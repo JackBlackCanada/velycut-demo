@@ -28,14 +28,9 @@ export default function Landing() {
     localStorage.setItem('selectedUserType', userType);
     setShowUserTypeModal(false);
     
-    // For demo purposes, simulate authentication success and redirect based on user type
-    // In production, this would go through proper Replit Auth
+    // Redirect to login page with user type stored
     setTimeout(() => {
-      if (userType === 'client') {
-        window.location.href = '/client-dashboard';
-      } else {
-        window.location.href = '/stylist-dashboard';
-      }
+      window.location.href = '/login';
     }, 100);
   };
 

@@ -3,10 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Star, Clock, Plus, Settings } from "lucide-react";
+import { Calendar, MapPin, Star, Clock, Plus, Settings, Gift, Home, Search, User } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
-import logoPath from "@assets/logo_1753651837767.png";
+// Using simple text logo for now
+const logoPath = null;
 
 export default function ClientDashboard() {
   const { user } = useAuth();
@@ -39,7 +40,7 @@ export default function ClientDashboard() {
       {/* Header */}
       <div className="app-header">
         <div className="flex items-center justify-between">
-          <img src={logoPath} alt="VELY" className="logo" />
+          <div className="text-xl font-bold text-purple-600">VELY</div>
           <div className="flex items-center space-x-3">
             <Button variant="ghost" size="icon">
               <Settings className="w-5 h-5" />
@@ -220,8 +221,26 @@ export default function ClientDashboard() {
       <div className="tab-bar">
         <div className="flex justify-around">
           <div className="tab-item active">
-            <Calendar className="w-5 h-5 mb-1" />
+            <Home className="w-5 h-5 mb-1" />
             <span className="text-xs">Home</span>
+          </div>
+          <div 
+            onClick={() => navigate('/search-stylists')}
+            className="tab-item"
+          >
+            <Search className="w-5 h-5 mb-1" />
+            <span className="text-xs">Search</span>
+          </div>
+          <div className="tab-item">
+            <Calendar className="w-5 h-5 mb-1" />
+            <span className="text-xs">Bookings</span>
+          </div>
+          <div 
+            onClick={() => navigate('/refer-earn')}
+            className="tab-item"
+          >
+            <Gift className="w-5 h-5 mb-1" />
+            <span className="text-xs">Refer</span>
           </div>
           <div 
             className="tab-item inactive cursor-pointer"
