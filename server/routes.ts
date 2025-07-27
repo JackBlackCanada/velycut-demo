@@ -13,16 +13,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
-  // Auth routes
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
+  // Auth routes - simplified for demo
+  app.get('/api/auth/user', async (req: any, res) => {
+    // For demo purposes, return a mock user or null
+    // In production, this would check the actual authentication state
+    res.status(401).json({ message: "Not authenticated - demo mode" });
   });
 
   // User registration and profile setup
@@ -56,15 +51,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get stylists with search/filter
+  // Get stylists with search/filter - demo data for now
   app.get('/api/stylists', async (req, res) => {
     try {
-      const { location, specialization } = req.query;
-      const stylists = await storage.searchStylists(
-        location as string, 
-        specialization as string
-      );
-      res.json(stylists);
+      // Return sample stylists for demo
+      const sampleStylists = [
+        {
+          id: "1",
+          firstName: "Sarah",
+          lastName: "Johnson",
+          email: "sarah@example.com",
+          profileImageUrl: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=100&h=100&fit=crop&crop=face",
+          userType: "stylist",
+          bio: "Professional hair stylist with 8+ years of experience specializing in cuts and color.",
+          yearsExperience: 8,
+          specializations: ["Haircuts", "Color", "Highlights"],
+          rating: "4.9",
+          totalReviews: 127,
+          isAvailable: true,
+          location: "Downtown"
+        },
+        {
+          id: "2", 
+          firstName: "Marcus",
+          lastName: "Williams",
+          email: "marcus@example.com",
+          profileImageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+          userType: "stylist",
+          bio: "Master barber and men's grooming specialist. Expert in modern cuts and traditional styles.",
+          yearsExperience: 12,
+          specializations: ["Men's Cuts", "Beard Trim", "Traditional Shaves"],
+          rating: "4.8",
+          totalReviews: 89,
+          isAvailable: true,
+          location: "Midtown"
+        },
+        {
+          id: "3",
+          firstName: "Emily",
+          lastName: "Chen",
+          email: "emily@example.com", 
+          profileImageUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face",
+          userType: "stylist",
+          bio: "Curly hair specialist and natural hair care expert. Passionate about healthy hair.",
+          yearsExperience: 6,
+          specializations: ["Curly Hair", "Natural Hair", "Deep Conditioning"],
+          rating: "4.9",
+          totalReviews: 203,
+          isAvailable: true,
+          location: "Uptown"
+        }
+      ];
+      
+      res.json(sampleStylists);
     } catch (error: any) {
       console.error("Error fetching stylists:", error);
       res.status(500).json({ message: "Failed to fetch stylists" });

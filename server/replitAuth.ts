@@ -103,6 +103,7 @@ export async function setupAuth(app: Express) {
   passport.deserializeUser((user: Express.User, cb) => cb(null, user));
 
   app.get("/api/login", (req, res, next) => {
+    console.log('Login attempt with hostname:', req.hostname);
     passport.authenticate(`replitauth:${req.hostname}`, {
       prompt: "login consent",
       scope: ["openid", "email", "profile", "offline_access"],
@@ -110,9 +111,10 @@ export async function setupAuth(app: Express) {
   });
 
   app.get("/api/callback", (req, res, next) => {
+    console.log('Callback with hostname:', req.hostname);
     passport.authenticate(`replitauth:${req.hostname}`, {
       successReturnToOrRedirect: "/",
-      failureRedirect: "/api/login",
+      failureRedirect: "/",
     })(req, res, next);
   });
 

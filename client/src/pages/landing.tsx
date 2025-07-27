@@ -28,9 +28,14 @@ export default function Landing() {
     localStorage.setItem('selectedUserType', userType);
     setShowUserTypeModal(false);
     
-    // Redirect to authentication with a small delay to ensure modal closes
+    // For demo purposes, simulate authentication success and redirect based on user type
+    // In production, this would go through proper Replit Auth
     setTimeout(() => {
-      window.location.href = '/api/login';
+      if (userType === 'client') {
+        window.location.href = '/client-dashboard';
+      } else {
+        window.location.href = '/stylist-dashboard';
+      }
     }, 100);
   };
 

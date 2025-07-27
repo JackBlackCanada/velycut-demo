@@ -15,37 +15,17 @@ import Checkout from "@/pages/checkout";
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
 
-  // Prioritize showing landing page for unauthenticated users
-  if (!isAuthenticated && !isLoading) {
-    return (
-      <Switch>
-        <Route path="/" component={Landing} />
-        <Route component={NotFound} />
-      </Switch>
-    );
-  }
-
-  // Show authenticated app when user is logged in
-  if (isAuthenticated && user) {
-    return (
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/client-dashboard" component={ClientDashboard} />
-        <Route path="/stylist-dashboard" component={StylistDashboard} />
-        <Route path="/search-stylists" component={SearchStylists} />
-        <Route path="/checkout" component={Checkout} />
-        <Route component={NotFound} />
-      </Switch>
-    );
-  }
-
-  // Only show loading spinner briefly during auth check
   return (
-    <div className="app-container">
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
-      </div>
-    </div>
+    <Switch>
+      {/* Always allow access to all pages for demo purposes */}
+      <Route path="/" component={Landing} />
+      <Route path="/home" component={Home} />
+      <Route path="/client-dashboard" component={ClientDashboard} />
+      <Route path="/stylist-dashboard" component={StylistDashboard} />
+      <Route path="/search-stylists" component={SearchStylists} />
+      <Route path="/checkout" component={Checkout} />
+      <Route component={NotFound} />
+    </Switch>
   );
 }
 
