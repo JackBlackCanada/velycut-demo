@@ -178,8 +178,8 @@ export default function Contact() {
             
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs font-bold">🇨🇦</span>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <span className="text-2xl leading-none">🇨🇦</span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Toronto, ON</h4>
@@ -189,8 +189,8 @@ export default function Contact() {
               </div>
               
               <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs font-bold">🇺🇸</span>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+                  <span className="text-2xl leading-none">🇺🇸</span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Los Angeles, CA</h4>
