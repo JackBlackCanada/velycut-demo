@@ -22,11 +22,11 @@ export default function ClientDashboard() {
     queryKey: ["/api/bookings"],
   });
 
-  const upcomingBookings = bookings?.filter((b: any) => 
+  const upcomingBookings = (bookings as any[])?.filter((b: any) => 
     ['pending', 'confirmed'].includes(b.status)
   ) || [];
 
-  const recentBookings = bookings?.filter((b: any) => 
+  const recentBookings = (bookings as any[])?.filter((b: any) => 
     ['completed'].includes(b.status)
   ).slice(0, 3) || [];
 
@@ -60,9 +60,9 @@ export default function ClientDashboard() {
             <NotificationCenter />
             <AnimatedNavMenu userType="client" />
             <Avatar className="w-7 h-7 sm:w-8 sm:h-8">
-              <AvatarImage src={user?.profileImageUrl} />
+              <AvatarImage src={(user as any)?.profileImageUrl} />
               <AvatarFallback className="text-xs sm:text-sm">
-                {user?.firstName?.[0]}{user?.lastName?.[0]}
+                {(user as any)?.firstName?.[0]}{(user as any)?.lastName?.[0]}
               </AvatarFallback>
             </Avatar>
           </div>
@@ -73,7 +73,7 @@ export default function ClientDashboard() {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-title-large mb-2">
-            Welcome back, {user?.firstName}
+            Welcome back, {(user as any)?.firstName}
           </h1>
           <p className="text-body">
             Ready for your next haircut?
@@ -303,7 +303,7 @@ export default function ClientDashboard() {
         {/* Advanced Search Modal */}
         {showAdvancedSearch && (
           <AdvancedSearch
-            onSearch={(filters) => {
+            onSearch={(filters: any) => {
               console.log('Search filters:', filters);
               // Navigate to search results with filters
               navigate('/book-service');
