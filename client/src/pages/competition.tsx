@@ -12,7 +12,7 @@ export default function Competition() {
   const [activeTab, setActiveTab] = useState<'gallery' | 'leaderboard' | 'upload' | 'winners'>('gallery');
   const [sortBy, setSortBy] = useState<'votes' | 'newest' | 'trending'>('votes');
   
-  // Mock data - in production, this would come from API
+  // Demo data with real dates - in production, this would come from API
   const [competition] = useState({
     id: '1',
     title: 'January 2025 Cut of the Month',
@@ -22,7 +22,7 @@ export default function Competition() {
     status: 'active',
     customerPrize: '$100',
     stylistPrize: '$1000',
-    daysLeft: 4
+    daysLeft: Math.ceil((new Date('2025-01-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
   });
 
   const [entries, setEntries] = useState([
@@ -31,48 +31,72 @@ export default function Competition() {
       customerName: 'Sarah M.',
       stylistName: 'Maria Rodriguez',
       city: 'Toronto, ON',
-      imageUrl: '/api/placeholder/300/400',
+      imageUrl: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=500&fit=crop&crop=face',
       voteCount: 342,
       status: 'approved',
       isWinner: false,
       description: 'Fresh new look for the new year!',
-      createdAt: '2025-01-15'
+      createdAt: new Date(Date.now() - 13 * 24 * 60 * 60 * 1000).toISOString() // 13 days ago
     },
     {
       id: '2',
       customerName: 'Mike C.',
       stylistName: 'David Wilson',
       city: 'Los Angeles, CA',
-      imageUrl: '/api/placeholder/300/400',
+      imageUrl: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=400&h=500&fit=crop&crop=face',
       voteCount: 298,
       status: 'featured',
       isWinner: false,
       description: 'Perfect fade and beard trim combo',
-      createdAt: '2025-01-12'
+      createdAt: new Date(Date.now() - 16 * 24 * 60 * 60 * 1000).toISOString() // 16 days ago
     },
     {
       id: '3',
       customerName: 'Emma L.',
       stylistName: 'Jessica Chen',
       city: 'Toronto, ON',
-      imageUrl: '/api/placeholder/300/400',
+      imageUrl: 'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400&h=500&fit=crop&crop=face',
       voteCount: 276,
       status: 'approved',
       isWinner: false,
       description: 'Bold color transformation!',
-      createdAt: '2025-01-18'
+      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString() // 10 days ago
     },
     {
       id: '4',
       customerName: 'Alex T.',
       stylistName: 'Marcus Johnson',
       city: 'Los Angeles, CA',
-      imageUrl: '/api/placeholder/300/400',
+      imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face',
       voteCount: 189,
       status: 'approved',
       isWinner: false,
       description: 'Classic cut with modern style',
-      createdAt: '2025-01-20'
+      createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString() // 8 days ago
+    },
+    {
+      id: '5',
+      customerName: 'Riley K.',
+      stylistName: 'Amanda Foster',
+      city: 'Toronto, ON',
+      imageUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=500&fit=crop&crop=face',
+      voteCount: 167,
+      status: 'approved',
+      isWinner: false,
+      description: 'Pixie cut perfection!',
+      createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() // 5 days ago
+    },
+    {
+      id: '6',
+      customerName: 'Jordan B.',
+      stylistName: 'Carlos Martinez',
+      city: 'Los Angeles, CA',
+      imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&crop=face',
+      voteCount: 143,
+      status: 'approved',
+      isWinner: false,
+      description: 'Clean business professional look',
+      createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days ago
     }
   ]);
 
@@ -225,7 +249,7 @@ export default function Competition() {
             {/* Sort Options */}
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-headline font-bold text-gray-900 dark:text-white">
-                {entries.length} Entries
+                {entries.length} Entries This Month
               </h3>
               <div className="flex space-x-2">
                 {[
@@ -330,7 +354,7 @@ export default function Competition() {
           <>
             <div className="text-center mb-6">
               <h3 className="text-title-large font-bold text-gray-900 dark:text-white mb-2">
-                Top 10 Leaderboard
+                Top {Math.min(entries.length, 10)} Leaderboard
               </h3>
               <p className="text-body text-gray-600 dark:text-gray-300">
                 Current standings for {competition.title}
