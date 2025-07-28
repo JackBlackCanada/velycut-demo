@@ -50,16 +50,29 @@ export default function BookService() {
           });
         },
         (error) => {
-          console.log("Location access denied, using default location");
-          // Default to San Francisco coordinates
-          setUserLocation({ lat: 37.7749, lng: -122.4194 });
+          console.log("Location access denied, using Toronto as default");
+          // Default to Toronto coordinates (VELY's primary market)
+          setUserLocation({ lat: 43.6532, lng: -79.3832 });
         }
       );
     } else {
-      // Default location if geolocation not supported
-      setUserLocation({ lat: 37.7749, lng: -122.4194 });
+      // Default to Toronto if geolocation not supported
+      setUserLocation({ lat: 43.6532, lng: -79.3832 });
     }
   }, []);
+
+  // Calculate distance between two coordinates
+  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    const R = 6371; // Radius of Earth in kilometers
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c; // Distance in kilometers
+  };
 
   // Mock stylists data with realistic locations
   const { data: availableStylists } = useQuery({
@@ -68,7 +81,115 @@ export default function BookService() {
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      const mockStylists: Stylist[] = [
+      // Determine user's city based on location
+      const isInToronto = userLocation && userLocation.lat > 40; // Simple check
+      
+      const mockStylists: Stylist[] = isInToronto ? [
+        // Toronto Stylists
+        {
+          id: "1",
+          name: "Sarah Johnson",
+          rating: 4.9,
+          reviewCount: 127,
+          distance: userLocation ? `${calculateDistance(userLocation.lat, userLocation.lng, 43.6532, -79.3832).toFixed(1)} km` : "0.8 km",
+          estimatedTime: userLocation ? `${Math.ceil(calculateDistance(userLocation.lat, userLocation.lng, 43.6532, -79.3832) * 2)} mins` : "12 mins",
+          profileImage: sarahProfile,
+          specialties: ["Basic Cut", "Wash & Style"],
+          price: 35,
+          isAvailable: true,
+          location: {
+            lat: 43.6532,
+            lng: -79.3832,
+            address: "King St W, Toronto"
+          }
+        },
+        {
+          id: "2", 
+          name: "Priya Patel",
+          rating: 4.8,
+          reviewCount: 89,
+          distance: userLocation ? `${calculateDistance(userLocation.lat, userLocation.lng, 43.6426, -79.3871).toFixed(1)} km` : "1.5 km",
+          estimatedTime: userLocation ? `${Math.ceil(calculateDistance(userLocation.lat, userLocation.lng, 43.6426, -79.3871) * 2)} mins` : "18 mins",
+          profileImage: michaelProfile,
+          specialties: ["Color Specialist", "Curly Hair"],
+          price: 42,
+          isAvailable: true,
+          location: {
+            lat: 43.6426,
+            lng: -79.3871,
+            address: "Queen St W, Toronto"
+          }
+        },
+        {
+          id: "3",
+          name: "Emily Rodriguez", 
+          rating: 4.7,
+          reviewCount: 156,
+          distance: userLocation ? `${calculateDistance(userLocation.lat, userLocation.lng, 43.6591, -79.3656).toFixed(1)} km` : "2.3 km",
+          estimatedTime: userLocation ? `${Math.ceil(calculateDistance(userLocation.lat, userLocation.lng, 43.6591, -79.3656) * 2)} mins` : "25 mins",
+          profileImage: "https://images.unsplash.com/photo-1494790108755-2616c0763c6c?w=100&h=100&fit=crop&crop=face",
+          specialties: ["Layered Cut", "Styling"],
+          price: 38,
+          isAvailable: true,
+          location: {
+            lat: 43.6591,
+            lng: -79.3656,
+            address: "Yonge St, Toronto"
+          }
+        },
+        {
+          id: "4",
+          name: "Marcus Thompson",
+          rating: 4.6,
+          reviewCount: 94,
+          distance: userLocation ? `${calculateDistance(userLocation.lat, userLocation.lng, 43.6511, -79.3470).toFixed(1)} km` : "1.9 km",
+          estimatedTime: userLocation ? `${Math.ceil(calculateDistance(userLocation.lat, userLocation.lng, 43.6511, -79.3470) * 2)} mins` : "22 mins",
+          profileImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+          specialties: ["Men's Cuts", "Fade"],
+          price: 40,
+          isAvailable: true,
+          location: {
+            lat: 43.6511,
+            lng: -79.3470,
+            address: "Distillery District, Toronto"
+          }
+        },
+        {
+          id: "5",
+          name: "Jessica Kim",
+          rating: 4.9,
+          reviewCount: 203,
+          distance: userLocation ? `${calculateDistance(userLocation.lat, userLocation.lng, 43.6481, -79.3708).toFixed(1)} km` : "1.1 km",
+          estimatedTime: userLocation ? `${Math.ceil(calculateDistance(userLocation.lat, userLocation.lng, 43.6481, -79.3708) * 2)} mins` : "15 mins",
+          profileImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face",
+          specialties: ["Premium Cut", "Blowout"],
+          price: 48,
+          isAvailable: true,
+          location: {
+            lat: 43.6481,
+            lng: -79.3708,
+            address: "Entertainment District, Toronto"
+          }
+        },
+        {
+          id: "6",
+          name: "Aisha Johnson",
+          rating: 4.8,
+          reviewCount: 167,
+          distance: userLocation ? `${calculateDistance(userLocation.lat, userLocation.lng, 43.6677, -79.3948).toFixed(1)} km` : "2.8 km",
+          estimatedTime: userLocation ? `${Math.ceil(calculateDistance(userLocation.lat, userLocation.lng, 43.6677, -79.3948) * 2)} mins` : "28 mins",
+          profileImage: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=100&h=100&fit=crop&crop=face",
+          specialties: ["Natural Hair", "Protective Styles"],
+          price: 45,
+          isAvailable: true,
+          location: {
+            lat: 43.6677,
+            lng: -79.3948,
+            address: "Kensington Market, Toronto"
+          }
+        }
+      ] : [
+        // Los Angeles Stylists
         {
           id: "1",
           name: "Sarah Johnson",
@@ -81,9 +202,9 @@ export default function BookService() {
           price: 28,
           isAvailable: true,
           location: {
-            lat: userLocation ? userLocation.lat + 0.01 : 37.7849,
-            lng: userLocation ? userLocation.lng + 0.005 : -122.4144,
-            address: "Downtown Salon"
+            lat: 34.0522,
+            lng: -118.2437,
+            address: "Downtown LA"
           }
         },
         {
@@ -98,9 +219,9 @@ export default function BookService() {
           price: 32,
           isAvailable: true,
           location: {
-            lat: userLocation ? userLocation.lat - 0.008 : 37.7669,
-            lng: userLocation ? userLocation.lng - 0.012 : -122.4314,
-            address: "Mission District"
+            lat: 34.0736,
+            lng: -118.2400,
+            address: "Hollywood"
           }
         },
         {
@@ -115,9 +236,9 @@ export default function BookService() {
           price: 35,
           isAvailable: true,
           location: {
-            lat: userLocation ? userLocation.lat + 0.015 : 37.7899,
-            lng: userLocation ? userLocation.lng + 0.018 : -122.4014,
-            address: "Castro Street"
+            lat: 34.0259,
+            lng: -118.7798,
+            address: "Santa Monica"
           }
         },
         {
@@ -132,9 +253,9 @@ export default function BookService() {
           price: 38,
           isAvailable: true,
           location: {
-            lat: userLocation ? userLocation.lat - 0.012 : 37.7629,
-            lng: userLocation ? userLocation.lng + 0.008 : -122.4114,
-            address: "SOMA District"
+            lat: 34.0901,
+            lng: -118.3398,
+            address: "Beverly Hills"
           }
         },
         {
@@ -149,9 +270,9 @@ export default function BookService() {
           price: 42,
           isAvailable: true,
           location: {
-            lat: userLocation ? userLocation.lat + 0.005 : 37.7799,
-            lng: userLocation ? userLocation.lng - 0.003 : -122.4224,
-            address: "Union Square"
+            lat: 34.0928,
+            lng: -118.3287,
+            address: "West Hollywood"
           }
         },
         {
@@ -166,9 +287,9 @@ export default function BookService() {
           price: 45,
           isAvailable: true,
           location: {
-            lat: userLocation ? userLocation.lat + 0.018 : 37.7929,
-            lng: userLocation ? userLocation.lng + 0.015 : -122.4044,
-            address: "Nob Hill"
+            lat: 34.0195,
+            lng: -118.4912,
+            address: "Venice Beach"
           }
         }
       ];

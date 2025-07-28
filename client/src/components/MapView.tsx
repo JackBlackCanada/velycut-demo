@@ -30,56 +30,82 @@ interface MapViewProps {
 export default function MapView({ stylists, onStylistSelect }: MapViewProps) {
   const [selectedStylist, setSelectedStylist] = useState<Stylist | null>(null);
 
+  // Calculate positions based on real coordinates relative to center
+  const calculatePosition = (stylist: Stylist, stylists: Stylist[]) => {
+    if (!stylists.length) return { top: '50%', left: '50%' };
+    
+    // Find center point of all stylists
+    const centerLat = stylists.reduce((sum, s) => sum + s.location.lat, 0) / stylists.length;
+    const centerLng = stylists.reduce((sum, s) => sum + s.location.lng, 0) / stylists.length;
+    
+    // Calculate relative position (simplified projection)
+    const latRange = Math.max(...stylists.map(s => s.location.lat)) - Math.min(...stylists.map(s => s.location.lat));
+    const lngRange = Math.max(...stylists.map(s => s.location.lng)) - Math.min(...stylists.map(s => s.location.lng));
+    
+    const normalizedLat = latRange > 0 ? (stylist.location.lat - Math.min(...stylists.map(s => s.location.lat))) / latRange : 0.5;
+    const normalizedLng = lngRange > 0 ? (stylist.location.lng - Math.min(...stylists.map(s => s.location.lng))) / lngRange : 0.5;
+    
+    // Convert to percentages with some padding
+    const top = Math.max(10, Math.min(90, (1 - normalizedLat) * 80 + 10)) + '%';
+    const left = Math.max(10, Math.min(90, normalizedLng * 80 + 10)) + '%';
+    
+    return { top, left };
+  };
+
   return (
     <div className="relative">
-      {/* Simplified Map Container */}
-      <div className="bg-gray-100 rounded-lg h-64 relative overflow-hidden mb-4">
-        {/* Map Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-green-50">
-          {/* Street Grid Pattern */}
-          <svg className="absolute inset-0 w-full h-full opacity-20">
+      {/* Interactive Map Container */}
+      <div className="bg-gray-100 rounded-lg h-80 relative overflow-hidden mb-4 border">
+        {/* Map Background - Street Map Style */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100">
+          {/* Street Pattern */}
+          <svg className="absolute inset-0 w-full h-full opacity-15">
             <defs>
-              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#666" strokeWidth="1"/>
+              <pattern id="streets" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#333" strokeWidth="2"/>
+                <path d="M 30 0 L 30 60 M 0 30 L 60 30" fill="none" stroke="#666" strokeWidth="1"/>
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
+            <rect width="100%" height="100%" fill="url(#streets)" />
           </svg>
           
+          {/* Neighborhood Labels */}
+          <div className="absolute top-4 left-4 text-xs font-semibold text-gray-600 bg-white/80 px-2 py-1 rounded">
+            {stylists?.[0]?.location.address.includes('Toronto') ? 'Toronto, ON' : 'Los Angeles, CA'}
+          </div>
+          
           {/* Your Location */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="w-4 h-4 bg-blue-600 rounded-full border-2 border-white shadow-lg">
-              <div className="w-8 h-8 bg-blue-600 rounded-full opacity-30 absolute -top-2 -left-2 animate-pulse"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+            <div className="relative">
+              <div className="w-5 h-5 bg-blue-600 rounded-full border-3 border-white shadow-lg">
+                <div className="w-10 h-10 bg-blue-600 rounded-full opacity-20 absolute -top-2.5 -left-2.5 animate-ping"></div>
+              </div>
+              <div className="text-xs font-bold text-blue-600 mt-1 whitespace-nowrap bg-white/90 px-1 rounded">You</div>
             </div>
-            <div className="text-xs font-semibold text-blue-600 mt-1 whitespace-nowrap">You</div>
           </div>
           
           {/* Stylist Markers */}
-          {stylists?.map((stylist, index) => {
-            const positions = [
-              { top: '25%', left: '30%' },
-              { top: '40%', left: '65%' },
-              { top: '65%', left: '35%' },
-              { top: '30%', left: '75%' },
-              { top: '70%', left: '60%' },
-              { top: '55%', left: '20%' }
-            ];
-            const position = positions[index] || { top: '50%', left: '50%' };
+          {stylists?.map((stylist) => {
+            const position = calculatePosition(stylist, stylists);
             
             return (
               <div
                 key={stylist.id}
-                className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-20 transition-transform hover:scale-110"
                 style={{ top: position.top, left: position.left }}
                 onClick={() => setSelectedStylist(stylist)}
               >
                 <div className="relative">
-                  <div className="w-8 h-8 bg-purple-600 rounded-full border-2 border-white shadow-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-purple-600 rounded-full border-2 border-white shadow-lg flex items-center justify-center hover:bg-purple-700 transition-colors">
                     <span className="text-white text-xs font-bold">${stylist.price}</span>
                   </div>
                   {selectedStylist?.id === stylist.id && (
-                    <div className="w-12 h-12 bg-purple-600 rounded-full opacity-30 absolute -top-2 -left-2 animate-pulse"></div>
+                    <div className="w-14 h-14 bg-purple-600 rounded-full opacity-30 absolute -top-2 -left-2 animate-pulse"></div>
                   )}
+                  {/* Distance Line */}
+                  <svg className="absolute top-1/2 left-1/2 w-32 h-32 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-30">
+                    <line x1="64" y1="64" x2="64" y2="64" stroke="#6366f1" strokeWidth="2" strokeDasharray="4,4" />
+                  </svg>
                 </div>
               </div>
             );
