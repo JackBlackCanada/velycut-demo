@@ -50,9 +50,9 @@ export default function Landing() {
           }}
         />
         
-        {/* Minimal Bottom Overlay to Show All Family Members */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent" />
+        {/* Ultra-Light Overlay for Maximum Image Visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/20 to-transparent" />
         
         {/* Floating Navigation Menu - Responsive */}
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-20">
@@ -62,7 +62,7 @@ export default function Landing() {
         {/* Main Content - Bottom Layout to Show All Family Members */}
         <div className="relative z-10 min-h-screen flex items-end justify-center px-4 sm:px-6 md:px-8 pb-12 sm:pb-16 md:pb-20">
           {/* Enhanced Content Box - Bottom Center Position */}
-          <div className="backdrop-blur-md bg-gradient-to-t from-black/40 to-black/25 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/30 shadow-2xl w-full max-w-lg md:max-w-xl lg:max-w-2xl relative overflow-hidden text-center">
+          <div className="backdrop-blur-sm bg-gradient-to-t from-black/20 to-black/12 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/15 shadow-2xl w-full max-w-lg md:max-w-xl lg:max-w-2xl relative overflow-hidden text-center">
             {/* Subtle accent gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-3xl"></div>
             
