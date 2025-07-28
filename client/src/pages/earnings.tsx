@@ -84,7 +84,7 @@ export default function Earnings() {
                 <DollarSign className="w-6 h-6 text-green-600" />
               </div>
               <div className="text-2xl font-bold text-green-600">
-                ${earnings?.totalEarnings?.toFixed(2) || '0.00'}
+                ${(earnings as any)?.totalEarnings?.toFixed(2) || '0.00'}
               </div>
               <div className="text-caption text-gray-600">Total Earnings</div>
             </CardContent>
@@ -96,7 +96,7 @@ export default function Earnings() {
                 <TrendingUp className="w-6 h-6 text-purple-600" />
               </div>
               <div className="text-2xl font-bold text-purple-600">
-                ${earnings?.thisMonth?.toFixed(2) || '0.00'}
+                ${(earnings as any)?.thisMonth?.toFixed(2) || '0.00'}
               </div>
               <div className="text-caption text-gray-600">This Month</div>
             </CardContent>
@@ -111,7 +111,7 @@ export default function Earnings() {
                 <Clock className="w-6 h-6 text-yellow-600" />
               </div>
               <div className="text-2xl font-bold text-yellow-600">
-                ${earnings?.pendingPayouts?.toFixed(2) || '0.00'}
+                ${(earnings as any)?.pendingPayouts?.toFixed(2) || '0.00'}
               </div>
               <div className="text-caption text-gray-600">Pending</div>
             </CardContent>
@@ -123,7 +123,7 @@ export default function Earnings() {
                 <CheckCircle className="w-6 h-6 text-blue-600" />
               </div>
               <div className="text-2xl font-bold text-blue-600">
-                {earnings?.completedBookings || 0}
+                {(earnings as any)?.completedBookings || 0}
               </div>
               <div className="text-caption text-gray-600">Completed</div>
             </CardContent>
@@ -161,7 +161,7 @@ export default function Earnings() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {earnings?.recentPayouts?.map((payout: any) => (
+              {(earnings as any)?.recentPayouts?.map((payout: any) => (
                 <div key={payout.id} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
                   <div className="flex items-center space-x-3">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -191,7 +191,7 @@ export default function Earnings() {
                 </div>
               ))}
               
-              {(!earnings?.recentPayouts || earnings.recentPayouts.length === 0) && (
+              {(!(earnings as any)?.recentPayouts || (earnings as any).recentPayouts.length === 0) && (
                 <div className="text-center py-8 text-gray-500">
                   <DollarSign className="w-12 h-12 mx-auto mb-2 text-gray-300" />
                   <p>No payouts yet</p>

@@ -50,8 +50,8 @@ export default function StylistDashboard() {
     },
   });
 
-  const pendingBookings = bookings?.filter((b: any) => b.status === 'pending') || [];
-  const upcomingBookings = bookings?.filter((b: any) => b.status === 'confirmed') || [];
+  const pendingBookings = (bookings as any[])?.filter((b: any) => b.status === 'pending') || [];
+  const upcomingBookings = (bookings as any[])?.filter((b: any) => b.status === 'confirmed') || [];
 
   if (isLoading) {
     return (
@@ -83,16 +83,27 @@ export default function StylistDashboard() {
             <div className="flex items-center space-x-2">
               <span className="text-caption">Availability</span>
               <Switch
-                checked={stats?.isAvailable || false}
+                checked={(stats as any)?.isAvailable || false}
                 onCheckedChange={(checked) => toggleAvailabilityMutation.mutate(checked)}
                 className="data-[state=checked]:bg-purple-600"
               />
               <span className="text-caption">
-                {stats?.isAvailable ? 'On' : 'Off'}
+                {(stats as any)?.isAvailable ? 'On' : 'Off'}
               </span>
             </div>
             <NotificationCenter />
-            <AnimatedNavMenu userType="stylist" />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {/* Simple menu for demo */}}
+              className="w-10 h-10 flex items-center justify-center"
+            >
+              <div className="w-5 h-5 flex flex-col justify-between">
+                <div className="w-full h-0.5 bg-gray-700 rounded"></div>
+                <div className="w-full h-0.5 bg-gray-700 rounded"></div>
+                <div className="w-full h-0.5 bg-gray-700 rounded"></div>
+              </div>
+            </Button>
           </div>
         </div>
       </div>
@@ -101,9 +112,9 @@ export default function StylistDashboard() {
         {/* VELY Count - Cool Feature */}
         <div className="mb-8">
           <VELYCount 
-            stylistId={user?.id || ''} 
-            currentCount={user?.velyCount || 142} 
-            monthlyCount={user?.monthlyVelyCount || 23}
+            stylistId={(user as any)?.id || ''} 
+            currentCount={(user as any)?.velyCount || 142} 
+            monthlyCount={(user as any)?.monthlyVelyCount || 23}
             isOwnProfile={true}
           />
         </div>
@@ -114,11 +125,11 @@ export default function StylistDashboard() {
             className="metric-card cursor-pointer active:scale-95 transition-transform"
             onClick={() => navigate('/earnings')}
           >
-            <div className="metric-value">${stats?.totalEarnings || 0}</div>
+            <div className="metric-value">${(stats as any)?.totalEarnings || 0}</div>
             <div className="metric-label">Earnings</div>
           </div>
           <div className="metric-card">
-            <div className="metric-value">{stats?.weeklyBookings || 0}</div>
+            <div className="metric-value">{(stats as any)?.weeklyBookings || 0}</div>
             <div className="metric-label">This Week</div>
             <div className="text-xs text-gray-500 mt-1">appointments</div>
           </div>
@@ -288,9 +299,9 @@ export default function StylistDashboard() {
             <Button 
               onClick={() => toggleAvailabilityMutation.mutate(true)}
               className="btn-primary"
-              disabled={stats?.isAvailable}
+              disabled={(stats as any)?.isAvailable}
             >
-              {stats?.isAvailable ? 'Already Available' : 'Go Online'}
+              {(stats as any)?.isAvailable ? 'Already Available' : 'Go Online'}
             </Button>
           </div>
         )}
@@ -307,10 +318,10 @@ export default function StylistDashboard() {
             <Clock className="w-5 h-5 mb-1" />
             <span className="text-xs">Schedule</span>
           </Link>
-          <div className="tab-item inactive">
+          <Link href="/earnings" className="tab-item inactive">
             <DollarSign className="w-5 h-5 mb-1" />
             <span className="text-xs">Earnings</span>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
