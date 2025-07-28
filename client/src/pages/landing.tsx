@@ -59,15 +59,20 @@ export default function Landing() {
           <AnimatedNavMenu />
         </div>
 
+        {/* Floating Elements for Visual Interest */}
+        <div className="absolute top-1/4 left-8 w-2 h-2 bg-purple-400/30 rounded-full animate-pulse hidden md:block"></div>
+        <div className="absolute top-1/3 right-16 w-3 h-3 bg-pink-400/30 rounded-full animate-pulse hidden lg:block" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-1/3 left-12 w-1.5 h-1.5 bg-blue-400/30 rounded-full animate-pulse hidden md:block" style={{animationDelay: '2s'}}></div>
+
         {/* Main Content - Bottom Layout to Show All Family Members */}
         <div className="relative z-10 min-h-screen flex items-end justify-center px-4 sm:px-6 md:px-8 pb-12 sm:pb-16 md:pb-20">
           {/* Enhanced Content Box - Bottom Center Position */}
-          <div className="backdrop-blur-sm bg-gradient-to-t from-black/20 to-black/12 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/15 shadow-2xl w-full max-w-lg md:max-w-xl lg:max-w-2xl relative overflow-hidden text-center">
+          <div className="backdrop-blur-sm bg-gradient-to-t from-black/20 to-black/12 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/15 shadow-2xl w-full max-w-lg md:max-w-xl lg:max-w-2xl relative overflow-hidden text-center content-shine">
             {/* Subtle accent gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-3xl"></div>
             
             <div className="relative z-10">
-              <img src={logoPath} alt="VELY" className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-4 sm:mb-6 mx-auto drop-shadow-lg" />
+              <img src={logoPath} alt="VELY" className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-4 sm:mb-6 mx-auto drop-shadow-lg float-animation" />
               
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 text-white drop-shadow-2xl">
                 VELY
@@ -83,28 +88,37 @@ export default function Landing() {
                 Professional styling in the comfort of your home. Quality haircuts for the whole family.
               </p>
 
-              {/* Compact Layout with Button and Trust Indicators */}
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+              {/* Enhanced CTA with Social Proof */}
+              <div className="space-y-4">
                 <Button 
                   onClick={() => setShowUserTypeModal(true)}
-                  className="btn-primary w-full md:w-auto px-8 py-3 sm:py-4 text-base sm:text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 border-0 rounded-2xl font-semibold"
+                  className="btn-primary w-full px-8 py-4 text-base sm:text-lg shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 hover:scale-105 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 border-0 rounded-2xl font-semibold relative overflow-hidden group"
                 >
-                  Get Started Today
+                  <span className="relative z-10">Get Started Today</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-pink-400/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                 </Button>
                 
-                {/* Compact Trust indicators */}
-                <div className="flex items-center space-x-4 text-white/80 text-xs sm:text-sm">
-                  <div className="flex items-center space-x-1">
-                    <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                    <span>Licensed</span>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-white/85">
+                  {/* Trust indicators with enhanced styling */}
+                  <div className="flex items-center space-x-4 text-xs sm:text-sm">
+                    <div className="flex items-center space-x-1.5">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="font-medium">Licensed Stylists</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                      <span className="font-medium">Same-Day Service</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5">
+                      <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+                      <span className="font-medium">All Ages Welcome</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
-                    <span>Same-Day</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
-                    <span>All Ages</span>
+                  
+                  {/* Social proof */}
+                  <div className="text-xs sm:text-sm font-medium text-white/70 flex items-center space-x-1">
+                    <span>⭐⭐⭐⭐⭐</span>
+                    <span>4.9/5 from 500+ families</span>
                   </div>
                 </div>
               </div>
@@ -125,31 +139,43 @@ export default function Landing() {
           <div className="space-y-4">
             <div 
               onClick={() => navigate('/book-service')}
-              className="ios-card cursor-pointer active:scale-95 transition-all duration-150"
+              className="ios-card cursor-pointer active:scale-95 transition-all duration-300 hover:shadow-lg hover:shadow-purple-100 border border-purple-100 hover:border-purple-200 group"
             >
-              <div className="ios-card-content text-center py-8">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">✂️</span>
+              <div className="ios-card-content text-center py-8 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                <div className="relative z-10">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-3xl">✂️</span>
+                  </div>
+                  <h3 className="text-headline mb-2 font-bold text-gray-800">Book a Haircut</h3>
+                  <p className="text-body font-medium text-gray-600">
+                    Starting at $28 • On-demand service
+                  </p>
+                  <div className="mt-3 text-xs text-purple-600 font-semibold">
+                    Available in 15+ cities
+                  </div>
                 </div>
-                <h3 className="text-headline mb-2">Book a Haircut</h3>
-                <p className="text-body">
-                  Starting at $28 • On-demand service
-                </p>
               </div>
             </div>
 
             <div 
               onClick={() => handleUserTypeSelection('stylist')}
-              className="ios-card cursor-pointer active:scale-95 transition-all duration-150"
+              className="ios-card cursor-pointer active:scale-95 transition-all duration-300 hover:shadow-lg hover:shadow-green-100 border border-green-100 hover:border-green-200 group"
             >
-              <div className="ios-card-content text-center py-8">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">💼</span>
+              <div className="ios-card-content text-center py-8 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-50 opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                <div className="relative z-10">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-3xl">💼</span>
+                  </div>
+                  <h3 className="text-headline mb-2 font-bold text-gray-800">Become a Stylist</h3>
+                  <p className="text-body font-medium text-gray-600">
+                    Earn up to $75/hour • Flexible schedule
+                  </p>
+                  <div className="mt-3 text-xs text-green-600 font-semibold">
+                    Join 200+ professional stylists
+                  </div>
                 </div>
-                <h3 className="text-headline mb-2">Become a Stylist</h3>
-                <p className="text-body">
-                  Grow your business with VELY
-                </p>
               </div>
             </div>
           </div>
