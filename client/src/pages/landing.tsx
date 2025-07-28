@@ -145,11 +145,15 @@ export default function Landing() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-50 group-hover:opacity-70 transition-opacity"></div>
                 <div className="relative z-10">
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-3xl">✂️</span>
+                    <img 
+                      src="/attached_assets/booking icon_1753674957768.png" 
+                      alt="Book a Haircut" 
+                      className="w-8 h-8 filter brightness-0 invert"
+                    />
                   </div>
                   <h3 className="text-headline mb-2 font-bold text-gray-800">Book a Haircut</h3>
                   <p className="text-body font-medium text-gray-600">
-                    Starting at $28 • On-demand service
+                    Starting at $20 • On-demand service
                   </p>
                   <div className="mt-3 text-xs text-purple-600 font-semibold">
                     Available in 15+ cities
@@ -166,11 +170,15 @@ export default function Landing() {
                 <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-50 opacity-50 group-hover:opacity-70 transition-opacity"></div>
                 <div className="relative z-10">
                   <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-3xl">💼</span>
+                    <img 
+                      src="/attached_assets/Join as a Stylist ICON_1753674957768.png" 
+                      alt="Register as a Stylist" 
+                      className="w-8 h-8 filter brightness-0 invert"
+                    />
                   </div>
-                  <h3 className="text-headline mb-2 font-bold text-gray-800">Become a Stylist</h3>
+                  <h3 className="text-headline mb-2 font-bold text-gray-800">Register as a Stylist</h3>
                   <p className="text-body font-medium text-gray-600">
-                    Earn up to $75/hour • Flexible schedule
+                    Earn up to $125/hour • Flexible schedule
                   </p>
                   <div className="mt-3 text-xs text-green-600 font-semibold">
                     Join 200+ professional stylists
