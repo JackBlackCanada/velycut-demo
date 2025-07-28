@@ -147,12 +147,14 @@ export default function Landing() {
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-all duration-300 relative overflow-hidden">
                     {/* Animated background sparkle effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                    <div className="relative z-10 p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                    <div className="relative z-10 p-2 bg-white/10 rounded-lg backdrop-blur-sm group-hover:bg-white/20 transition-all duration-300">
                       <img 
-                        src="/attached_assets/booking icon_1753674957768.png" 
+                        src="/attached_assets/booking icon_1753675188737.png" 
                         alt="Book a Haircut" 
-                        className="w-8 h-8 filter brightness-0 invert drop-shadow-sm group-hover:drop-shadow-md transition-all duration-300"
+                        className="w-8 h-8 filter brightness-0 invert drop-shadow-sm group-hover:drop-shadow-md transition-all duration-300 group-hover:scale-105"
                       />
+                      {/* Subtle glow effect behind icon */}
+                      <div className="absolute inset-0 bg-purple-200/30 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     {/* Subtle rotating border effect */}
                     <div className="absolute inset-0 rounded-full border-2 border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
