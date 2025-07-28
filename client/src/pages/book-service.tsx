@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar, MapPin, Star, Clock, User, Phone, Home } from "luc
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import MapView from "@/components/MapView";
+import FloatingNavButton from "@/components/FloatingNavButton";
 
 interface Stylist {
   id: string;

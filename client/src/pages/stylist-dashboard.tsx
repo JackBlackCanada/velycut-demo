@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useLocation } from "wouter";
+import AnimatedNavMenu from "@/components/AnimatedNavMenu";
 // Using simple text logo for now
 
 export default function StylistDashboard() {
@@ -88,6 +89,7 @@ export default function StylistDashboard() {
                 {stats?.isAvailable ? 'On' : 'Off'}
               </span>
             </div>
+            <AnimatedNavMenu userType="stylist" />
           </div>
         </div>
       </div>

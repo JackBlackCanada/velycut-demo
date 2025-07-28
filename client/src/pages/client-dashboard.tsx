@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Star, Clock, Plus, Settings, Gift, Home, Search, User, ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
+import AnimatedNavMenu from "@/components/AnimatedNavMenu";
 // Using simple text logo for now
 const logoPath = null;
 
@@ -52,9 +53,7 @@ export default function ClientDashboard() {
             <div className="text-xl font-bold text-purple-600">VELY</div>
           </div>
           <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon">
-              <Settings className="w-5 h-5" />
-            </Button>
+            <AnimatedNavMenu userType="client" />
             <Avatar className="w-8 h-8">
               <AvatarImage src={user?.profileImageUrl} />
               <AvatarFallback>

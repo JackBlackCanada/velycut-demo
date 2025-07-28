@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
+import AnimatedNavMenu from "@/components/AnimatedNavMenu";
 import logoPath from "@assets/logo_1753651837767.png";
 
 export default function Landing() {
@@ -52,13 +53,16 @@ export default function Landing() {
         <div className="app-header bg-transparent border-b-0 relative z-10">
           <div className="flex items-center justify-between">
             <img src={logoPath} alt="VELY" className="logo-large" />
-            <Button 
-              variant="ghost" 
-              onClick={() => window.location.href = '/api/login'}
-              className="text-white hover:bg-white/10"
-            >
-              Sign In
-            </Button>
+            <div className="flex items-center space-x-3">
+              <Button 
+                variant="ghost" 
+                onClick={() => window.location.href = '/api/login'}
+                className="text-white hover:bg-white/10"
+              >
+                Sign In
+              </Button>
+              <AnimatedNavMenu />
+            </div>
           </div>
         </div>
 
