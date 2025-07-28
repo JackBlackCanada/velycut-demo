@@ -5,6 +5,12 @@ import { ArrowLeft, Trophy, Upload, Heart, Share2, Clock, Crown, Star, Camera, U
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import logoPath from "@assets/logo_1753651837767.png";
+import example1 from "@assets/example 1_1753666813525.jpg";
+import example3 from "@assets/example 3_1753666813526.jpg";
+import example5 from "@assets/example 5_1753666813526.jpg";
+import example6 from "@assets/example 6_1753666813527.jpg";
+import example7 from "@assets/example 7_1753666813527.jpg";
+import example8 from "@assets/example 8_1753666813527.jpg";
 
 export default function Competition() {
   const [, navigate] = useLocation();
@@ -31,7 +37,7 @@ export default function Competition() {
       customerName: 'Sarah M.',
       stylistName: 'Maria Rodriguez',
       city: 'Toronto, ON',
-      imageUrl: '/attached_assets/example 1_1753666813525.jpg',
+      imageUrl: example1,
       voteCount: 342,
       status: 'approved',
       isWinner: false,
@@ -43,7 +49,7 @@ export default function Competition() {
       customerName: 'Sophia L.',
       stylistName: 'David Wilson',
       city: 'Los Angeles, CA',
-      imageUrl: '/attached_assets/example 3_1753666813526.jpg',
+      imageUrl: example3,
       voteCount: 298,
       status: 'featured',
       isWinner: false,
@@ -55,7 +61,7 @@ export default function Competition() {
       customerName: 'Liam K.',
       stylistName: 'Jessica Chen',
       city: 'Toronto, ON',
-      imageUrl: '/attached_assets/example 5_1753666813526.jpg',
+      imageUrl: example5,
       voteCount: 276,
       status: 'approved',
       isWinner: false,
@@ -67,7 +73,7 @@ export default function Competition() {
       customerName: 'Marcus T.',
       stylistName: 'Marcus Johnson',
       city: 'Los Angeles, CA',
-      imageUrl: '/attached_assets/example 6_1753666813527.jpg',
+      imageUrl: example6,
       voteCount: 189,
       status: 'approved',
       isWinner: false,
@@ -79,7 +85,7 @@ export default function Competition() {
       customerName: 'Isabella R.',
       stylistName: 'Amanda Foster',
       city: 'Toronto, ON',
-      imageUrl: '/attached_assets/example 7_1753666813527.jpg',
+      imageUrl: example7,
       voteCount: 167,
       status: 'approved',
       isWinner: false,
@@ -91,7 +97,7 @@ export default function Competition() {
       customerName: 'Zara B.',
       stylistName: 'Carlos Martinez',
       city: 'Los Angeles, CA',
-      imageUrl: '/attached_assets/example 8_1753666813527.jpg',
+      imageUrl: example8,
       voteCount: 143,
       status: 'approved',
       isWinner: false,
