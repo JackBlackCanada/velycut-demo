@@ -10,6 +10,8 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useLocation, Link } from "wouter";
 import AnimatedNavMenu from "@/components/AnimatedNavMenu";
+import VELYCount from "@/components/VELYCount";
+import NotificationCenter from "@/components/NotificationCenter";
 // Using simple text logo for now
 
 export default function StylistDashboard() {
@@ -89,12 +91,23 @@ export default function StylistDashboard() {
                 {stats?.isAvailable ? 'On' : 'Off'}
               </span>
             </div>
+            <NotificationCenter />
             <AnimatedNavMenu userType="stylist" />
           </div>
         </div>
       </div>
 
       <div className="app-content">
+        {/* VELY Count - Cool Feature */}
+        <div className="mb-8">
+          <VELYCount 
+            stylistId={user?.id || ''} 
+            currentCount={user?.velyCount || 142} 
+            monthlyCount={user?.monthlyVelyCount || 23}
+            isOwnProfile={true}
+          />
+        </div>
+
         {/* Stats Cards - Matches Dashboard Mockup */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div 

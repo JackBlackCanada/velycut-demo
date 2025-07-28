@@ -34,6 +34,18 @@ export const users = pgTable("users", {
   stripeAccountId: varchar("stripe_account_id"),
   stripeAccountStatus: varchar("stripe_account_status").default("pending"), // pending, active, restricted, inactive
   stripeOnboardingCompleted: boolean("stripe_onboarding_completed").default(false),
+  
+  // Verification and onboarding fields
+  verificationStatus: varchar("verification_status").default("pending"), // pending, in-progress, approved, rejected
+  backgroundCheckStatus: varchar("background_check_status").default("pending"),
+  identityVerified: boolean("identity_verified").default(false),
+  backgroundCheckCompleted: boolean("background_check_completed").default(false),
+  onboardingCompleted: boolean("onboarding_completed").default(false),
+  
+  // VELY Count - total cuts completed on platform
+  velyCount: integer("vely_count").default(0),
+  monthlyVelyCount: integer("monthly_vely_count").default(0),
+  
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
