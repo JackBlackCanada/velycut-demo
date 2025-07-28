@@ -114,8 +114,8 @@ export default function ScheduleManagement() {
   });
 
   useEffect(() => {
-    if (scheduleData?.availability) {
-      setWeeklySchedule(scheduleData.availability);
+    if (scheduleData && typeof scheduleData === 'object' && 'availability' in scheduleData && scheduleData.availability) {
+      setWeeklySchedule(scheduleData.availability as AvailabilitySlot[]);
     } else {
       // Initialize with default empty schedule
       const defaultSchedule: AvailabilitySlot[] = [];
@@ -336,9 +336,9 @@ export default function ScheduleManagement() {
             </CardTitle>
           </CardHeader>
           <CardContent className="ios-card-content">
-            {scheduleData?.timeOff?.length > 0 ? (
+            {scheduleData && typeof scheduleData === 'object' && 'timeOff' in scheduleData && Array.isArray(scheduleData.timeOff) && scheduleData.timeOff.length > 0 ? (
               <div className="space-y-3">
-                {scheduleData.timeOff.map((timeOff: TimeOff) => (
+                {(scheduleData.timeOff as TimeOff[]).map((timeOff: TimeOff) => (
                   <div key={timeOff.id} className="flex items-center justify-between p-3 bg-orange-50 rounded-lg border border-orange-200">
                     <div className="flex-1">
                       <div className="text-body font-medium">

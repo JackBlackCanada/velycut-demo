@@ -99,18 +99,26 @@ export default function MapView({ stylists, onStylistSelect }: MapViewProps) {
     <div className="relative">
       {/* Interactive Map Container */}
       <div className="bg-gray-100 rounded-lg h-80 relative overflow-hidden mb-4 border">
-        {/* Map Background - Street Map Style */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100">
-          {/* Street Pattern */}
-          <svg className="absolute inset-0 w-full h-full opacity-15">
-            <defs>
-              <pattern id="streets" width="60" height="60" patternUnits="userSpaceOnUse">
-                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#333" strokeWidth="2"/>
-                <path d="M 30 0 L 30 60 M 0 30 L 60 30" fill="none" stroke="#666" strokeWidth="1"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#streets)" />
-          </svg>
+        {/* Map Background - Realistic Map Style */}
+        <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-blue-50">
+          {/* Natural Map Features */}
+          <div className="absolute inset-0">
+            {/* Water bodies */}
+            <div className="absolute top-8 right-8 w-16 h-12 bg-blue-200 rounded-full opacity-60"></div>
+            <div className="absolute bottom-12 left-12 w-20 h-8 bg-blue-200 rounded-lg opacity-60"></div>
+            
+            {/* Parks/Green spaces */}
+            <div className="absolute top-16 left-16 w-12 h-12 bg-green-200 rounded-lg opacity-60"></div>
+            <div className="absolute bottom-20 right-20 w-14 h-10 bg-green-200 rounded-full opacity-60"></div>
+            
+            {/* Road lines - simplified organic roads */}
+            <svg className="absolute inset-0 w-full h-full opacity-20">
+              <path d="M 0 50 Q 80 30, 160 50 T 320 60" fill="none" stroke="#666" strokeWidth="3"/>
+              <path d="M 30 0 Q 50 80, 70 160 T 80 320" fill="none" stroke="#666" strokeWidth="2"/>
+              <path d="M 0 120 Q 60 110, 120 120 T 240 130" fill="none" stroke="#888" strokeWidth="2"/>
+              <path d="M 200 0 Q 210 60, 220 120 T 240 240" fill="none" stroke="#888" strokeWidth="2"/>
+            </svg>
+          </div>
           
           {/* Neighborhood Labels */}
           <div className="absolute top-4 left-4 text-xs font-semibold text-gray-600 bg-white/80 px-2 py-1 rounded shadow-sm">
@@ -150,11 +158,16 @@ export default function MapView({ stylists, onStylistSelect }: MapViewProps) {
                 onClick={() => setSelectedStylist(stylist)}
               >
                 <div className="relative">
-                  <div className={`w-12 h-12 rounded-full border-3 border-white shadow-lg flex items-center justify-center transition-colors ${
-                    selectedStylist?.id === stylist.id ? 'bg-purple-700 scale-110' : 'bg-purple-600 hover:bg-purple-700'
+                  <div className={`w-10 h-10 rounded-full border-2 border-white shadow-lg flex items-center justify-center transition-all duration-200 ${
+                    selectedStylist?.id === stylist.id ? 'bg-purple-700 scale-125' : stylist.isAvailable ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-400'
                   }`}>
                     <span className="text-white text-xs font-bold">${stylist.price}</span>
                   </div>
+                  
+                  {/* Availability indicator */}
+                  {stylist.isAvailable && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border border-white"></div>
+                  )}
                   {selectedStylist?.id === stylist.id && (
                     <div className="w-16 h-16 bg-purple-600 rounded-full opacity-20 absolute -top-2 -left-2 animate-pulse"></div>
                   )}

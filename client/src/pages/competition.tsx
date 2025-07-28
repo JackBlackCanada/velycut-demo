@@ -124,7 +124,7 @@ export default function Competition() {
         : entry
     ));
 
-    setVotedEntries(prev => new Set([...prev, entryId]));
+    setVotedEntries(prev => new Set(Array.from(prev).concat(entryId)));
     
     toast({
       title: "Vote Submitted!",
