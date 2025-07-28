@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Star, MapPin, Home } from "lucide-react";
 import BookingModal from "@/components/booking-modal";
 import logoPath from "@assets/logo_1753651837767.png";
+import sarahProfile from "@assets/Asian famliy_1753662896690.png";
+import jamesProfile from "@assets/Business scene indian lady office_1753660854288.png";
 
 export default function SearchStylists() {
   const [, navigate] = useLocation();
@@ -79,10 +81,10 @@ export default function SearchStylists() {
         <div className="space-y-4">
           {/* Sample Stylists matching mockup */}
           {[
-            { name: "Sarah", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=100&h=100&fit=crop&crop=face" },
-            { name: "James", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" },
-            { name: "Emily", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face" },
-            { name: "Daniel", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" }
+            { name: "Sarah", title: "Experienced stylist", avatar: sarahProfile },
+            { name: "Priya", title: "Experienced stylist", avatar: jamesProfile },
+            { name: "Emily", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1494790108755-2616c0763c6c?w=100&h=100&fit=crop&crop=face" },
+            { name: "Marcus", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" }
           ].map((stylist, index) => (
             <div key={index} className="ios-list-item">
               <Avatar className="w-12 h-12 mr-4">

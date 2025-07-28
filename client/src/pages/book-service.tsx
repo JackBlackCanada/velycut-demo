@@ -8,6 +8,8 @@ import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import MapView from "@/components/MapView";
 import FloatingNavButton from "@/components/FloatingNavButton";
+import sarahProfile from "@assets/Asian famliy_1753662896690.png";
+import michaelProfile from "@assets/Business scene indian lady office_1753660854288.png";
 
 interface Stylist {
   id: string;
@@ -74,7 +76,7 @@ export default function BookService() {
           reviewCount: 127,
           distance: "0.8 mi",
           estimatedTime: "12 mins",
-          profileImage: "",
+          profileImage: sarahProfile,
           specialties: ["Basic Cut", "Wash & Style"],
           price: 28,
           isAvailable: true,
@@ -86,13 +88,13 @@ export default function BookService() {
         },
         {
           id: "2", 
-          name: "Michael Chen",
+          name: "Priya Patel",
           rating: 4.8,
           reviewCount: 89,
           distance: "1.2 mi",
           estimatedTime: "18 mins",
-          profileImage: "",
-          specialties: ["Men's Cuts", "Beard Trim"],
+          profileImage: michaelProfile,
+          specialties: ["Color Specialist", "Curly Hair"],
           price: 32,
           isAvailable: true,
           location: {
@@ -108,7 +110,7 @@ export default function BookService() {
           reviewCount: 156,
           distance: "2.1 mi",
           estimatedTime: "25 mins",
-          profileImage: "",
+          profileImage: "https://images.unsplash.com/photo-1494790108755-2616c0763c6c?w=100&h=100&fit=crop&crop=face",
           specialties: ["Layered Cut", "Styling"],
           price: 35,
           isAvailable: true,
@@ -120,13 +122,13 @@ export default function BookService() {
         },
         {
           id: "4",
-          name: "David Park",
+          name: "Marcus Thompson",
           rating: 4.6,
           reviewCount: 94,
           distance: "1.8 mi",
           estimatedTime: "22 mins",
-          profileImage: "",
-          specialties: ["Precision Cut", "Fade"],
+          profileImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+          specialties: ["Men's Cuts", "Fade"],
           price: 38,
           isAvailable: true,
           location: {
@@ -142,7 +144,7 @@ export default function BookService() {
           reviewCount: 203,
           distance: "0.6 mi",
           estimatedTime: "10 mins",
-          profileImage: "",
+          profileImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face",
           specialties: ["Premium Cut", "Blowout"],
           price: 42,
           isAvailable: true,
@@ -154,13 +156,13 @@ export default function BookService() {
         },
         {
           id: "6",
-          name: "Alex Thompson",
+          name: "Aisha Johnson",
           rating: 4.8,
           reviewCount: 167,
           distance: "2.4 mi", 
           estimatedTime: "28 mins",
-          profileImage: "",
-          specialties: ["Luxury Cut", "Deep Conditioning"],
+          profileImage: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=100&h=100&fit=crop&crop=face",
+          specialties: ["Natural Hair", "Protective Styles"],
           price: 45,
           isAvailable: true,
           location: {
