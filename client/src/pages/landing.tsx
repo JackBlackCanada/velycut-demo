@@ -50,60 +50,62 @@ export default function Landing() {
           }}
         />
         
-        {/* Minimal Overlay for Maximum Image Visibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent md:from-black/50 md:via-black/10 md:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30" />
+        {/* Minimal Bottom Overlay to Show All Family Members */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent" />
         
         {/* Floating Navigation Menu - Responsive */}
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-20">
           <AnimatedNavMenu />
         </div>
 
-        {/* Main Content - Side Layout for Better Image Visibility */}
-        <div className="relative z-10 min-h-screen flex items-end md:items-center px-4 sm:px-6 md:px-8 pb-16 sm:pb-20 md:pb-0">
-          {/* Enhanced Content Box - Positioned to Left on Desktop */}
-          <div className="backdrop-blur-md bg-gradient-to-b from-black/30 to-black/40 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/30 shadow-2xl w-full md:w-96 lg:w-[420px] md:ml-8 lg:ml-12 xl:ml-16 relative overflow-hidden text-center md:text-left">
+        {/* Main Content - Bottom Layout to Show All Family Members */}
+        <div className="relative z-10 min-h-screen flex items-end justify-center px-4 sm:px-6 md:px-8 pb-12 sm:pb-16 md:pb-20">
+          {/* Enhanced Content Box - Bottom Center Position */}
+          <div className="backdrop-blur-md bg-gradient-to-t from-black/40 to-black/25 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/30 shadow-2xl w-full max-w-lg md:max-w-xl lg:max-w-2xl relative overflow-hidden text-center">
             {/* Subtle accent gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-3xl"></div>
             
             <div className="relative z-10">
-              <img src={logoPath} alt="VELY" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-6 sm:mb-8 mx-auto md:mx-0 drop-shadow-lg" />
+              <img src={logoPath} alt="VELY" className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 mb-4 sm:mb-6 mx-auto drop-shadow-lg" />
               
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 text-white drop-shadow-2xl">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 text-white drop-shadow-2xl">
                 VELY
               </h1>
               
-              <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto md:mx-0 mb-6 sm:mb-8"></div>
+              <div className="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mb-4 sm:mb-6"></div>
               
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-4 sm:mb-6 text-white/95 leading-tight">
+              <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-3 sm:mb-4 text-white/95 leading-tight">
                 Professional Styling at Your Location
               </h2>
               
-              <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 sm:mb-10 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-8 leading-relaxed">
                 Professional styling in the comfort of your home. Quality haircuts for the whole family.
               </p>
 
-              {/* Enhanced CTA Button */}
-              <Button 
-                onClick={() => setShowUserTypeModal(true)}
-                className="btn-primary w-full text-base sm:text-lg md:text-xl py-4 sm:py-5 shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 border-0 rounded-2xl font-semibold"
-              >
-                Get Started Today
-              </Button>
-              
-              {/* Trust indicators */}
-              <div className="flex items-center justify-center space-x-6 mt-6 sm:mt-8 text-white/80 text-xs sm:text-sm">
-                <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>Licensed Stylists</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span>Same-Day Service</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                  <span>All Ages</span>
+              {/* Compact Layout with Button and Trust Indicators */}
+              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                <Button 
+                  onClick={() => setShowUserTypeModal(true)}
+                  className="btn-primary w-full md:w-auto px-8 py-3 sm:py-4 text-base sm:text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 border-0 rounded-2xl font-semibold"
+                >
+                  Get Started Today
+                </Button>
+                
+                {/* Compact Trust indicators */}
+                <div className="flex items-center space-x-4 text-white/80 text-xs sm:text-sm">
+                  <div className="flex items-center space-x-1">
+                    <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                    <span>Licensed</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                    <span>Same-Day</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
+                    <span>All Ages</span>
+                  </div>
                 </div>
               </div>
             </div>
