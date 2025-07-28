@@ -17,6 +17,10 @@ import StylistOnboarding from "@/pages/stylist-onboarding";
 import Earnings from "@/pages/earnings";
 import BookService from "@/pages/book-service";
 import About from "@/pages/about";
+import Profile from "@/pages/profile";
+import Settings from "@/pages/settings";
+import Contact from "@/pages/contact";
+import Bookings from "@/pages/bookings";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -36,6 +40,10 @@ function Router() {
       <Route path="/earnings" component={Earnings} />
       <Route path="/book-service" component={BookService} />
       <Route path="/about" component={About} />
+      <Route path="/profile" component={Profile} />
+      <Route path="/settings" component={Settings} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/bookings" component={Bookings} />
       <Route component={NotFound} />
     </Switch>
   );
