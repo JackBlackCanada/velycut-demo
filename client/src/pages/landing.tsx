@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
 import AnimatedNavMenu from "@/components/AnimatedNavMenu";
 import logoPath from "@assets/logo_1753651837767.png";
-import heroImagePath from "@assets/Business scene indian lady office_1753660854288.png";
+import heroImagePath from "@assets/Asian famliy_1753662896690.png";
 
 export default function Landing() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -50,8 +50,8 @@ export default function Landing() {
           }}
         />
         
-        {/* Subtle Gradient Overlay - More Image Visible */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
+        {/* Warm Overlay to Complement Family Image */}
+        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/20 via-transparent to-black/60" />
         
         {/* Floating Navigation Menu - Responsive */}
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-20">
@@ -60,7 +60,7 @@ export default function Landing() {
 
         {/* Main Content - Positioned to Show More Image */}
         <div className="relative z-10 flex flex-col items-center justify-end min-h-screen text-center px-4 sm:px-6 md:px-8 pb-20 sm:pb-24 md:pb-32">
-          <div className="backdrop-blur-sm bg-black/15 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/20 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg">
+          <div className="backdrop-blur-sm bg-black/20 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/25 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg">
             <img src={logoPath} alt="VELY" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-6 sm:mb-8 mx-auto" />
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white drop-shadow-xl">
@@ -72,7 +72,7 @@ export default function Landing() {
             </h2>
             
             <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 sm:mb-10 leading-relaxed">
-              Book expert stylists who come to you. Quality haircuts and styling services wherever you are.
+              Professional styling in the comfort of your home. Quality haircuts for the whole family.
             </p>
 
             <Button 
