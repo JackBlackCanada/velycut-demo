@@ -21,6 +21,7 @@ import {
 import { useLocation } from "wouter";
 import WeatherIntegration from "./WeatherIntegration";
 import PhotoUploadBooking from "./PhotoUploadBooking";
+import AddOnServicesStep from "./AddOnServicesStep";
 
 interface SmartBookingWizardProps {
   stylistId: string;
@@ -47,6 +48,7 @@ export default function SmartBookingWizard({ stylistId, stylist }: SmartBookingW
   const [currentStep, setCurrentStep] = useState(0);
   const [bookingData, setBookingData] = useState<any>({
     services: [],
+    addOnServices: [],
     datetime: null,
     location: '',
     specialRequests: '',
@@ -334,6 +336,20 @@ export default function SmartBookingWizard({ stylistId, stylist }: SmartBookingW
           </Button>
         </div>
       )
+    },
+    {
+      id: 'add-ons',
+      title: 'Add-On Services',
+      description: 'Enhance your experience',
+      isComplete: true, // Optional step
+      component: (
+        <AddOnServicesStep
+          selectedAddOns={bookingData.addOnServices}
+          onAddOnsChange={(addOns) => setBookingData({...bookingData, addOnServices: addOns})}
+          onContinue={() => setCurrentStep(currentStep + 1)}
+          mainServiceTotal={calculateTotal()}
+        />
+      )
     }
   ];
 
@@ -350,10 +366,13 @@ export default function SmartBookingWizard({ stylistId, stylist }: SmartBookingW
   };
 
   const calculateTotal = () => {
-    return bookingData.services.reduce((total: number, serviceId: string) => {
+    const mainTotal = bookingData.services.reduce((total: number, serviceId: string) => {
       const service = recommendedServices.find(s => s.id === serviceId);
       return total + (service?.price || 0);
     }, 0);
+    
+    // Add-on services are calculated in the AddOnServicesStep component
+    return mainTotal;
   };
 
   const handleCompleteBooking = () => {

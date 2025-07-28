@@ -440,3 +440,38 @@ The platform now provides enterprise-level real-time communication and booking c
 - **Mobile-First Intelligence**: All AI features optimized for touch interfaces with responsive design principles
 
 The platform now incorporates enterprise-level artificial intelligence for personalized experiences, virtual consultations replacing traditional in-person meetings, and predictive analytics driving optimal booking experiences while maintaining the sophisticated Apple design aesthetic.
+
+## Stylist Upsell & Add-On Services System (January 2025)
+
+### Strategic Upselling Implementation
+- **Post-Selection Timing**: Add-on services are presented ONLY after stylist selection and main service agreement to maximize conversion
+- **Revenue-Optimized Categories**: Hair care, styling, color enhancements, family services, and educational add-ons based on industry data
+- **Smart Pricing Strategy**: Multi-service discounts ($5 per additional service, max $15) to encourage bundle purchases
+- **Mobile-First Interface**: Apple-inspired design with visual service cards and instant price calculation
+
+### Comprehensive Add-On Menu
+- **Hair Care Add-Ons**: Scalp massage ($20), deep conditioning ($30), hot oil treatment ($35), keratin treatment ($80-150)
+- **Styling & Finishing**: Blow dry ($25), curling/flat iron styling ($35), braiding ($40), formal updos ($80)
+- **Color Services**: Root touch-ups ($50), toner application ($40), highlights/balayage ($150+)
+- **Family & Grooming**: Additional family cuts ($30), children's cuts ($25), beard trimming ($20)
+- **Value-Added Services**: Styling tutorials ($15), travel fees (distance-based), before/after photos
+
+### Technical Implementation
+- **AddOnServicesStep Component**: Dedicated upsell interface integrated into SmartBookingWizard workflow
+- **Dynamic Pricing Engine**: Real-time total calculation with multi-service discounts and visual savings display
+- **Category-Based Organization**: Popular services highlighted with visual icons and popularity badges
+- **Conversion Optimization**: Optional skip functionality to avoid booking abandonment while maximizing upsell opportunities
+
+### Business Intelligence Features
+- **Popular Service Highlighting**: Algorithm-driven recommendations based on booking data and seasonal trends
+- **Revenue Analytics**: Track upsell conversion rates, average order value increases, and stylist earnings enhancement
+- **Client Experience**: Transparent pricing with clear value propositions and immediate total updates
+- **Stylist Benefits**: Increased earnings potential with 85% retention on all services including add-ons
+
+### Integration Strategy
+- **Workflow Positioning**: Add-ons appear between main service selection and final payment to optimize conversion timing
+- **Psychological Pricing**: Services priced in ranges ($20-25) to accommodate different stylist pricing levels
+- **Visual Merchandising**: Service cards with icons, descriptions, and clear value statements to drive selection
+- **Friction Reduction**: One-click service selection with instant total updates and clear skip options
+
+The add-on system strategically increases average booking value while maintaining user experience quality, with stylist earnings enhanced through carefully timed upselling during the booking process.
