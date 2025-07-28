@@ -111,6 +111,31 @@ export default function StylistDashboard() {
           </div>
         </div>
 
+        {/* Schedule Management */}
+        <div className="ios-card mb-6">
+          <div className="ios-card-content">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-purple-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-800">Manage Schedule</h3>
+                  <p className="text-sm text-gray-600">Set your weekly hours and time off</p>
+                </div>
+              </div>
+              <Button 
+                onClick={() => navigate('/schedule-management')}
+                size="sm"
+                className="btn-primary"
+              >
+                <Clock className="w-4 h-4 mr-1" />
+                Schedule
+              </Button>
+            </div>
+          </div>
+        </div>
+
         {/* Payout Setup Alert */}
         <div className="ios-card mb-6 border-yellow-200 bg-yellow-50">
           <div className="ios-card-content">
@@ -265,10 +290,10 @@ export default function StylistDashboard() {
             <Calendar className="w-5 h-5 mb-1" />
             <span className="text-xs">Appointments</span>
           </div>
-          <div className="tab-item inactive">
+          <Link href="/schedule-management" className="tab-item inactive">
             <Clock className="w-5 h-5 mb-1" />
             <span className="text-xs">Schedule</span>
-          </div>
+          </Link>
           <div className="tab-item inactive">
             <DollarSign className="w-5 h-5 mb-1" />
             <span className="text-xs">Earnings</span>

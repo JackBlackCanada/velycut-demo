@@ -3,6 +3,8 @@ import {
   services,
   bookings,
   reviews,
+  availability,
+  timeOff,
   type User,
   type UpsertUser,
   type Service,
@@ -11,6 +13,10 @@ import {
   type InsertBooking,
   type Review,
   type InsertReview,
+  type Availability,
+  type InsertAvailability,
+  type TimeOff,
+  type InsertTimeOff,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -41,6 +47,13 @@ export interface IStorage {
   getReviewsByStylistId(stylistId: string): Promise<Review[]>;
   createReview(review: InsertReview): Promise<Review>;
   getReviewByBookingId(bookingId: string): Promise<Review | undefined>;
+
+  // Availability operations
+  getStylistAvailability(stylistId: string): Promise<Availability[]>;
+  updateStylistAvailability(stylistId: string, availabilityData: InsertAvailability[]): Promise<Availability[]>;
+  getStylistTimeOff(stylistId: string): Promise<TimeOff[]>;
+  createTimeOff(timeOffData: InsertTimeOff): Promise<TimeOff>;
+  deleteTimeOff(timeOffId: string): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -48,12 +61,16 @@ export class MemStorage implements IStorage {
   private services: Map<string, Service>;
   private bookings: Map<string, Booking>;
   private reviews: Map<string, Review>;
+  private availability: Map<string, Availability>;
+  private timeOff: Map<string, TimeOff>;
 
   constructor() {
     this.users = new Map();
     this.services = new Map();
     this.bookings = new Map();
     this.reviews = new Map();
+    this.availability = new Map();
+    this.timeOff = new Map();
     
     // Initialize with some sample data
     this.initializeSampleData();
@@ -82,6 +99,8 @@ export class MemStorage implements IStorage {
       totalEarnings: "12450.00",
       stripeCustomerId: null,
       stripeAccountId: null,
+      stripeAccountStatus: "pending",
+      stripeOnboardingCompleted: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -107,6 +126,8 @@ export class MemStorage implements IStorage {
       totalEarnings: "8970.00",
       stripeCustomerId: null,
       stripeAccountId: null,
+      stripeAccountStatus: "pending",
+      stripeOnboardingCompleted: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -133,6 +154,8 @@ export class MemStorage implements IStorage {
       totalEarnings: "0.00",
       stripeCustomerId: null,
       stripeAccountId: null,
+      stripeAccountStatus: "pending",
+      stripeOnboardingCompleted: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -181,6 +204,9 @@ export class MemStorage implements IStorage {
       clientPhone: "(555) 345-6789",
       specialRequests: null,
       paymentIntentId: null,
+      stripeTransferStatus: "completed",
+      stylistPayout: "38.25",
+      platformFee: "6.75",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -243,6 +269,8 @@ export class MemStorage implements IStorage {
         totalEarnings: userData.totalEarnings ?? "0.00",
         stripeCustomerId: userData.stripeCustomerId ?? null,
         stripeAccountId: userData.stripeAccountId ?? null,
+        stripeAccountStatus: userData.stripeAccountStatus ?? "pending",
+        stripeOnboardingCompleted: userData.stripeOnboardingCompleted ?? false,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -345,6 +373,9 @@ export class MemStorage implements IStorage {
       clientPhone: bookingData.clientPhone ?? null,
       specialRequests: bookingData.specialRequests ?? null,
       paymentIntentId: bookingData.paymentIntentId ?? null,
+      stripeTransferStatus: bookingData.stripeTransferStatus ?? "pending",
+      stylistPayout: bookingData.stylistPayout ?? null,
+      platformFee: bookingData.platformFee ?? null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -416,6 +447,62 @@ export class MemStorage implements IStorage {
       };
       this.users.set(stylistId, updatedStylist);
     }
+  }
+
+  // Availability operations
+  async getStylistAvailability(stylistId: string): Promise<Availability[]> {
+    return Array.from(this.availability.values()).filter(avail => avail.stylistId === stylistId && avail.isActive);
+  }
+
+  async updateStylistAvailability(stylistId: string, availabilityData: InsertAvailability[]): Promise<Availability[]> {
+    // Remove existing availability for the stylist
+    const existingKeys = Array.from(this.availability.keys()).filter(key => {
+      const avail = this.availability.get(key);
+      return avail?.stylistId === stylistId;
+    });
+    existingKeys.forEach(key => this.availability.delete(key));
+
+    // Add new availability entries
+    const newAvailability: Availability[] = [];
+    for (const data of availabilityData) {
+      const id = randomUUID();
+      const availability: Availability = {
+        id,
+        stylistId: data.stylistId,
+        dayOfWeek: data.dayOfWeek,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        isActive: data.isActive ?? true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      this.availability.set(id, availability);
+      newAvailability.push(availability);
+    }
+    
+    return newAvailability;
+  }
+
+  async getStylistTimeOff(stylistId: string): Promise<TimeOff[]> {
+    return Array.from(this.timeOff.values()).filter(time => time.stylistId === stylistId);
+  }
+
+  async createTimeOff(timeOffData: InsertTimeOff): Promise<TimeOff> {
+    const id = randomUUID();
+    const timeOff: TimeOff = {
+      id,
+      stylistId: timeOffData.stylistId,
+      startDate: timeOffData.startDate,
+      endDate: timeOffData.endDate,
+      reason: timeOffData.reason ?? null,
+      createdAt: new Date(),
+    };
+    this.timeOff.set(id, timeOff);
+    return timeOff;
+  }
+
+  async deleteTimeOff(timeOffId: string): Promise<void> {
+    this.timeOff.delete(timeOffId);
   }
 }
 

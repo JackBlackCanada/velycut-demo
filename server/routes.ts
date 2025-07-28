@@ -287,6 +287,111 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get stylist's weekly schedule
+  app.get('/api/stylist/schedule', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.userType !== 'stylist') {
+        return res.status(403).json({ message: "Only stylists can access schedule" });
+      }
+
+      const availability = await storage.getStylistAvailability(userId);
+      const timeOff = await storage.getStylistTimeOff(userId);
+      
+      res.json({ availability, timeOff });
+    } catch (error: any) {
+      console.error("Error fetching schedule:", error);
+      res.status(500).json({ message: "Failed to fetch schedule" });
+    }
+  });
+
+  // Update stylist's weekly schedule
+  app.post('/api/stylist/schedule', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.userType !== 'stylist') {
+        return res.status(403).json({ message: "Only stylists can update schedule" });
+      }
+
+      const { availability } = req.body;
+      
+      // Validate availability data
+      if (!Array.isArray(availability)) {
+        return res.status(400).json({ message: "Availability must be an array" });
+      }
+
+      // Add stylistId to each availability entry
+      const availabilityWithStylistId = availability.map(avail => ({
+        ...avail,
+        stylistId: userId,
+      }));
+
+      const updatedAvailability = await storage.updateStylistAvailability(userId, availabilityWithStylistId);
+      
+      res.json({ availability: updatedAvailability });
+    } catch (error: any) {
+      console.error("Error updating schedule:", error);
+      res.status(500).json({ message: "Failed to update schedule" });
+    }
+  });
+
+  // Add time off
+  app.post('/api/stylist/time-off', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.userType !== 'stylist') {
+        return res.status(403).json({ message: "Only stylists can add time off" });
+      }
+
+      const timeOffData = {
+        ...req.body,
+        stylistId: userId,
+      };
+
+      const timeOff = await storage.createTimeOff(timeOffData);
+      
+      res.json(timeOff);
+    } catch (error: any) {
+      console.error("Error adding time off:", error);
+      res.status(500).json({ message: "Failed to add time off" });
+    }
+  });
+
+  // Delete time off
+  app.delete('/api/stylist/time-off/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user || user.userType !== 'stylist') {
+        return res.status(403).json({ message: "Only stylists can delete time off" });
+      }
+
+      const { id } = req.params;
+      
+      // Verify the time off belongs to this stylist
+      const timeOffList = await storage.getStylistTimeOff(userId);
+      const timeOff = timeOffList.find(t => t.id === id);
+      
+      if (!timeOff) {
+        return res.status(404).json({ message: "Time off not found" });
+      }
+
+      await storage.deleteTimeOff(id);
+      
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("Error deleting time off:", error);
+      res.status(500).json({ message: "Failed to delete time off" });
+    }
+  });
+
   // Stripe Connect routes for stylist payouts
   app.post('/api/stylist/create-stripe-account', async (req, res) => {
     try {

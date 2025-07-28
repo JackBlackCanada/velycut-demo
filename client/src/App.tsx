@@ -22,6 +22,7 @@ import Settings from "@/pages/settings";
 import Contact from "@/pages/contact";
 import Bookings from "@/pages/bookings";
 import Competition from "@/pages/competition";
+import ScheduleManagement from "@/pages/schedule-management";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -46,6 +47,7 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/bookings" component={Bookings} />
       <Route path="/competition" component={Competition} />
+      <Route path="/schedule-management" component={ScheduleManagement} />
       <Route component={NotFound} />
     </Switch>
   );
