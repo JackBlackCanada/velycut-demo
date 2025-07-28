@@ -92,18 +92,7 @@ export default function StylistDashboard() {
               </span>
             </div>
             <NotificationCenter />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {/* Simple menu for demo */}}
-              className="w-10 h-10 flex items-center justify-center"
-            >
-              <div className="w-5 h-5 flex flex-col justify-between">
-                <div className="w-full h-0.5 bg-gray-700 rounded"></div>
-                <div className="w-full h-0.5 bg-gray-700 rounded"></div>
-                <div className="w-full h-0.5 bg-gray-700 rounded"></div>
-              </div>
-            </Button>
+            <AnimatedNavMenu userType="stylist" />
           </div>
         </div>
       </div>
