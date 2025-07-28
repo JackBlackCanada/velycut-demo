@@ -16,6 +16,7 @@ import ReferEarn from "@/pages/refer-earn";
 import StylistOnboarding from "@/pages/stylist-onboarding";
 import Earnings from "@/pages/earnings";
 import BookService from "@/pages/book-service";
+import About from "@/pages/about";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -34,6 +35,7 @@ function Router() {
       <Route path="/stylist-onboarding" component={StylistOnboarding} />
       <Route path="/earnings" component={Earnings} />
       <Route path="/book-service" component={BookService} />
+      <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
   );
