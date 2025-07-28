@@ -32,6 +32,7 @@ import SmartBookingWizard from "@/components/SmartBookingWizard";
 import BookingStatusTracker from "@/components/BookingStatusTracker";
 import AIStyleRecommendationsPage from "@/pages/ai-style-recommendations";
 import SmartBookingPage from "@/pages/smart-booking-page";
+import DemoModeToggle from "@/components/DemoModeToggle";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -76,6 +77,7 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Router />
+        <DemoModeToggle />
       </TooltipProvider>
     </QueryClientProvider>
   );

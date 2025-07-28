@@ -1,4 +1,5 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import { isDemoMode, getDemoData } from "./demoData";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
@@ -23,13 +24,52 @@ export async function apiRequest(
   return res;
 }
 
+// Demo mode data handlers
+const handleDemoQuery = async (path: string): Promise<any> => {
+  console.log(`[DEMO] Fetching: ${path}`);
+  
+  // Route demo data based on path
+  if (path.includes('/stylists')) {
+    return getDemoData.stylists();
+  }
+  if (path.includes('/bookings')) {
+    return getDemoData.bookings();
+  }
+  if (path.includes('/messages')) {
+    const bookingId = path.split('/').pop();
+    return getDemoData.messages(bookingId);
+  }
+  if (path.includes('/notifications')) {
+    return getDemoData.notifications();
+  }
+  if (path.includes('/competition')) {
+    return getDemoData.competitionEntries();
+  }
+  if (path.includes('/auth/user')) {
+    return getDemoData.client('demo-client');
+  }
+  if (path.includes('/analytics')) {
+    return getDemoData.analytics();
+  }
+  
+  // Default demo response
+  return { message: "Demo data", path };
+};
+
 type UnauthorizedBehavior = "returnNull" | "throw";
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    const path = queryKey.join("/") as string;
+    
+    // Handle demo mode
+    if (isDemoMode()) {
+      return await handleDemoQuery(path);
+    }
+
+    const res = await fetch(path, {
       credentials: "include",
     });
 

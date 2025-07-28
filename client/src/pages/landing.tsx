@@ -6,6 +6,7 @@ import { useLocation } from "wouter";
 import { Calendar, Scissors, User } from "lucide-react";
 import AnimatedNavMenu from "@/components/AnimatedNavMenu";
 import logoPath from "@assets/logo_1753651837767.png";
+import DemoButton from "@/components/DemoButton";
 import heroImagePath from "@assets/Asian famliy_1753662896690.png";
 
 export default function Landing() {
