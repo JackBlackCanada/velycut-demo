@@ -30,24 +30,50 @@ interface MapViewProps {
 export default function MapView({ stylists, onStylistSelect }: MapViewProps) {
   const [selectedStylist, setSelectedStylist] = useState<Stylist | null>(null);
 
-  // Calculate positions based on real coordinates relative to center
-  const calculatePosition = (stylist: Stylist, stylists: Stylist[]) => {
+  // Calculate positions based on real coordinates with better distribution
+  const calculatePosition = (stylist: Stylist, stylists: Stylist[], index: number) => {
     if (!stylists.length) return { top: '50%', left: '50%' };
     
-    // Find center point of all stylists
-    const centerLat = stylists.reduce((sum, s) => sum + s.location.lat, 0) / stylists.length;
-    const centerLng = stylists.reduce((sum, s) => sum + s.location.lng, 0) / stylists.length;
+    // Get all coordinates
+    const allLats = stylists.map(s => s.location.lat);
+    const allLngs = stylists.map(s => s.location.lng);
     
-    // Calculate relative position (simplified projection)
-    const latRange = Math.max(...stylists.map(s => s.location.lat)) - Math.min(...stylists.map(s => s.location.lat));
-    const lngRange = Math.max(...stylists.map(s => s.location.lng)) - Math.min(...stylists.map(s => s.location.lng));
+    const minLat = Math.min(...allLats);
+    const maxLat = Math.max(...allLats);
+    const minLng = Math.min(...allLngs);
+    const maxLng = Math.max(...allLngs);
     
-    const normalizedLat = latRange > 0 ? (stylist.location.lat - Math.min(...stylists.map(s => s.location.lat))) / latRange : 0.5;
-    const normalizedLng = lngRange > 0 ? (stylist.location.lng - Math.min(...stylists.map(s => s.location.lng))) / lngRange : 0.5;
+    // Handle case where all stylists are at the same location (spread them out artificially)
+    let latRange = maxLat - minLat;
+    let lngRange = maxLng - minLng;
     
-    // Convert to percentages with some padding
-    const top = Math.max(10, Math.min(90, (1 - normalizedLat) * 80 + 10)) + '%';
-    const left = Math.max(10, Math.min(90, normalizedLng * 80 + 10)) + '%';
+    if (latRange < 0.01 && lngRange < 0.01) {
+      // All stylists at same location - create artificial spread
+      const positions = [
+        { top: '25%', left: '30%' },
+        { top: '40%', left: '65%' },
+        { top: '65%', left: '35%' },
+        { top: '30%', left: '75%' },
+        { top: '70%', left: '25%' },
+        { top: '55%', left: '60%' }
+      ];
+      return positions[index % positions.length] || { top: '50%', left: '50%' };
+    }
+    
+    // Ensure minimum spread for better visibility
+    latRange = Math.max(latRange, 0.02);
+    lngRange = Math.max(lngRange, 0.02);
+    
+    // Normalize coordinates (0 to 1)
+    const normalizedLat = (stylist.location.lat - minLat) / latRange;
+    const normalizedLng = (stylist.location.lng - minLng) / lngRange;
+    
+    // Convert to map percentages with generous padding
+    // Flip latitude because map coordinates are inverted (north = top)
+    const top = Math.max(15, Math.min(85, (1 - normalizedLat) * 70 + 15)) + '%';
+    const left = Math.max(15, Math.min(85, normalizedLng * 70 + 15)) + '%';
+    
+    console.log(`Stylist ${stylist.name}: lat=${stylist.location.lat}, lng=${stylist.location.lng} -> top=${top}, left=${left}`);
     
     return { top, left };
   };
@@ -70,9 +96,16 @@ export default function MapView({ stylists, onStylistSelect }: MapViewProps) {
           </svg>
           
           {/* Neighborhood Labels */}
-          <div className="absolute top-4 left-4 text-xs font-semibold text-gray-600 bg-white/80 px-2 py-1 rounded">
+          <div className="absolute top-4 left-4 text-xs font-semibold text-gray-600 bg-white/80 px-2 py-1 rounded shadow-sm">
             {stylists?.[0]?.location.address.includes('Toronto') ? 'Toronto, ON' : 'Los Angeles, CA'}
           </div>
+          
+          {/* Debug info */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="absolute top-4 right-4 text-xs bg-yellow-100 px-2 py-1 rounded">
+              {stylists?.length} stylists
+            </div>
+          )}
           
           {/* Your Location */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
@@ -85,27 +118,33 @@ export default function MapView({ stylists, onStylistSelect }: MapViewProps) {
           </div>
           
           {/* Stylist Markers */}
-          {stylists?.map((stylist) => {
-            const position = calculatePosition(stylist, stylists);
+          {stylists?.map((stylist, index) => {
+            const position = calculatePosition(stylist, stylists, index);
             
             return (
               <div
                 key={stylist.id}
-                className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-20 transition-transform hover:scale-110"
-                style={{ top: position.top, left: position.left }}
+                className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-20 transition-all duration-200 hover:scale-110"
+                style={{ 
+                  top: position.top, 
+                  left: position.left,
+                  zIndex: selectedStylist?.id === stylist.id ? 30 : 20
+                }}
                 onClick={() => setSelectedStylist(stylist)}
               >
                 <div className="relative">
-                  <div className="w-10 h-10 bg-purple-600 rounded-full border-2 border-white shadow-lg flex items-center justify-center hover:bg-purple-700 transition-colors">
+                  <div className={`w-12 h-12 rounded-full border-3 border-white shadow-lg flex items-center justify-center transition-colors ${
+                    selectedStylist?.id === stylist.id ? 'bg-purple-700 scale-110' : 'bg-purple-600 hover:bg-purple-700'
+                  }`}>
                     <span className="text-white text-xs font-bold">${stylist.price}</span>
                   </div>
                   {selectedStylist?.id === stylist.id && (
-                    <div className="w-14 h-14 bg-purple-600 rounded-full opacity-30 absolute -top-2 -left-2 animate-pulse"></div>
+                    <div className="w-16 h-16 bg-purple-600 rounded-full opacity-20 absolute -top-2 -left-2 animate-pulse"></div>
                   )}
-                  {/* Distance Line */}
-                  <svg className="absolute top-1/2 left-1/2 w-32 h-32 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-30">
-                    <line x1="64" y1="64" x2="64" y2="64" stroke="#6366f1" strokeWidth="2" strokeDasharray="4,4" />
-                  </svg>
+                  {/* Stylist name label */}
+                  <div className="absolute top-full mt-1 left-1/2 transform -translate-x-1/2 bg-white/90 px-1 py-0.5 rounded text-xs font-medium whitespace-nowrap shadow-sm">
+                    {stylist.name.split(' ')[0]}
+                  </div>
                 </div>
               </div>
             );
