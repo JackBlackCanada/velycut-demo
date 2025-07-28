@@ -41,23 +41,26 @@ export default function Landing() {
   return (
     <div className="app-container">
       {/* Hero Section - Full Screen Professional Focus */}
-      <div className="min-h-screen bg-gradient-to-br from-purple-900/95 to-indigo-900/95 text-white relative overflow-hidden">
-        {/* Background Image - Full Screen */}
+      <div className="min-h-screen text-white relative overflow-hidden">
+        {/* Background Image - Full Screen with Better Visibility */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${heroImagePath})`
           }}
         />
+        
+        {/* Subtle Gradient Overlay - More Image Visible */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50" />
         
         {/* Floating Navigation Menu - Responsive */}
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-20">
           <AnimatedNavMenu />
         </div>
 
-        {/* Main Content - Responsive Centered */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 md:px-8">
-          <div className="backdrop-blur-md bg-black/20 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/30 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg">
+        {/* Main Content - Positioned to Show More Image */}
+        <div className="relative z-10 flex flex-col items-center justify-end min-h-screen text-center px-4 sm:px-6 md:px-8 pb-20 sm:pb-24 md:pb-32">
+          <div className="backdrop-blur-sm bg-black/15 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/20 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg">
             <img src={logoPath} alt="VELY" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-6 sm:mb-8 mx-auto" />
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white drop-shadow-xl">
