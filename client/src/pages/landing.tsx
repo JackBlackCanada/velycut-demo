@@ -50,30 +50,30 @@ export default function Landing() {
           }}
         />
         
-        {/* Enhanced Overlay for Better Visual Appeal */}
-        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/15 via-transparent via-transparent to-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-900/5 to-transparent" />
+        {/* Minimal Overlay for Maximum Image Visibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent md:from-black/50 md:via-black/10 md:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30" />
         
         {/* Floating Navigation Menu - Responsive */}
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-20">
           <AnimatedNavMenu />
         </div>
 
-        {/* Main Content - Enhanced Layout */}
-        <div className="relative z-10 flex flex-col items-center justify-end min-h-screen text-center px-4 sm:px-6 md:px-8 pb-16 sm:pb-20 md:pb-24">
-          {/* Enhanced Content Box */}
-          <div className="backdrop-blur-md bg-gradient-to-b from-black/25 to-black/35 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/30 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg relative overflow-hidden">
+        {/* Main Content - Side Layout for Better Image Visibility */}
+        <div className="relative z-10 min-h-screen flex items-end md:items-center px-4 sm:px-6 md:px-8 pb-16 sm:pb-20 md:pb-0">
+          {/* Enhanced Content Box - Positioned to Left on Desktop */}
+          <div className="backdrop-blur-md bg-gradient-to-b from-black/30 to-black/40 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/30 shadow-2xl w-full md:w-96 lg:w-[420px] md:ml-8 lg:ml-12 xl:ml-16 relative overflow-hidden text-center md:text-left">
             {/* Subtle accent gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-3xl"></div>
             
             <div className="relative z-10">
-              <img src={logoPath} alt="VELY" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-6 sm:mb-8 mx-auto drop-shadow-lg" />
+              <img src={logoPath} alt="VELY" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-6 sm:mb-8 mx-auto md:mx-0 drop-shadow-lg" />
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 text-white drop-shadow-2xl">
                 VELY
               </h1>
               
-              <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mb-6 sm:mb-8"></div>
+              <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto md:mx-0 mb-6 sm:mb-8"></div>
               
               <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-4 sm:mb-6 text-white/95 leading-tight">
                 Professional Styling at Your Location
