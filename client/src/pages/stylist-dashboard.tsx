@@ -8,7 +8,7 @@ import { Calendar, MapPin, Star, Clock, DollarSign, Settings, TrendingUp, Home, 
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import AnimatedNavMenu from "@/components/AnimatedNavMenu";
 // Using simple text logo for now
 
