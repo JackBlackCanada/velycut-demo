@@ -148,11 +148,39 @@ export default function Landing() {
                     {/* Animated background sparkle effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                     <div className="relative z-10 p-2 bg-white/10 rounded-lg backdrop-blur-sm group-hover:bg-white/20 transition-all duration-300">
-                      <img 
-                        src="/attached_assets/booking icon_1753675188737.png" 
-                        alt="Book a Haircut" 
-                        className="w-8 h-8 filter brightness-0 invert drop-shadow-sm group-hover:drop-shadow-md transition-all duration-300 group-hover:scale-105"
-                      />
+                      {/* Custom SVG icon for calendar + scissors + barber pole */}
+                      <div className="w-8 h-8 relative group-hover:scale-105 transition-all duration-300">
+                        <svg viewBox="0 0 32 32" className="w-full h-full filter brightness-0 invert drop-shadow-sm group-hover:drop-shadow-md transition-all duration-300">
+                          {/* Calendar */}
+                          <rect x="4" y="6" width="16" height="14" rx="2" fill="currentColor" opacity="0.9"/>
+                          <rect x="6" y="8" width="12" height="10" fill="none" stroke="white" strokeWidth="1"/>
+                          <line x1="6" y1="4" x2="6" y2="8" stroke="currentColor" strokeWidth="2"/>
+                          <line x1="18" y1="4" x2="18" y2="8" stroke="currentColor" strokeWidth="2"/>
+                          <line x1="9" y1="11" x2="9" y2="11" stroke="white" strokeWidth="1.5"/>
+                          <line x1="12" y1="11" x2="12" y2="11" stroke="white" strokeWidth="1.5"/>
+                          <line x1="15" y1="11" x2="15" y2="11" stroke="white" strokeWidth="1.5"/>
+                          
+                          {/* Scissors */}
+                          <g transform="translate(8,14) scale(0.8)">
+                            <circle cx="2" cy="8" r="2" fill="currentColor"/>
+                            <circle cx="12" cy="8" r="2" fill="currentColor"/>
+                            <line x1="4" y1="6" x2="10" y2="10" stroke="currentColor" strokeWidth="1.5"/>
+                            <line x1="4" y1="10" x2="10" y2="6" stroke="currentColor" strokeWidth="1.5"/>
+                            <circle cx="2" cy="8" r="0.8" fill="white"/>
+                            <circle cx="12" cy="8" r="0.8" fill="white"/>
+                          </g>
+                          
+                          {/* Barber pole */}
+                          <g transform="translate(22,4)">
+                            <rect x="0" y="2" width="4" height="16" rx="2" fill="currentColor"/>
+                            <rect x="0.5" y="2.5" width="3" height="15" rx="1.5" fill="white"/>
+                            <path d="M0.5,4 L3.5,7 M0.5,7 L3.5,10 M0.5,10 L3.5,13 M0.5,13 L3.5,16" stroke="#e11d48" strokeWidth="1"/>
+                            <path d="M0.5,5.5 L3.5,8.5 M0.5,8.5 L3.5,11.5 M0.5,11.5 L3.5,14.5" stroke="#3b82f6" strokeWidth="1"/>
+                            <circle cx="2" cy="1" r="1.5" fill="currentColor"/>
+                            <circle cx="2" cy="19" r="1.5" fill="currentColor"/>
+                          </g>
+                        </svg>
+                      </div>
                       {/* Subtle glow effect behind icon */}
                       <div className="absolute inset-0 bg-purple-200/30 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
