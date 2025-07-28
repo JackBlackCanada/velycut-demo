@@ -288,15 +288,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get stylist's weekly schedule
-  app.get('/api/stylist/schedule', isAuthenticated, async (req: any, res) => {
+  app.get('/api/stylist/schedule', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
+      // For demo mode, use default stylist ID
+      const userId = "stylist-1";
       
-      if (!user || user.userType !== 'stylist') {
-        return res.status(403).json({ message: "Only stylists can access schedule" });
-      }
-
       const availability = await storage.getStylistAvailability(userId);
       const timeOff = await storage.getStylistTimeOff(userId);
       
@@ -308,14 +304,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Update stylist's weekly schedule
-  app.post('/api/stylist/schedule', isAuthenticated, async (req: any, res) => {
+  app.post('/api/stylist/schedule', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user || user.userType !== 'stylist') {
-        return res.status(403).json({ message: "Only stylists can update schedule" });
-      }
+      // For demo mode, use default stylist ID
+      const userId = "stylist-1";
 
       const { availability } = req.body;
       
@@ -340,14 +332,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Add time off
-  app.post('/api/stylist/time-off', isAuthenticated, async (req: any, res) => {
+  app.post('/api/stylist/time-off', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user || user.userType !== 'stylist') {
-        return res.status(403).json({ message: "Only stylists can add time off" });
-      }
+      // For demo mode, use default stylist ID
+      const userId = "stylist-1";
 
       const timeOffData = {
         ...req.body,
@@ -364,14 +352,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Delete time off
-  app.delete('/api/stylist/time-off/:id', isAuthenticated, async (req: any, res) => {
+  app.delete('/api/stylist/time-off/:id', async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user || user.userType !== 'stylist') {
-        return res.status(403).json({ message: "Only stylists can delete time off" });
-      }
+      // For demo mode, use default stylist ID
+      const userId = "stylist-1";
 
       const { id } = req.params;
       

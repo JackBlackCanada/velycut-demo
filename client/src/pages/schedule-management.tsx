@@ -57,7 +57,7 @@ export default function ScheduleManagement() {
 
   const { data: scheduleData, isLoading } = useQuery({
     queryKey: ["/api/stylist/schedule"],
-    enabled: !!user && user.userType === 'stylist',
+    enabled: true, // Allow in demo mode
   });
 
   const saveScheduleMutation = useMutation({
@@ -161,19 +161,20 @@ export default function ScheduleManagement() {
     });
   };
 
-  if (!user || user.userType !== 'stylist') {
-    return (
-      <div className="app-container">
-        <div className="min-h-screen flex items-center justify-center">
-          <Card className="ios-card p-6 text-center">
-            <h2 className="text-title-large mb-2">Access Denied</h2>
-            <p className="text-body text-gray-600 mb-4">Only stylists can access schedule management.</p>
-            <Button onClick={() => navigate('/')}>Go Home</Button>
-          </Card>
-        </div>
-      </div>
-    );
-  }
+  // Allow access in demo mode - remove user type restriction for now
+  // if (!user || user.userType !== 'stylist') {
+  //   return (
+  //     <div className="app-container">
+  //       <div className="min-h-screen flex items-center justify-center">
+  //         <Card className="ios-card p-6 text-center">
+  //           <h2 className="text-title-large mb-2">Access Denied</h2>
+  //           <p className="text-body text-gray-600 mb-4">Only stylists can access schedule management.</p>
+  //           <Button onClick={() => navigate('/')}>Go Home</Button>
+  //         </Card>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (isLoading) {
     return (
