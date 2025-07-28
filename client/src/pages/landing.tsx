@@ -50,37 +50,63 @@ export default function Landing() {
           }}
         />
         
-        {/* Warm Overlay to Complement Family Image */}
-        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/20 via-transparent to-black/60" />
+        {/* Enhanced Overlay for Better Visual Appeal */}
+        <div className="absolute inset-0 bg-gradient-to-b from-amber-900/15 via-transparent via-transparent to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-900/5 to-transparent" />
         
         {/* Floating Navigation Menu - Responsive */}
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-20">
           <AnimatedNavMenu />
         </div>
 
-        {/* Main Content - Positioned to Show More Image */}
-        <div className="relative z-10 flex flex-col items-center justify-end min-h-screen text-center px-4 sm:px-6 md:px-8 pb-20 sm:pb-24 md:pb-32">
-          <div className="backdrop-blur-sm bg-black/20 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/25 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg">
-            <img src={logoPath} alt="VELY" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-6 sm:mb-8 mx-auto" />
+        {/* Main Content - Enhanced Layout */}
+        <div className="relative z-10 flex flex-col items-center justify-end min-h-screen text-center px-4 sm:px-6 md:px-8 pb-16 sm:pb-20 md:pb-24">
+          {/* Enhanced Content Box */}
+          <div className="backdrop-blur-md bg-gradient-to-b from-black/25 to-black/35 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/30 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg relative overflow-hidden">
+            {/* Subtle accent gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-3xl"></div>
             
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white drop-shadow-xl">
-              VELY
-            </h1>
-            
-            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-6 sm:mb-8 text-white/95">
-              Professional Styling at Your Location
-            </h2>
-            
-            <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 sm:mb-10 leading-relaxed">
-              Professional styling in the comfort of your home. Quality haircuts for the whole family.
-            </p>
+            <div className="relative z-10">
+              <img src={logoPath} alt="VELY" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-6 sm:mb-8 mx-auto drop-shadow-lg" />
+              
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 text-white drop-shadow-2xl">
+                VELY
+              </h1>
+              
+              <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mb-6 sm:mb-8"></div>
+              
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-4 sm:mb-6 text-white/95 leading-tight">
+                Professional Styling at Your Location
+              </h2>
+              
+              <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 sm:mb-10 leading-relaxed">
+                Professional styling in the comfort of your home. Quality haircuts for the whole family.
+              </p>
 
-            <Button 
-              onClick={() => setShowUserTypeModal(true)}
-              className="btn-primary w-full text-base sm:text-lg md:text-xl py-3 sm:py-4 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-            >
-              Get Started
-            </Button>
+              {/* Enhanced CTA Button */}
+              <Button 
+                onClick={() => setShowUserTypeModal(true)}
+                className="btn-primary w-full text-base sm:text-lg md:text-xl py-4 sm:py-5 shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 border-0 rounded-2xl font-semibold"
+              >
+                Get Started Today
+              </Button>
+              
+              {/* Trust indicators */}
+              <div className="flex items-center justify-center space-x-6 mt-6 sm:mt-8 text-white/80 text-xs sm:text-sm">
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span>Licensed Stylists</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <span>Same-Day Service</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                  <span>All Ages</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
