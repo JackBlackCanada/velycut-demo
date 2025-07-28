@@ -19,6 +19,7 @@ interface SearchFilters {
   minRating: number;
   specialties: string[];
   availability: string;
+  language?: string;
   sortBy: string;
 }
 
@@ -62,6 +63,7 @@ export default function AdvancedSearch() {
       minRating: 0,
       specialties: [],
       availability: "any",
+      language: "",
       sortBy: "rating"
     });
     setSearchQuery("");
@@ -81,6 +83,7 @@ export default function AdvancedSearch() {
     filters.minRating > 0,
     filters.specialties.length > 0,
     filters.availability !== "any",
+    filters.language,
     filters.priceMin > 20 || filters.priceMax < 200
   ].filter(Boolean).length;
 
@@ -252,6 +255,34 @@ export default function AdvancedSearch() {
                       </div>
                     ))}
                   </div>
+                </div>
+
+                {/* Language Preference */}
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">
+                    Preferred Language
+                  </Label>
+                  <Select
+                    value={filters.language || "any"}
+                    onValueChange={(value) => setFilters(prev => ({ ...prev, language: value === "any" ? "" : value }))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Any language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="any">Any language</SelectItem>
+                      <SelectItem value="english">English</SelectItem>
+                      <SelectItem value="french">French</SelectItem>
+                      <SelectItem value="spanish">Spanish</SelectItem>
+                      <SelectItem value="mandarin">Mandarin Chinese</SelectItem>
+                      <SelectItem value="cantonese">Cantonese</SelectItem>
+                      <SelectItem value="punjabi">Punjabi</SelectItem>
+                      <SelectItem value="arabic">Arabic</SelectItem>
+                      <SelectItem value="tagalog">Tagalog</SelectItem>
+                      <SelectItem value="italian">Italian</SelectItem>
+                      <SelectItem value="portuguese">Portuguese</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 {/* Sort By */}

@@ -48,7 +48,11 @@ export default function StylistOnboarding() {
     emergencyContact: '',
     emergencyPhone: '',
     bankingInfo: '',
-    taxNumber: ''
+    taxNumber: '',
+    
+    // Language proficiency
+    motherTongue: '',
+    additionalLanguages: [] as Array<{language: string, fluency: string}>
   });
 
   const [verificationStatus, setVerificationStatus] = useState({
@@ -541,6 +545,133 @@ export default function StylistOnboarding() {
                 </div>
               </div>
 
+              {/* Language Proficiency Section */}
+              <div>
+                <Label className="text-sm font-medium mb-3 block">
+                  Language Skills
+                </Label>
+                
+                <div className="space-y-3">
+                  <div>
+                    <Label htmlFor="motherTongue">Mother Tongue / Native Language</Label>
+                    <Select
+                      value={formData.motherTongue}
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, motherTongue: value }))}
+                    >
+                      <SelectTrigger className="mt-1">
+                        <SelectValue placeholder="Select your native language" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="english">English</SelectItem>
+                        <SelectItem value="french">French</SelectItem>
+                        <SelectItem value="spanish">Spanish</SelectItem>
+                        <SelectItem value="mandarin">Mandarin Chinese</SelectItem>
+                        <SelectItem value="cantonese">Cantonese</SelectItem>
+                        <SelectItem value="punjabi">Punjabi</SelectItem>
+                        <SelectItem value="arabic">Arabic</SelectItem>
+                        <SelectItem value="tagalog">Tagalog</SelectItem>
+                        <SelectItem value="italian">Italian</SelectItem>
+                        <SelectItem value="german">German</SelectItem>
+                        <SelectItem value="portuguese">Portuguese</SelectItem>
+                        <SelectItem value="polish">Polish</SelectItem>
+                        <SelectItem value="russian">Russian</SelectItem>
+                        <SelectItem value="korean">Korean</SelectItem>
+                        <SelectItem value="japanese">Japanese</SelectItem>
+                        <SelectItem value="vietnamese">Vietnamese</SelectItem>
+                        <SelectItem value="hindi">Hindi</SelectItem>
+                        <SelectItem value="urdu">Urdu</SelectItem>
+                        <SelectItem value="farsi">Farsi/Persian</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label className="text-sm font-medium">Additional Languages</Label>
+                    <p className="text-xs text-gray-500 mb-2">Add other languages you can communicate in with clients</p>
+                    
+                    <div className="space-y-2">
+                      {formData.additionalLanguages.map((lang, index) => (
+                        <div key={index} className="flex items-center space-x-2 p-2 border rounded-lg">
+                          <div className="flex-1 grid grid-cols-2 gap-2">
+                            <Select
+                              value={lang.language}
+                              onValueChange={(value) => {
+                                const updated = [...formData.additionalLanguages];
+                                updated[index] = { ...updated[index], language: value };
+                                setFormData(prev => ({ ...prev, additionalLanguages: updated }));
+                              }}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Language" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="english">English</SelectItem>
+                                <SelectItem value="french">French</SelectItem>
+                                <SelectItem value="spanish">Spanish</SelectItem>
+                                <SelectItem value="mandarin">Mandarin Chinese</SelectItem>
+                                <SelectItem value="cantonese">Cantonese</SelectItem>
+                                <SelectItem value="punjabi">Punjabi</SelectItem>
+                                <SelectItem value="arabic">Arabic</SelectItem>
+                                <SelectItem value="tagalog">Tagalog</SelectItem>
+                                <SelectItem value="italian">Italian</SelectItem>
+                                <SelectItem value="german">German</SelectItem>
+                                <SelectItem value="portuguese">Portuguese</SelectItem>
+                                <SelectItem value="other">Other</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            
+                            <Select
+                              value={lang.fluency}
+                              onValueChange={(value) => {
+                                const updated = [...formData.additionalLanguages];
+                                updated[index] = { ...updated[index], fluency: value };
+                                setFormData(prev => ({ ...prev, additionalLanguages: updated }));
+                              }}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder="Fluency" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="basic">Basic</SelectItem>
+                                <SelectItem value="conversational">Conversational</SelectItem>
+                                <SelectItem value="fluent">Fluent</SelectItem>
+                                <SelectItem value="native">Native</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              const updated = formData.additionalLanguages.filter((_, i) => i !== index);
+                              setFormData(prev => ({ ...prev, additionalLanguages: updated }));
+                            }}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            ×
+                          </Button>
+                        </div>
+                      ))}
+                      
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            additionalLanguages: [...prev.additionalLanguages, { language: '', fluency: '' }]
+                          }));
+                        }}
+                        className="w-full"
+                      >
+                        + Add Language
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="emergencyContact">Emergency Contact Name</Label>
@@ -585,7 +716,7 @@ export default function StylistOnboarding() {
                formData.specializations.length > 0;
       case 'portfolio':
         return formData.certifications.length > 0 && formData.portfolioImages.length >= 3 && 
-               formData.emergencyContact && formData.emergencyPhone;
+               formData.emergencyContact && formData.emergencyPhone && formData.motherTongue;
       default:
         return false;
     }

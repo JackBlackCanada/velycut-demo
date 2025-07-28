@@ -46,6 +46,10 @@ export const users = pgTable("users", {
   velyCount: integer("vely_count").default(0),
   monthlyVelyCount: integer("monthly_vely_count").default(0),
   
+  // Language proficiency
+  motherTongue: varchar("mother_tongue"),
+  languages: jsonb("languages"), // [{language: string, fluency: 'basic'|'conversational'|'fluent'|'native'}]
+  
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
