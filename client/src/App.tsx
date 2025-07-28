@@ -21,6 +21,7 @@ import Profile from "@/pages/profile";
 import Settings from "@/pages/settings";
 import Contact from "@/pages/contact";
 import Bookings from "@/pages/bookings";
+import Competition from "@/pages/competition";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -44,6 +45,7 @@ function Router() {
       <Route path="/settings" component={Settings} />
       <Route path="/contact" component={Contact} />
       <Route path="/bookings" component={Bookings} />
+      <Route path="/competition" component={Competition} />
       <Route component={NotFound} />
     </Switch>
   );

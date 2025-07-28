@@ -7,6 +7,7 @@ import { Calendar, MapPin, Star, Clock, Plus, Settings, Gift, Home, Search, User
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
 import AnimatedNavMenu from "@/components/AnimatedNavMenu";
+import CompetitionBanner from "@/components/CompetitionBanner";
 // Using simple text logo for now
 const logoPath = null;
 
@@ -74,6 +75,9 @@ export default function ClientDashboard() {
             Ready for your next haircut?
           </p>
         </div>
+
+        {/* Competition Banner */}
+        <CompetitionBanner />
 
         {/* Quick Actions */}
         <div className="ios-card mb-6">

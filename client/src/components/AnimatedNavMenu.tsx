@@ -33,16 +33,19 @@ export default function AnimatedNavMenu({ userType, className = '' }: AnimatedNa
     { id: 'home', icon: Home, label: 'Home', path: '/client-dashboard', color: 'text-purple-600' },
     { id: 'book', icon: Calendar, label: 'Book Service', path: '/book-service', color: 'text-pink-600' },
     { id: 'search', icon: Search, label: 'Find Stylists', path: '/search-stylists', color: 'text-blue-600' },
+    { id: 'competition', icon: Star, label: 'Competition', path: '/competition', color: 'text-yellow-600' },
     { id: 'profile', icon: User, label: 'Profile', path: '/profile', color: 'text-green-600' },
     { id: 'settings', icon: Settings, label: 'Settings', path: '/settings', color: 'text-gray-600' },
   ] : userType === 'stylist' ? [
     { id: 'dashboard', icon: Home, label: 'Dashboard', path: '/stylist-dashboard', color: 'text-purple-600' },
     { id: 'earnings', icon: Star, label: 'Earnings', path: '/earnings', color: 'text-yellow-600' },
     { id: 'bookings', icon: Calendar, label: 'Bookings', path: '/bookings', color: 'text-blue-600' },
+    { id: 'competition', icon: Star, label: 'Competition', path: '/competition', color: 'text-orange-600' },
     { id: 'profile', icon: User, label: 'Profile', path: '/profile', color: 'text-green-600' },
     { id: 'settings', icon: Settings, label: 'Settings', path: '/settings', color: 'text-gray-600' },
   ] : [
     { id: 'home', icon: Home, label: 'Home', path: '/', color: 'text-purple-600' },
+    { id: 'competition', icon: Star, label: 'Competition', path: '/competition', color: 'text-yellow-600' },
     { id: 'about', icon: Heart, label: 'About', path: '/about', color: 'text-pink-600' },
     { id: 'contact', icon: Sparkles, label: 'Contact', path: '/contact', color: 'text-blue-600' },
   ];

@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { registerCompetitionRoutes } from "./competitionRoutes";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { insertUserSchema, insertBookingSchema, insertReviewSchema, insertServiceSchema } from "@shared/schema";
 import Stripe from "stripe";
@@ -392,6 +393,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Stripe not configured. Please set STRIPE_SECRET_KEY environment variable." });
     });
   }
+
+  // Register competition routes
+  registerCompetitionRoutes(app);
 
   const httpServer = createServer(app);
   return httpServer;
