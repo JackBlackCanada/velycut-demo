@@ -52,13 +52,22 @@ export default function StylistOnboarding() {
     
     // Language proficiency
     motherTongue: '',
-    additionalLanguages: [] as Array<{language: string, fluency: string}>
+    additionalLanguages: [] as Array<{language: string, fluency: string}>,
+    
+    // Personal Bio
+    personalBio: '',
+    workHistory: '',
+    hobbies: '',
+    familyBackground: '',
+    personalStory: '',
+    whyBecomeStylist: ''
   });
 
   const [verificationStatus, setVerificationStatus] = useState({
     identity: 'pending',
     background: 'pending',
     professional: 'pending',
+    bio: 'pending',
     documents: 'pending'
   });
 
@@ -83,6 +92,13 @@ export default function StylistOnboarding() {
       description: 'Provide work experience and certifications',
       required: true,
       completed: verificationStatus.professional === 'approved'
+    },
+    {
+      id: 'bio',
+      title: 'Personal Bio & Story',
+      description: 'Share your story and connect with clients',
+      required: true,
+      completed: verificationStatus.bio === 'approved'
     },
     {
       id: 'portfolio',
@@ -465,6 +481,112 @@ export default function StylistOnboarding() {
           </div>
         );
 
+      case 'bio':
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <User className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+              <h2 className="text-title-large mb-2">Personal Bio & Story</h2>
+              <p className="text-body text-gray-600">
+                Share your story to help clients connect with you personally
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <Label htmlFor="personalBio">Professional Bio</Label>
+                <Textarea
+                  id="personalBio"
+                  value={formData.personalBio}
+                  onChange={(e) => setFormData(prev => ({ ...prev, personalBio: e.target.value }))}
+                  placeholder="Write a brief professional bio that clients will see on your profile. Include your expertise, approach to styling, and what makes you unique..."
+                  className="mt-1 min-h-[100px]"
+                  maxLength={500}
+                />
+                <p className="text-xs text-gray-500 mt-1">{formData.personalBio.length}/500 characters</p>
+              </div>
+
+              <div>
+                <Label htmlFor="workHistory">Work History & Career Journey</Label>
+                <Textarea
+                  id="workHistory"
+                  value={formData.workHistory}
+                  onChange={(e) => setFormData(prev => ({ ...prev, workHistory: e.target.value }))}
+                  placeholder="Tell us about your career journey. Where did you start? What salons have you worked at? What experiences shaped your styling approach?"
+                  className="mt-1 min-h-[80px]"
+                  maxLength={400}
+                />
+                <p className="text-xs text-gray-500 mt-1">{formData.workHistory.length}/400 characters</p>
+              </div>
+
+              <div>
+                <Label htmlFor="personalStory">Personal Story & Background</Label>
+                <Textarea
+                  id="personalStory"
+                  value={formData.personalStory}
+                  onChange={(e) => setFormData(prev => ({ ...prev, personalStory: e.target.value }))}
+                  placeholder="Share your personal story. Where did you grow up? What inspired you to become a stylist? What are your roots and cultural background?"
+                  className="mt-1 min-h-[80px]"
+                  maxLength={400}
+                />
+                <p className="text-xs text-gray-500 mt-1">{formData.personalStory.length}/400 characters</p>
+              </div>
+
+              <div>
+                <Label htmlFor="familyBackground">Family & Community</Label>
+                <Textarea
+                  id="familyBackground"
+                  value={formData.familyBackground}
+                  onChange={(e) => setFormData(prev => ({ ...prev, familyBackground: e.target.value }))}
+                  placeholder="Tell clients about your family, community ties, or cultural heritage that influences your work. This helps clients feel more connected to you."
+                  className="mt-1 min-h-[80px]"
+                  maxLength={300}
+                />
+                <p className="text-xs text-gray-500 mt-1">{formData.familyBackground.length}/300 characters</p>
+              </div>
+
+              <div>
+                <Label htmlFor="hobbies">Hobbies & Interests</Label>
+                <Textarea
+                  id="hobbies"
+                  value={formData.hobbies}
+                  onChange={(e) => setFormData(prev => ({ ...prev, hobbies: e.target.value }))}
+                  placeholder="What do you enjoy outside of work? Sports, arts, travel, cooking? These personal touches help clients relate to you as a person."
+                  className="mt-1 min-h-[60px]"
+                  maxLength={250}
+                />
+                <p className="text-xs text-gray-500 mt-1">{formData.hobbies.length}/250 characters</p>
+              </div>
+
+              <div>
+                <Label htmlFor="whyBecomeStylist">Why Did You Become a Stylist?</Label>
+                <Textarea
+                  id="whyBecomeStylist"
+                  value={formData.whyBecomeStylist}
+                  onChange={(e) => setFormData(prev => ({ ...prev, whyBecomeStylist: e.target.value }))}
+                  placeholder="What motivated you to choose this career? What do you love most about making people look and feel their best?"
+                  className="mt-1 min-h-[80px]"
+                  maxLength={350}
+                />
+                <p className="text-xs text-gray-500 mt-1">{formData.whyBecomeStylist.length}/350 characters</p>
+              </div>
+            </div>
+
+            <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+              <div className="flex items-start space-x-3">
+                <User className="w-5 h-5 text-purple-600 mt-0.5" />
+                <div>
+                  <h4 className="font-medium text-purple-800">Why Share Your Story?</h4>
+                  <p className="text-sm text-purple-700 mt-1">
+                    Personal bios help clients choose stylists they connect with. Sharing your background, 
+                    interests, and journey builds trust and helps clients feel comfortable inviting you into their homes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
       case 'portfolio':
         return (
           <div className="space-y-6">
@@ -714,6 +836,9 @@ export default function StylistOnboarding() {
       case 'professional':
         return formData.licenseNumber && formData.licenseExpiry && formData.yearsOfExperience && 
                formData.specializations.length > 0;
+      case 'bio':
+        return formData.personalBio.length >= 50 && formData.workHistory.length >= 30 && 
+               formData.personalStory.length >= 30 && formData.whyBecomeStylist.length >= 30;
       case 'portfolio':
         return formData.certifications.length > 0 && formData.portfolioImages.length >= 3 && 
                formData.emergencyContact && formData.emergencyPhone && formData.motherTongue;

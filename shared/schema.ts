@@ -50,6 +50,14 @@ export const users = pgTable("users", {
   motherTongue: varchar("mother_tongue"),
   languages: jsonb("languages"), // [{language: string, fluency: 'basic'|'conversational'|'fluent'|'native'}]
   
+  // Personal Bio fields for stylists
+  personalBio: varchar("personal_bio", { length: 500 }),
+  workHistory: varchar("work_history", { length: 400 }),
+  hobbies: varchar("hobbies", { length: 250 }),
+  familyBackground: varchar("family_background", { length: 300 }),
+  personalStory: varchar("personal_story", { length: 400 }),
+  whyBecomeStylist: varchar("why_become_stylist", { length: 350 }),
+  
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
