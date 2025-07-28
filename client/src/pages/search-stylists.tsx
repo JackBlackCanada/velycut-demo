@@ -20,8 +20,8 @@ export default function SearchStylists() {
   });
 
   const handleBookStylist = (stylist: any) => {
-    setSelectedStylist(stylist);
-    setShowBookingModal(true);
+    // Navigate to smart booking wizard with add-on services
+    navigate(`/smart-booking/${stylist.id}`);
   };
 
   if (isLoading) {
@@ -81,12 +81,16 @@ export default function SearchStylists() {
         <div className="space-y-4">
           {/* Sample Stylists matching mockup */}
           {[
-            { name: "Sarah", title: "Experienced stylist", avatar: sarahProfile },
-            { name: "Priya", title: "Experienced stylist", avatar: jamesProfile },
-            { name: "Emily", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1494790108755-2616c0763c6c?w=100&h=100&fit=crop&crop=face" },
-            { name: "Marcus", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" }
+            { id: "sarah-demo", name: "Sarah", title: "Experienced stylist", avatar: sarahProfile },
+            { id: "priya-demo", name: "Priya", title: "Experienced stylist", avatar: jamesProfile },
+            { id: "emily-demo", name: "Emily", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1494790108755-2616c0763c6c?w=100&h=100&fit=crop&crop=face" },
+            { id: "marcus-demo", name: "Marcus", title: "Experienced stylist", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face" }
           ].map((stylist, index) => (
-            <div key={index} className="ios-list-item">
+            <div 
+              key={index} 
+              className="ios-list-item cursor-pointer hover:bg-gray-50 transition-colors"
+              onClick={() => navigate(`/smart-booking/${stylist.id}`)}
+            >
               <Avatar className="w-12 h-12 mr-4">
                 <AvatarImage src={stylist.avatar} />
                 <AvatarFallback>{stylist.name[0]}</AvatarFallback>
@@ -136,7 +140,7 @@ export default function SearchStylists() {
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200">
         <div className="app-container max-w-sm mx-auto">
           <Button 
-            onClick={() => setShowBookingModal(true)}
+            onClick={() => navigate('/smart-booking/demo-stylist')}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white py-4 rounded-2xl font-semibold text-lg"
           >
             Book Now
@@ -144,12 +148,7 @@ export default function SearchStylists() {
         </div>
       </div>
 
-      {/* Booking Modal */}
-      <BookingModal 
-        open={showBookingModal}
-        onClose={() => setShowBookingModal(false)}
-        stylist={selectedStylist}
-      />
+      {/* Note: Booking now uses SmartBookingWizard with add-on services */}
     </div>
   );
 }

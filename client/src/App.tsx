@@ -31,6 +31,7 @@ import AIStyleRecommendations from "@/components/AIStyleRecommendations";
 import SmartBookingWizard from "@/components/SmartBookingWizard";
 import BookingStatusTracker from "@/components/BookingStatusTracker";
 import AIStyleRecommendationsPage from "@/pages/ai-style-recommendations";
+import SmartBookingPage from "@/pages/smart-booking-page";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -62,7 +63,7 @@ function Router() {
       <Route path="/book-enhanced/:stylistId" component={({ params }) => <EnhancedBooking stylistId={params.stylistId} onBookingComplete={(id) => console.log('Booking created:', id)} />} />
       <Route path="/virtual-consultation/:stylistId" component={({ params }) => <VirtualConsultation stylistId={params.stylistId} onConsultationComplete={(results) => console.log('Consultation complete:', results)} />} />
       <Route path="/ai-recommendations" component={AIStyleRecommendationsPage} />
-      <Route path="/smart-booking/:stylistId" component={({ params }) => <SmartBookingWizard stylistId={params.stylistId} />} />
+      <Route path="/smart-booking/:stylistId" component={SmartBookingPage} />
       <Route path="/booking-status/:bookingId" component={({ params }) => <BookingStatusTracker bookingId={params.bookingId} />} />
       <Route component={NotFound} />
     </Switch>

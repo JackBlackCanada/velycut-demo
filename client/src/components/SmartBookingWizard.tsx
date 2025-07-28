@@ -306,8 +306,14 @@ export default function SmartBookingWizard({ stylistId, stylist }: SmartBookingW
               <div className="border-t pt-3 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Services</span>
-                  <span>${calculateTotal()}</span>
+                  <span>${calculateMainTotal()}</span>
                 </div>
+                {bookingData.addOnServices.length > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span>Add-ons ({bookingData.addOnServices.length})</span>
+                    <span>${calculateAddOnTotal()}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-sm">
                   <span>Travel Fee</span>
                   <span>$15</span>
@@ -320,7 +326,7 @@ export default function SmartBookingWizard({ stylistId, stylist }: SmartBookingW
                 )}
                 <div className="flex justify-between font-semibold border-t pt-2">
                   <span>Total</span>
-                  <span>${calculateTotal() + 15 + (bookingData.groupSize - 1) * 30}</span>
+                  <span>${calculateMainTotal() + calculateAddOnTotal() + 15 + (bookingData.groupSize - 1) * 30}</span>
                 </div>
               </div>
             </CardContent>
@@ -347,7 +353,7 @@ export default function SmartBookingWizard({ stylistId, stylist }: SmartBookingW
           selectedAddOns={bookingData.addOnServices}
           onAddOnsChange={(addOns) => setBookingData({...bookingData, addOnServices: addOns})}
           onContinue={() => setCurrentStep(currentStep + 1)}
-          mainServiceTotal={calculateTotal()}
+          mainServiceTotal={calculateMainTotal()}
         />
       )
     }
@@ -365,14 +371,31 @@ export default function SmartBookingWizard({ stylistId, stylist }: SmartBookingW
     }
   };
 
-  const calculateTotal = () => {
-    const mainTotal = bookingData.services.reduce((total: number, serviceId: string) => {
+  const calculateMainTotal = () => {
+    return bookingData.services.reduce((total: number, serviceId: string) => {
       const service = recommendedServices.find(s => s.id === serviceId);
       return total + (service?.price || 0);
     }, 0);
+  };
+
+  const calculateAddOnTotal = () => {
+    const addOnServices = [
+      { id: "hair-wash-massage", price: 20 },
+      { id: "deep-conditioning", price: 30 },
+      { id: "blow-dry-finish", price: 25 },
+      { id: "root-touch-up", price: 50 },
+      { id: "beard-trim", price: 20 },
+      { id: "styling-tutorial", price: 15 }
+    ];
     
-    // Add-on services are calculated in the AddOnServicesStep component
-    return mainTotal;
+    return bookingData.addOnServices.reduce((total: number, serviceId: string) => {
+      const service = addOnServices.find(s => s.id === serviceId);
+      return total + (service?.price || 0);
+    }, 0);
+  };
+
+  const calculateTotal = () => {
+    return calculateMainTotal() + calculateAddOnTotal();
   };
 
   const handleCompleteBooking = () => {
