@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Star, Clock, Plus, Settings, Gift, Home, Search, User, ArrowLeft } from "lucide-react";
+import { Calendar, MapPin, Star, Clock, Plus, Settings, Gift, Home, Search, User, ArrowLeft, MessageCircle, Bell } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
 import AnimatedNavMenu from "@/components/AnimatedNavMenu";
@@ -151,6 +151,30 @@ export default function ClientDashboard() {
                         <div className="flex items-center mt-2 text-caption">
                           <MapPin className="w-3 h-3 mr-1" />
                           {booking.clientAddress}
+                        </div>
+                        
+                        {/* Action Buttons */}
+                        <div className="flex space-x-2 mt-3">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate(`/messages/${booking.id}`)}
+                            className="flex-1"
+                          >
+                            <MessageCircle className="w-3 h-3 mr-1" />
+                            Message
+                          </Button>
+                          {booking.status === 'confirmed' && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => navigate(`/tracking/${booking.id}`)}
+                              className="flex-1"
+                            >
+                              <MapPin className="w-3 h-3 mr-1" />
+                              Track
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>

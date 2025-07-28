@@ -23,6 +23,9 @@ import Contact from "@/pages/contact";
 import Bookings from "@/pages/bookings";
 import Competition from "@/pages/competition";
 import ScheduleManagement from "@/pages/schedule-management";
+import InAppMessaging from "@/components/InAppMessaging";
+import LiveTracking from "@/components/LiveTracking";
+import EnhancedBooking from "@/components/EnhancedBooking";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -48,6 +51,10 @@ function Router() {
       <Route path="/bookings" component={Bookings} />
       <Route path="/competition" component={Competition} />
       <Route path="/schedule-management" component={ScheduleManagement} />
+      <Route path="/messages" component={() => <InAppMessaging userType="client" userId="demo_client" />} />
+      <Route path="/messages/:bookingId" component={({ params }) => <InAppMessaging userType="client" userId="demo_client" bookingId={params.bookingId} />} />
+      <Route path="/tracking/:bookingId" component={({ params }) => <LiveTracking bookingId={params.bookingId} userType="client" />} />
+      <Route path="/book-enhanced/:stylistId" component={({ params }) => <EnhancedBooking stylistId={params.stylistId} onBookingComplete={(id) => console.log('Booking created:', id)} />} />
       <Route component={NotFound} />
     </Switch>
   );

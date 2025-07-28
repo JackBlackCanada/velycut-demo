@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { registerCompetitionRoutes } from "./competitionRoutes";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupRealTimeRoutes } from "./realTimeRoutes";
 import { insertUserSchema, insertBookingSchema, insertReviewSchema, insertServiceSchema } from "@shared/schema";
 import Stripe from "stripe";
 
@@ -487,5 +488,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerCompetitionRoutes(app);
 
   const httpServer = createServer(app);
+
+  // Setup real-time features
+  setupRealTimeRoutes(app, httpServer);
+
   return httpServer;
 }
