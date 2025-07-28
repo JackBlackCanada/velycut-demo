@@ -68,12 +68,12 @@ export default function AnimatedNavMenu({ userType, className = '' }: AnimatedNa
         <div className="menu-icon-wrapper">
           {!isOpen ? (
             <div className="flex flex-col space-y-1">
-              <div className="w-4 h-0.5 bg-white rounded"></div>
-              <div className="w-4 h-0.5 bg-white rounded"></div>
-              <div className="w-4 h-0.5 bg-white rounded"></div>
+              <div className="w-4 h-0.5 bg-gray-700 rounded"></div>
+              <div className="w-4 h-0.5 bg-gray-700 rounded"></div>
+              <div className="w-4 h-0.5 bg-gray-700 rounded"></div>
             </div>
           ) : (
-            <X className="w-4 h-4 text-white" />
+            <X className="w-4 h-4 text-gray-700" />
           )}
         </div>
       </Button>
