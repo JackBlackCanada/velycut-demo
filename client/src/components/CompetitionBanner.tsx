@@ -82,7 +82,7 @@ export default function CompetitionBanner({ className = '' }: CompetitionBannerP
               <div className="text-xs text-white/70">Entries</div>
             </div>
             <div>
-              <div className="text-2xl font-bold">{Math.ceil((new Date('2025-01-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}</div>
+              <div className="text-2xl font-bold">{Math.ceil((new Date('2025-07-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}</div>
               <div className="text-xs text-white/70">Days Left</div>
             </div>
           </div>

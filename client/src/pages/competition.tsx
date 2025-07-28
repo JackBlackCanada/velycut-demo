@@ -15,14 +15,14 @@ export default function Competition() {
   // Demo data with real dates - in production, this would come from API
   const [competition] = useState({
     id: '1',
-    title: 'January 2025 Cut of the Month',
+    title: 'July 2025 Cut of the Month',
     description: 'Show off your best haircuts and win amazing prizes!',
-    startDate: '2025-01-01',
-    endDate: '2025-01-31',
+    startDate: '2025-07-01',
+    endDate: '2025-07-31',
     status: 'active',
     customerPrize: '$100',
     stylistPrize: '$1000',
-    daysLeft: Math.ceil((new Date('2025-01-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+    daysLeft: Math.ceil((new Date('2025-07-31').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
   });
 
   const [entries, setEntries] = useState([
@@ -35,8 +35,8 @@ export default function Competition() {
       voteCount: 342,
       status: 'approved',
       isWinner: false,
-      description: 'Fresh new look for the new year!',
-      createdAt: new Date(Date.now() - 13 * 24 * 60 * 60 * 1000).toISOString() // 13 days ago
+      description: 'Fresh summer style transformation!',
+      createdAt: '2025-07-14T10:30:00Z' // July 14th
     },
     {
       id: '2',
@@ -48,7 +48,7 @@ export default function Competition() {
       status: 'featured',
       isWinner: false,
       description: 'Perfect fade and beard trim combo',
-      createdAt: new Date(Date.now() - 16 * 24 * 60 * 60 * 1000).toISOString() // 16 days ago
+      createdAt: '2025-07-11T14:20:00Z' // July 11th
     },
     {
       id: '3',
@@ -60,7 +60,7 @@ export default function Competition() {
       status: 'approved',
       isWinner: false,
       description: 'Bold color transformation!',
-      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString() // 10 days ago
+      createdAt: '2025-07-17T16:45:00Z' // July 17th
     },
     {
       id: '4',
@@ -72,7 +72,7 @@ export default function Competition() {
       status: 'approved',
       isWinner: false,
       description: 'Classic cut with modern style',
-      createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString() // 8 days ago
+      createdAt: '2025-07-19T11:15:00Z' // July 19th
     },
     {
       id: '5',
@@ -84,7 +84,7 @@ export default function Competition() {
       status: 'approved',
       isWinner: false,
       description: 'Pixie cut perfection!',
-      createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() // 5 days ago
+      createdAt: '2025-07-22T09:30:00Z' // July 22nd
     },
     {
       id: '6',
@@ -96,7 +96,7 @@ export default function Competition() {
       status: 'approved',
       isWinner: false,
       description: 'Clean business professional look',
-      createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days ago
+      createdAt: '2025-07-24T13:45:00Z' // July 24th
     }
   ]);
 
@@ -512,7 +512,7 @@ export default function Competition() {
                   First Competition!
                 </h4>
                 <p className="text-body text-gray-600 dark:text-gray-300">
-                  This is our inaugural Cut of the Month competition. Winners will be announced February 1st!
+                  This is our inaugural Cut of the Month competition. Winners will be announced August 1st!
                 </p>
               </div>
             </div>
