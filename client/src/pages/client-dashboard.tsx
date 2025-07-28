@@ -8,12 +8,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
 import AnimatedNavMenu from "@/components/AnimatedNavMenu";
 import CompetitionBanner from "@/components/CompetitionBanner";
+import NotificationCenter from "@/components/NotificationCenter";
+import AdvancedSearch from "@/components/AdvancedSearch";
 // Using simple text logo for now
 const logoPath = null;
 
 export default function ClientDashboard() {
   const { user } = useAuth();
   const [, navigate] = useLocation();
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
 
   const { data: bookings, isLoading } = useQuery({
     queryKey: ["/api/bookings"],
@@ -54,6 +57,7 @@ export default function ClientDashboard() {
             <div className="text-lg sm:text-xl font-bold text-purple-600">VELY</div>
           </div>
           <div className="flex items-center space-x-2 sm:space-x-3">
+            <NotificationCenter />
             <AnimatedNavMenu userType="client" />
             <Avatar className="w-7 h-7 sm:w-8 sm:h-8">
               <AvatarImage src={user?.profileImageUrl} />
@@ -88,7 +92,7 @@ export default function ClientDashboard() {
                 <p className="text-caption">Find stylists near you</p>
               </div>
               <Button 
-                onClick={() => navigate('/search-stylists')}
+                onClick={() => navigate('/book-service')}
                 className="btn-primary"
               >
                 <Plus className="w-4 h-4 mr-2" />
@@ -271,6 +275,18 @@ export default function ClientDashboard() {
             <span className="text-xs">Profile</span>
           </div>
         </div>
+
+        {/* Advanced Search Modal */}
+        {showAdvancedSearch && (
+          <AdvancedSearch
+            onSearch={(filters) => {
+              console.log('Search filters:', filters);
+              // Navigate to search results with filters
+              navigate('/book-service');
+            }}
+            onClose={() => setShowAdvancedSearch(false)}
+          />
+        )}
       </div>
     </div>
   );
