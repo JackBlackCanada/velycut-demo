@@ -40,53 +40,41 @@ export default function Landing() {
 
   return (
     <div className="app-container">
-      {/* Hero Section - Professional Styling Focus */}
+      {/* Hero Section - Full Screen Professional Focus */}
       <div className="min-h-screen bg-gradient-to-br from-purple-900/95 to-indigo-900/95 text-white relative overflow-hidden">
-        {/* Background Image Overlay */}
+        {/* Background Image - Full Screen */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85"
           style={{
             backgroundImage: `url(${heroImagePath})`
           }}
         />
         
-        {/* Header */}
-        <div className="app-header bg-transparent border-b-0 relative z-10">
-          <div className="flex items-center justify-between">
-            <img src={logoPath} alt="VELY" className="logo-large" />
-            <div className="flex items-center space-x-3">
-              <Button 
-                variant="ghost" 
-                onClick={() => window.location.href = '/api/login'}
-                className="text-white hover:bg-white/10"
-              >
-                Sign In
-              </Button>
-              <AnimatedNavMenu />
-            </div>
-          </div>
+        {/* Floating Navigation Menu */}
+        <div className="absolute top-6 right-6 z-20">
+          <AnimatedNavMenu />
         </div>
 
-        {/* Main Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-100px)] text-center px-6">
-          <div className="backdrop-blur-sm bg-white/10 rounded-3xl p-8 border border-white/20 shadow-2xl">
-            <img src={logoPath} alt="VELY" className="w-20 h-20 mb-6 mx-auto" />
+        {/* Main Content - Centered */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
+          <div className="backdrop-blur-md bg-black/20 rounded-3xl p-10 border border-white/30 shadow-2xl max-w-md">
+            <img src={logoPath} alt="VELY" className="w-24 h-24 mb-8 mx-auto" />
             
-            <h1 className="text-4xl font-bold mb-4 text-white drop-shadow-lg">
+            <h1 className="text-5xl font-bold mb-6 text-white drop-shadow-xl">
               VELY
             </h1>
             
-            <h2 className="text-2xl font-semibold mb-6 text-white/95">
+            <h2 className="text-2xl font-semibold mb-8 text-white/95">
               Professional Styling at Your Location
             </h2>
             
-            <p className="text-lg text-white/90 mb-8 max-w-md leading-relaxed">
+            <p className="text-lg text-white/90 mb-10 leading-relaxed">
               Book expert stylists who come to you. Quality haircuts and styling services wherever you are.
             </p>
 
             <Button 
               onClick={() => setShowUserTypeModal(true)}
-              className="btn-primary w-full max-w-xs text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="btn-primary w-full text-lg py-4 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
             >
               Get Started
             </Button>
