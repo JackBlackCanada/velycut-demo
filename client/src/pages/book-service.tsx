@@ -536,18 +536,24 @@ export default function BookService() {
           </div>
 
           {/* Map View */}
-          {viewMode === 'map' && availableStylists && (
-            <MapView 
-              stylists={availableStylists.sort((a, b) => {
-                if (sortBy === 'price') return a.price - b.price;
-                if (sortBy === 'rating') return b.rating - a.rating;
-                return parseFloat(a.distance) - parseFloat(b.distance);
-              })} 
-              onStylistSelect={(stylist) => {
-                setSelectedStylist(stylist);
-                setStep('confirm');
-              }} 
-            />
+          {viewMode === 'map' && (
+            <div>
+              {/* Debug info */}
+              <div className="text-xs text-gray-500 mb-2">
+                Debug: {availableStylists?.length || 0} stylists loaded
+              </div>
+              <MapView 
+                stylists={availableStylists?.sort((a, b) => {
+                  if (sortBy === 'price') return a.price - b.price;
+                  if (sortBy === 'rating') return b.rating - a.rating;
+                  return parseFloat(a.distance) - parseFloat(b.distance);
+                }) || []} 
+                onStylistSelect={(stylist) => {
+                  setSelectedStylist(stylist);
+                  setStep('confirm');
+                }} 
+              />
+            </div>
           )}
 
           {/* List View */}

@@ -29,6 +29,9 @@ interface MapViewProps {
 
 export default function MapView({ stylists, onStylistSelect }: MapViewProps) {
   const [selectedStylist, setSelectedStylist] = useState<Stylist | null>(null);
+  
+  // Debug logging
+  console.log('MapView rendered with stylists:', stylists?.length, stylists);
 
   // Calculate positions based on real coordinates with better distribution
   const calculatePosition = (stylist: Stylist, stylists: Stylist[], index: number) => {
@@ -77,6 +80,20 @@ export default function MapView({ stylists, onStylistSelect }: MapViewProps) {
     
     return { top, left };
   };
+
+  // Early return with loading state if no stylists
+  if (!stylists || stylists.length === 0) {
+    return (
+      <div className="relative">
+        <div className="bg-gray-100 rounded-lg h-80 relative overflow-hidden mb-4 border flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading map...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
