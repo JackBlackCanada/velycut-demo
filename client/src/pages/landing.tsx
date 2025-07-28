@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
+import { Calendar, Scissors, User } from "lucide-react";
 import AnimatedNavMenu from "@/components/AnimatedNavMenu";
 import logoPath from "@assets/logo_1753651837767.png";
 import heroImagePath from "@assets/Asian famliy_1753662896690.png";
@@ -148,38 +149,14 @@ export default function Landing() {
                     {/* Animated background sparkle effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                     <div className="relative z-10 p-2 bg-white/10 rounded-lg backdrop-blur-sm group-hover:bg-white/20 transition-all duration-300">
-                      {/* Custom SVG icon for calendar + scissors + barber pole */}
+                      {/* Combined icon stack for booking concept */}
                       <div className="w-8 h-8 relative group-hover:scale-105 transition-all duration-300">
-                        <svg viewBox="0 0 32 32" className="w-full h-full filter brightness-0 invert drop-shadow-sm group-hover:drop-shadow-md transition-all duration-300">
-                          {/* Calendar */}
-                          <rect x="4" y="6" width="16" height="14" rx="2" fill="currentColor" opacity="0.9"/>
-                          <rect x="6" y="8" width="12" height="10" fill="none" stroke="white" strokeWidth="1"/>
-                          <line x1="6" y1="4" x2="6" y2="8" stroke="currentColor" strokeWidth="2"/>
-                          <line x1="18" y1="4" x2="18" y2="8" stroke="currentColor" strokeWidth="2"/>
-                          <line x1="9" y1="11" x2="9" y2="11" stroke="white" strokeWidth="1.5"/>
-                          <line x1="12" y1="11" x2="12" y2="11" stroke="white" strokeWidth="1.5"/>
-                          <line x1="15" y1="11" x2="15" y2="11" stroke="white" strokeWidth="1.5"/>
-                          
-                          {/* Scissors */}
-                          <g transform="translate(8,14) scale(0.8)">
-                            <circle cx="2" cy="8" r="2" fill="currentColor"/>
-                            <circle cx="12" cy="8" r="2" fill="currentColor"/>
-                            <line x1="4" y1="6" x2="10" y2="10" stroke="currentColor" strokeWidth="1.5"/>
-                            <line x1="4" y1="10" x2="10" y2="6" stroke="currentColor" strokeWidth="1.5"/>
-                            <circle cx="2" cy="8" r="0.8" fill="white"/>
-                            <circle cx="12" cy="8" r="0.8" fill="white"/>
-                          </g>
-                          
-                          {/* Barber pole */}
-                          <g transform="translate(22,4)">
-                            <rect x="0" y="2" width="4" height="16" rx="2" fill="currentColor"/>
-                            <rect x="0.5" y="2.5" width="3" height="15" rx="1.5" fill="white"/>
-                            <path d="M0.5,4 L3.5,7 M0.5,7 L3.5,10 M0.5,10 L3.5,13 M0.5,13 L3.5,16" stroke="#e11d48" strokeWidth="1"/>
-                            <path d="M0.5,5.5 L3.5,8.5 M0.5,8.5 L3.5,11.5 M0.5,11.5 L3.5,14.5" stroke="#3b82f6" strokeWidth="1"/>
-                            <circle cx="2" cy="1" r="1.5" fill="currentColor"/>
-                            <circle cx="2" cy="19" r="1.5" fill="currentColor"/>
-                          </g>
-                        </svg>
+                        <Calendar className="w-6 h-6 text-white absolute top-0 left-0 group-hover:rotate-3 transition-transform duration-300" />
+                        <Scissors className="w-4 h-4 text-white absolute bottom-0 right-0 group-hover:-rotate-12 transition-transform duration-300" />
+                        {/* Barber pole element */}
+                        <div className="absolute top-1 right-0 w-1 h-6 bg-white rounded-full opacity-80">
+                          <div className="w-full h-full bg-gradient-to-b from-red-400 via-white to-blue-400 rounded-full opacity-60"></div>
+                        </div>
                       </div>
                       {/* Subtle glow effect behind icon */}
                       <div className="absolute inset-0 bg-purple-200/30 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -208,12 +185,8 @@ export default function Landing() {
                   <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-all duration-300 relative overflow-hidden">
                     {/* Animated background sparkle effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                    <div className="relative z-10 p-2 bg-white/10 rounded-lg backdrop-blur-sm">
-                      <img 
-                        src="/attached_assets/Join as a Stylist ICON_1753674957768.png" 
-                        alt="Register as a Stylist" 
-                        className="w-8 h-8 filter brightness-0 invert drop-shadow-sm group-hover:drop-shadow-md transition-all duration-300 group-hover:rotate-3"
-                      />
+                    <div className="relative z-10 p-2 bg-white/10 rounded-lg backdrop-blur-sm group-hover:bg-white/20 transition-all duration-300">
+                      <User className="w-8 h-8 text-white drop-shadow-sm group-hover:drop-shadow-md transition-all duration-300 group-hover:rotate-3" />
                     </div>
                     {/* Professional badge effect */}
                     <div className="absolute inset-0 rounded-full border-2 border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
