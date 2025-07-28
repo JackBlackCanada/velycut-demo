@@ -50,31 +50,31 @@ export default function Landing() {
           }}
         />
         
-        {/* Floating Navigation Menu */}
-        <div className="absolute top-6 right-6 z-20">
+        {/* Floating Navigation Menu - Responsive */}
+        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-20">
           <AnimatedNavMenu />
         </div>
 
-        {/* Main Content - Centered */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6">
-          <div className="backdrop-blur-md bg-black/20 rounded-3xl p-10 border border-white/30 shadow-2xl max-w-md">
-            <img src={logoPath} alt="VELY" className="w-24 h-24 mb-8 mx-auto" />
+        {/* Main Content - Responsive Centered */}
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 md:px-8">
+          <div className="backdrop-blur-md bg-black/20 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 border border-white/30 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg">
+            <img src={logoPath} alt="VELY" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-6 sm:mb-8 mx-auto" />
             
-            <h1 className="text-5xl font-bold mb-6 text-white drop-shadow-xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white drop-shadow-xl">
               VELY
             </h1>
             
-            <h2 className="text-2xl font-semibold mb-8 text-white/95">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold mb-6 sm:mb-8 text-white/95">
               Professional Styling at Your Location
             </h2>
             
-            <p className="text-lg text-white/90 mb-10 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 sm:mb-10 leading-relaxed">
               Book expert stylists who come to you. Quality haircuts and styling services wherever you are.
             </p>
 
             <Button 
               onClick={() => setShowUserTypeModal(true)}
-              className="btn-primary w-full text-lg py-4 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+              className="btn-primary w-full text-base sm:text-lg md:text-xl py-3 sm:py-4 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
             >
               Get Started
             </Button>

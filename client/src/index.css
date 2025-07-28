@@ -59,17 +59,68 @@
   }
 }
 
-/* Apple-Style Mobile App Design */
+/* Apple-Style Responsive Design */
 .app-container {
-  @apply max-w-sm mx-auto bg-white dark:bg-gray-900 min-h-screen;
+  @apply w-full max-w-sm mx-auto bg-white dark:bg-gray-900 min-h-screen px-4;
+}
+
+/* Responsive breakpoints */
+@media (min-width: 640px) {
+  .app-container {
+    @apply max-w-md px-6;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    @apply max-w-2xl px-8;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-container {
+    @apply max-w-4xl px-12;
+  }
+}
+
+@media (min-width: 1280px) {
+  .app-container {
+    @apply max-w-6xl px-16;
+  }
 }
 
 .app-header {
   @apply bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3 sticky top-0 z-50;
 }
 
+/* Responsive header */
+@media (min-width: 768px) {
+  .app-header {
+    @apply px-8 py-4;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-header {
+    @apply px-12 py-5;
+  }
+}
+
 .app-content {
   @apply px-4 py-6 space-y-6;
+}
+
+/* Responsive content */
+@media (min-width: 768px) {
+  .app-content {
+    @apply px-8 py-8 space-y-8;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-content {
+    @apply px-12 py-10 space-y-10;
+  }
 }
 
 /* iOS-Style Cards */
@@ -565,11 +616,32 @@
   }
   
   .menu-items {
-    padding: 24px 20px;
+    padding: 20px 16px;
   }
   
   .item-content {
-    padding: 18px 24px;
+    padding: 16px 20px;
+  }
+}
+
+/* Tablet and Desktop Menu Optimizations */
+@media (min-width: 768px) {
+  .menu-panel {
+    width: 320px;
+  }
+  
+  .menu-items {
+    padding: 32px 24px;
+  }
+  
+  .item-content {
+    padding: 20px 28px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .menu-panel {
+    width: 360px;
   }
 }
 
@@ -577,13 +649,30 @@
 
 .floating-nav-container {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 16px;
+  right: 16px;
   z-index: 1000;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+}
+
+/* Responsive floating nav positioning */
+@media (min-width: 640px) {
+  .floating-nav-container {
+    bottom: 24px;
+    right: 24px;
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .floating-nav-container {
+    bottom: 32px;
+    right: 32px;
+    gap: 20px;
+  }
 }
 
 .floating-actions {
@@ -704,6 +793,19 @@
   }
 }
 
+/* Touch-friendly minimum tap targets */
+@media (max-width: 640px) {
+  .btn-primary, .btn-secondary {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  button[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 /* Enhanced glass morphism for hero content */
 .hero-glass-card {
   backdrop-filter: blur(20px);
@@ -715,4 +817,146 @@
 /* Professional hero styling */
 .hero-professional {
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(88, 28, 135, 0.8));
+}
+
+/* ===== COMPREHENSIVE RESPONSIVE DESIGN ===== */
+
+/* Typography scaling */
+@media (min-width: 640px) {
+  .text-title-large {
+    @apply text-3xl;
+  }
+  .text-headline {
+    @apply text-xl;
+  }
+  .text-body {
+    @apply text-base;
+  }
+}
+
+@media (min-width: 768px) {
+  .text-title-large {
+    @apply text-4xl;
+  }
+  .text-headline {
+    @apply text-2xl;
+  }
+  .text-body {
+    @apply text-lg;
+  }
+}
+
+/* Card and component scaling */
+@media (min-width: 640px) {
+  .ios-card {
+    @apply p-6;
+  }
+  
+  .btn-primary, .btn-secondary {
+    @apply px-6 py-3 text-base;
+  }
+}
+
+@media (min-width: 768px) {
+  .ios-card {
+    @apply p-8;
+  }
+  
+  .btn-primary, .btn-secondary {
+    @apply px-8 py-4 text-lg;
+  }
+}
+
+/* Avatar and image scaling */
+@media (min-width: 640px) {
+  .avatar-sm {
+    @apply w-10 h-10;
+  }
+  
+  .avatar-md {
+    @apply w-14 h-14;
+  }
+  
+  .avatar-lg {
+    @apply w-20 h-20;
+  }
+}
+
+@media (min-width: 768px) {
+  .avatar-sm {
+    @apply w-12 h-12;
+  }
+  
+  .avatar-md {
+    @apply w-16 h-16;
+  }
+  
+  .avatar-lg {
+    @apply w-24 h-24;
+  }
+}
+
+/* Grid layouts for larger screens */
+@media (min-width: 768px) {
+  .responsive-grid-2 {
+    @apply grid grid-cols-2 gap-6;
+  }
+  
+  .responsive-grid-3 {
+    @apply grid grid-cols-3 gap-6;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid-2 {
+    @apply gap-8;
+  }
+  
+  .responsive-grid-3 {
+    @apply gap-8;
+  }
+  
+  .responsive-grid-4 {
+    @apply grid grid-cols-4 gap-8;
+  }
+}
+
+/* Form and input scaling */
+@media (min-width: 640px) {
+  .ios-input {
+    @apply px-4 py-3 text-base;
+  }
+  
+  .search-input {
+    @apply px-4 py-3;
+  }
+}
+
+@media (min-width: 768px) {
+  .ios-input {
+    @apply px-6 py-4 text-lg;
+  }
+  
+  .search-input {
+    @apply px-6 py-4;
+  }
+}
+
+/* Landing page responsiveness */
+@media (max-width: 640px) {
+  .landing-hero-content {
+    @apply px-4 py-6;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .landing-hero-content {
+    @apply px-8 py-10;
+  }
+}
+
+@media (min-width: 1025px) {
+  .landing-hero-content {
+    @apply px-12 py-16;
+  }
 }
